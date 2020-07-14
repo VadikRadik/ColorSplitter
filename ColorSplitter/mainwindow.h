@@ -10,6 +10,8 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = 0);
     ~MainWindow();
+
+    void setImageSourcesView(QWidget * view);
 };
 
 #endif // MAINWINDOW_H

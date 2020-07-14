@@ -24,6 +24,9 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    imagesourcesview.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    icolorsplitterview.h \
+    imagesourcesview.h
