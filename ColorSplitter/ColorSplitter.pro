@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui opengl
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -25,8 +25,24 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    imagesourcesview.cpp
+    imagesourcesview.cpp \
+    OpenGLWidget/openglwidget.cpp \
+    OpenGLWidget/scene.cpp \
+    DrawableObjects/rasterimage.cpp \
+    OpenGLWidget/ortho2dcamera.cpp \
+    imageview.cpp
 
 HEADERS  += mainwindow.h \
     icolorsplitterview.h \
-    imagesourcesview.h
+    imagesourcesview.h \
+    uistrings.h \
+    OpenGLWidget/openglwidget.h \
+    OpenGLWidget/scene.h \
+    OpenGLWidget/idrawable.h \
+    DrawableObjects/rasterimage.h \
+    OpenGLWidget/icamera.h \
+    OpenGLWidget/ortho2dcamera.h \
+    imageview.h
+
+RESOURCES += \
+    DrawableObjects/shaders.qrc

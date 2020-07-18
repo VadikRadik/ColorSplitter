@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/shaders">
+        <file>rasterImage.fsh</file>
+        <file>rasterImage.vsh</file>
+    </qresource>
+</RCC>

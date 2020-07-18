@@ -9,6 +9,11 @@
 
 #include "icolorsplitterview.h"
 
+/******************************************************************************
+*
+*   Представление списка изображений
+*
+******************************************************************************/
 class ImageSourcesView : public IColorSplitterView
 {
 public:
@@ -21,20 +26,16 @@ public:
     ImageSourcesView& operator=(ImageSourcesView&&)      = delete;
 
     virtual QWidget *createWidget() const override;
+    virtual void update(SplitterViewModel * model) override;
 
 private:
     QHBoxLayout * createControls() const;
 
 private:
-    const QString LOAD_IMAGES_BUTTON_CAPTION = "Открыть список изображений";
-    const QString SHOW_IMAGE_PATH = "Путь";
-    const QString SHOW_FILE_NAME = "Имя файла";
-    const QString WAY_TO_SHOW_CAPTION = "Отображать в списке";
-
     QPushButton * m_loadImagesButton;
-    QListView * m_imageSourcesView;
     QRadioButton * m_showPath;
     QRadioButton * m_showName;
+    QListView * m_imageSourcesView;
 };
 
 #endif // IMAGESOURCESVIEW_H

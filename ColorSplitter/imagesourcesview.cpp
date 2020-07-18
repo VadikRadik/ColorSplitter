@@ -3,16 +3,25 @@
 #include <QGroupBox>
 
 #include "imagesourcesview.h"
+#include "uistrings.h"
 
-ImageSourcesView::ImageSourcesView()
-    : m_loadImagesButton(new QPushButton(LOAD_IMAGES_BUTTON_CAPTION))
-    , m_showPath(new QRadioButton(SHOW_IMAGE_PATH))
-    , m_showName(new QRadioButton(SHOW_FILE_NAME))
+
+/******************************************************************************
+*   Конструктор
+******************************************************************************/
+ImageSourcesView::ImageSourcesView() // туду модель для листвью в параметры
+    : m_loadImagesButton(new QPushButton(UI_STRINGS::LOAD_IMAGES_BUTTON_CAPTION))
+    , m_showPath(new QRadioButton(UI_STRINGS::SHOW_IMAGE_PATH))
+    , m_showName(new QRadioButton(UI_STRINGS::SHOW_FILE_NAME))
     , m_imageSourcesView(new QListView())
 {
     m_showPath->setChecked(true);
 }
 
+
+/******************************************************************************
+*   Создание и передача виджета представления
+******************************************************************************/
 QWidget * ImageSourcesView::createWidget() const
 {
     QWidget * widget = new QWidget();
@@ -27,11 +36,24 @@ QWidget * ImageSourcesView::createWidget() const
     return widget;
 }
 
+
+/******************************************************************************
+*   Обновление представления по событию изменения модели
+******************************************************************************/
+void ImageSourcesView::update(SplitterViewModel *model)
+{
+
+}
+
+
+/******************************************************************************
+*   Создание элементов управления виджета представления
+******************************************************************************/
 QHBoxLayout *ImageSourcesView::createControls() const
 {
     QHBoxLayout * viewControlsLayout = new QHBoxLayout();
 
-    QGroupBox * showListWaysBox = new QGroupBox(WAY_TO_SHOW_CAPTION);
+    QGroupBox * showListWaysBox = new QGroupBox(UI_STRINGS::WAY_TO_SHOW_CAPTION);
     QHBoxLayout * showListWaysLayout = new QHBoxLayout();
 
     showListWaysLayout->addWidget(m_showPath);
