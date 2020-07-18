@@ -30,7 +30,8 @@ SOURCES += main.cpp\
     OpenGLWidget/scene.cpp \
     DrawableObjects/rasterimage.cpp \
     OpenGLWidget/ortho2dcamera.cpp \
-    imageview.cpp
+    imageview.cpp \
+    OpenGLWidget/scenebuilder.cpp
 
 HEADERS  += mainwindow.h \
     icolorsplitterview.h \
@@ -42,7 +43,8 @@ HEADERS  += mainwindow.h \
     DrawableObjects/rasterimage.h \
     OpenGLWidget/icamera.h \
     OpenGLWidget/ortho2dcamera.h \
-    imageview.h
+    imageview.h \
+    OpenGLWidget/scenebuilder.h
 
 RESOURCES += \
     DrawableObjects/shaders.qrc

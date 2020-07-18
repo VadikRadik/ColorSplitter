@@ -18,6 +18,7 @@ public:
     Scene();
 
     void bindDrawContext(QOpenGLContext *context);
+    void setCamera(ICamera * camera);
 
     void draw();
     void resizeView(int width, int height);

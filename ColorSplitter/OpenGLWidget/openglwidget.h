@@ -14,10 +14,8 @@
 class OpenGLWidget : public QOpenGLWidget, protected QOpenGLFunctions
 {
 public:
-    OpenGLWidget(QWidget *parent = 0);
+    OpenGLWidget(std::shared_ptr<Scene> scene, QWidget *parent = 0);
     ~OpenGLWidget();
-
-    void addToScene(std::shared_ptr<IDrawable> obj);
 
 protected:
     void initializeGL   ()                      override;
@@ -30,7 +28,7 @@ protected:
     void keyReleaseEvent(QKeyEvent *event)      override;
 
 private:
-    Scene m_scene;
+    std::shared_ptr<Scene> m_scene;
 };
 
 #endif // OPENGLWIDGET_H

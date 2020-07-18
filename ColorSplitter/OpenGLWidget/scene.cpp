@@ -7,7 +7,7 @@
 *   Конструктор
 ******************************************************************************/
 Scene::Scene()
-    : m_camera(new Ortho2DCamera())
+    : m_camera(nullptr)
     , m_openGLContext(nullptr)
     , m_sceneObjects()
 {
@@ -21,6 +21,11 @@ Scene::Scene()
 void Scene::bindDrawContext(QOpenGLContext *context)
 {
     m_openGLContext = context;
+}
+
+void Scene::setCamera(ICamera *camera)
+{
+    m_camera.reset(camera);
 }
 
 

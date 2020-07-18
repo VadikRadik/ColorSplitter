@@ -6,25 +6,20 @@
 *   Конструктор виджета
 *   setFocusPolicy нужен для корректной работы keyPressEvent
 ******************************************************************************/
-OpenGLWidget::OpenGLWidget(QWidget *parent)
+OpenGLWidget::OpenGLWidget(std::shared_ptr<Scene> scene, QWidget *parent)
     : QOpenGLWidget(parent)
-    , m_scene()
+    , m_scene(scene)
 {
     setFocusPolicy(Qt::StrongFocus);
 }
 
-OpenGLWidget::~OpenGLWidget()
-{
-    m_scene.flushObjects();
-}
-
 
 /******************************************************************************
-*   Добавление рисуемого объекта в сцену
+*   Объектам сцены с текстурами необходимо удаляться в этом деструкторе
 ******************************************************************************/
-void OpenGLWidget::addToScene(std::shared_ptr<IDrawable> obj)
+OpenGLWidget::~OpenGLWidget()
 {
-    m_scene.addObject(obj);
+    m_scene->flushObjects();
 }
 
 
@@ -35,7 +30,7 @@ void OpenGLWidget::initializeGL()
 {
     initializeOpenGLFunctions();
 
-    m_scene.bindDrawContext(context());
+    m_scene->bindDrawContext(context());
 
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 }
@@ -48,7 +43,7 @@ void OpenGLWidget::paintGL()
 {
     glClear(GL_COLOR_BUFFER_BIT);
 
-    m_scene.draw();
+    m_scene->draw();
 }
 
 
@@ -57,7 +52,7 @@ void OpenGLWidget::paintGL()
 ******************************************************************************/
 void OpenGLWidget::resizeGL(int width, int height)
 {
-    m_scene.resizeView(width, height);
+    m_scene->resizeView(width, height);
 }
 
 
@@ -67,30 +62,30 @@ void OpenGLWidget::resizeGL(int width, int height)
 
 void OpenGLWidget::wheelEvent(QWheelEvent *event)
 {
-    m_scene.wheelEvent(event);
+    m_scene->wheelEvent(event);
     update();
 }
 
 void OpenGLWidget::mouseMoveEvent(QMouseEvent *event)
 {
-    m_scene.mouseMoveEvent(event);
+    m_scene->mouseMoveEvent(event);
     update();
 }
 
 void OpenGLWidget::mousePressEvent(QMouseEvent *event)
 {
-    m_scene.mousePressEvent(event);
+    m_scene->mousePressEvent(event);
     update();
 }
 
 void OpenGLWidget::keyPressEvent(QKeyEvent *event)
 {
-    m_scene.keyPressEvent(event);
+    m_scene->keyPressEvent(event);
     update();
 }
 
 void OpenGLWidget::keyReleaseEvent(QKeyEvent *event)
 {
-    m_scene.keyReleaseEvent(event);
+    m_scene->keyReleaseEvent(event);
     update();
 }
