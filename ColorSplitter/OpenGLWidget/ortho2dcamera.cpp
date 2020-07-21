@@ -14,9 +14,9 @@ void Ortho2DCamera::resizeView(int width, int height)
 ******************************************************************************/
 QMatrix4x4 Ortho2DCamera::projectionMatrix() const
 {
-    QMatrix4x4 pMatrix;
-    pMatrix.ortho(m_viewportTransformMatrix.mapRect(m_viewRect));
-    return pMatrix;
+    QMatrix4x4 projection;
+    projection.ortho(m_viewportTransformMatrix.mapRect(m_viewRect));
+    return projection;
 }
 
 
@@ -26,6 +26,15 @@ QMatrix4x4 Ortho2DCamera::projectionMatrix() const
 QMatrix4x4 Ortho2DCamera::viewMatrix() const
 {
     return QMatrix4x4();
+}
+
+
+/******************************************************************************
+*   Вектор направления камеры
+******************************************************************************/
+QVector3D Ortho2DCamera::viewDirection() const
+{
+    return VIEW_DIRECTION;
 }
 
 

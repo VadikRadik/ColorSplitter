@@ -31,7 +31,9 @@ SOURCES += main.cpp\
     DrawableObjects/rasterimage.cpp \
     OpenGLWidget/ortho2dcamera.cpp \
     imageview.cpp \
-    OpenGLWidget/scenebuilder.cpp
+    OpenGLWidget/scenebuilder.cpp \
+    OpenGLWidget/centred3deulercamera.cpp \
+    colordiagramview.cpp
 
 HEADERS  += mainwindow.h \
     icolorsplitterview.h \
@@ -44,7 +46,9 @@ HEADERS  += mainwindow.h \
     OpenGLWidget/icamera.h \
     OpenGLWidget/ortho2dcamera.h \
     imageview.h \
-    OpenGLWidget/scenebuilder.h
+    OpenGLWidget/scenebuilder.h \
+    OpenGLWidget/centred3deulercamera.h \
+    colordiagramview.h
 
 RESOURCES += \
     DrawableObjects/shaders.qrc

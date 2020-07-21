@@ -20,6 +20,7 @@ public:
     virtual void resizeView(int width, int height)      = 0;
     virtual QMatrix4x4 projectionMatrix()         const = 0;
     virtual QMatrix4x4 viewMatrix()               const = 0;
+    virtual QVector3D viewDirection()             const = 0;
 
     virtual void wheelEvent     (QWheelEvent *event)    = 0;
     virtual void mouseMoveEvent (QMouseEvent *event)    = 0;
