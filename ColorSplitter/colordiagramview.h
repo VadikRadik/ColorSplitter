@@ -3,6 +3,11 @@
 
 #include "icolorsplitterview.h"
 #include "OpenGLWidget/openglwidget.h"
+#include "colordiagramscene.h"
+
+#include <QVBoxLayout>
+#include <QCheckBox>
+#include <QRadioButton>
 
 class ColorDiagramView : public IColorSplitterView
 {
@@ -13,8 +18,14 @@ public:
     virtual void update(SplitterViewModel * model) override;
 
 private:
-    OpenGLWidget * m_imegeWidget;
-    std::weak_ptr<Scene> m_scene;
+    QVBoxLayout *createControls() const;
+
+private:
+    OpenGLWidget * m_diagramWidget;
+    std::weak_ptr<ColorDiagramScene> m_scene;
+    QRadioButton * m_cubeShape;
+    QRadioButton * m_icosahedronShape;
+    QCheckBox * m_lightSwitch;
 };
 
 #endif // COLORDIAGRAMVIEW_H

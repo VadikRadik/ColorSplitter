@@ -15,13 +15,13 @@
 class RasterImage : public IDrawable
 {
 public:
-    RasterImage(const QImage &image);
+    RasterImage(const QImage &image, std::shared_ptr<QOpenGLShaderProgram> shader);
 
     virtual void draw(QOpenGLFunctions * oglFunctions, const DrawParameters & drawParams) override;
-    virtual void initialize() override;
+    virtual void setShader(std::shared_ptr<QOpenGLShaderProgram> shader) override;
 
 private:
-    QOpenGLShaderProgram m_shaderProgram;
+    std::shared_ptr<QOpenGLShaderProgram> m_shaderProgram;
     QVector<GLfloat> m_vertices;
     QVector<GLfloat> m_textureCoords;
     std::unique_ptr<QOpenGLTexture> m_texture;

@@ -3,6 +3,7 @@
 
 #include "icolorsplitterview.h"
 #include "OpenGLWidget/openglwidget.h"
+#include "imagescene.h"
 
 /******************************************************************************
 *
@@ -25,7 +26,7 @@ public:
 
 private:
     OpenGLWidget * m_imegeWidget;
-    std::weak_ptr<Scene> m_scene;
+    std::weak_ptr<ImageScene> m_scene;
 };
 
 #endif // IMAGEVIEW_H

@@ -4,7 +4,7 @@
 #include<QOpenGLWidget>
 #include<QOpenGLFunctions>
 
-#include "scene.h"
+#include "abstractscene.h"
 
 /******************************************************************************
 *
@@ -14,7 +14,7 @@
 class OpenGLWidget : public QOpenGLWidget, protected QOpenGLFunctions
 {
 public:
-    OpenGLWidget(std::shared_ptr<Scene> scene, QWidget *parent = 0);
+    OpenGLWidget(std::shared_ptr<AbstractScene> scene, QWidget *parent = 0);
     ~OpenGLWidget();
 
 protected:
@@ -28,7 +28,7 @@ protected:
     void keyReleaseEvent(QKeyEvent *event)      override;
 
 private:
-    std::shared_ptr<Scene> m_scene;
+    std::shared_ptr<AbstractScene> m_scene;
 };
 
 #endif // OPENGLWIDGET_H

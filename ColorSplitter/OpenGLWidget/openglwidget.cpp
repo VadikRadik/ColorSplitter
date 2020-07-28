@@ -6,7 +6,7 @@
 *   Конструктор виджета
 *   setFocusPolicy нужен для корректной работы keyPressEvent
 ******************************************************************************/
-OpenGLWidget::OpenGLWidget(std::shared_ptr<Scene> scene, QWidget *parent)
+OpenGLWidget::OpenGLWidget(std::shared_ptr<AbstractScene> scene, QWidget *parent)
     : QOpenGLWidget(parent)
     , m_scene(scene)
 {
@@ -30,9 +30,13 @@ void OpenGLWidget::initializeGL()
 {
     initializeOpenGLFunctions();
 
-    m_scene->bindDrawContext(context());
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_MULTISAMPLE);
 
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+
+    m_scene->bindDrawContext(context());
+    m_scene->initialize();
 }
 
 

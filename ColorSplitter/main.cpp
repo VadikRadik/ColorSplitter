@@ -15,6 +15,10 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
+    QSurfaceFormat format;
+    format.setSamples(4);
+    QSurfaceFormat::setDefaultFormat(format);
+
     std::shared_ptr<IColorSplitterView> imageSourcesView = std::make_shared<ImageSourcesView>();
     std::shared_ptr<IColorSplitterView> imageView = std::make_shared<ImageView>();
     std::shared_ptr<IColorSplitterView> colorDiagram = std::make_shared<ColorDiagramView>();
@@ -24,8 +28,8 @@ int main(int argc, char *argv[])
     w.setColorDiagramView(colorDiagram->createWidget());
     w.setImageView(imageView->createWidget());
     w.setWidgets();
-
     w.showMaximized();
-    colorDiagram->update(nullptr);
+
+    colorDiagram->update(nullptr); // colorDiagram->initialize();
     return a.exec();
 }

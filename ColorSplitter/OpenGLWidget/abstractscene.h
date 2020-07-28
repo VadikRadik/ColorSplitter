@@ -1,5 +1,5 @@
-#ifndef SCENE_H
-#define SCENE_H
+#ifndef ABSTRACTSCENE_H
+#define ABSTRACTSCENE_H
 
 #include <memory>
 #include <QOpenGLContext>
@@ -12,13 +12,14 @@
 *   Сцена с рисуемыми объектами
 *
 ******************************************************************************/
-class Scene
+class AbstractScene
 {
 public:
-    Scene();
+    AbstractScene(ICamera * camera);
+    virtual~AbstractScene() {}
 
     void bindDrawContext(QOpenGLContext *context);
-    void setCamera(ICamera * camera);
+    //void setCamera(ICamera * camera);
 
     void draw();
     void resizeView(int width, int height);
@@ -34,10 +35,22 @@ public:
     void keyPressEvent  (QKeyEvent *event);
     void keyReleaseEvent(QKeyEvent *event);
 
+    virtual void initialize() = 0;
+
+protected:
+    std::shared_ptr<QOpenGLShaderProgram> createShader(const QString & vertexShaderPath,
+                                                       const QString & fragmentShaderPath,
+                                                       const QString & geometryShaderPath);
+    void makeCurrentContext();
+
+protected:
+    QOpenGLContext * m_openGLContext;
+
 private:
     std::unique_ptr<ICamera> m_camera;
-    QOpenGLContext * m_openGLContext;
+
+    QSurface * m_cotextSurface;
     std::list<std::shared_ptr<IDrawable>> m_sceneObjects;
 };
 
-#endif // SCENE_H
+#endif // ABSTRACTSCENE_H

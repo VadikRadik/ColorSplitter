@@ -13,6 +13,10 @@ namespace UI_STRINGS {
     const QString SHOW_IMAGE_PATH = "Путь";
     const QString SHOW_FILE_NAME = "Имя файла";
     const QString WAY_TO_SHOW_CAPTION = "Отображать в списке";
+    const QString DIAGRAM_POINTS_SHAPE = "Форма точек";
+    const QString CUBE_SHAPE = "Куб";
+    const QString ICOSAHEDRON_SHAPE = "Икосаэдр";
+    const QString LIGHT_SWITCH = "Свет";
 }
 
 #endif // UISTRINGS_H

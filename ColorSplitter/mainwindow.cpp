@@ -9,8 +9,8 @@
 ******************************************************************************/
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
-    , m_verticalSplitter(new QSplitter(Qt::Horizontal))
-    , m_horizontalSplitter(new QSplitter(Qt::Vertical))
+    , m_imageSourceSplitter(new QSplitter(Qt::Horizontal))
+    , m_openglViewsSplitter(new QSplitter(Qt::Vertical))
     , m_imageSourceView(nullptr)
 {
     setGeometry(DEFAULT_MAIN_WINDOW_GEOMETRY);
@@ -36,7 +36,7 @@ void MainWindow::setImageSourcesView(QWidget *view)
 ******************************************************************************/
 void MainWindow::setImageView(QWidget *view)
 {
-    m_horizontalSplitter->addWidget(view);
+    m_openglViewsSplitter->addWidget(view);
 }
 
 
@@ -45,7 +45,7 @@ void MainWindow::setImageView(QWidget *view)
 ******************************************************************************/
 void MainWindow::setColorDiagramView(QWidget *view)
 {
-    m_horizontalSplitter->addWidget(view);
+    m_openglViewsSplitter->addWidget(view);
 }
 
 
@@ -65,17 +65,17 @@ QWidget *MainWindow::createCentralWidget()
 {
     QWidget * mainWidget = new QWidget();
 
-    m_horizontalSplitter->setStretchFactor(0,3);
-    m_horizontalSplitter->setStretchFactor(1,2);
-    m_horizontalSplitter->setGeometry(0,0,100,100);
+    m_openglViewsSplitter->setStretchFactor(0,5);
+    m_openglViewsSplitter->setStretchFactor(1,1);
+    //m_openglViewsSplitter->setGeometry(0,0,100,100);
 
-    m_verticalSplitter->addWidget(m_imageSourceView);
-    m_verticalSplitter->addWidget(m_horizontalSplitter);
-    m_verticalSplitter->setStretchFactor(0,1);
-    m_verticalSplitter->setStretchFactor(1,10);
+    m_imageSourceSplitter->addWidget(m_imageSourceView);
+    m_imageSourceSplitter->addWidget(m_openglViewsSplitter);
+    m_imageSourceSplitter->setStretchFactor(0,1);
+    m_imageSourceSplitter->setStretchFactor(1,10);
 
     QVBoxLayout * mainLayout = new QVBoxLayout();
-    mainLayout->addWidget(m_verticalSplitter);
+    mainLayout->addWidget(m_imageSourceSplitter);
     mainWidget->setLayout(mainLayout);
 
     return mainWidget;

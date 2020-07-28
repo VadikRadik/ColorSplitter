@@ -1,5 +1,4 @@
 #include "imageview.h"
-#include "OpenGLWidget/scenebuilder.h"
 #include "OpenGLWidget/ortho2dcamera.h"
 
 /******************************************************************************
@@ -8,9 +7,7 @@
 ImageView::ImageView()
     : m_imegeWidget(nullptr)
 {
-    SceneBuilder builder;
-    builder.setCamera(new Ortho2DCamera());
-    std::shared_ptr<Scene> scene = builder.build();
+    std::shared_ptr<ImageScene> scene = std::make_shared<ImageScene>(new Ortho2DCamera());
 
     m_imegeWidget = new OpenGLWidget(scene);
     m_scene = scene;
@@ -22,7 +19,7 @@ ImageView::ImageView()
 ******************************************************************************/
 QWidget *ImageView::createWidget() const
 {
-    return m_imegeWidget;
+    return m_imegeWidget;//new OpenGLWidget(m_scene.lock());
 }
 
 

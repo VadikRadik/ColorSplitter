@@ -28,8 +28,8 @@ private:
 
 private:
     QWidget * m_imageSourceView;
-    QSplitter * m_verticalSplitter;
-    QSplitter * m_horizontalSplitter;
+    QSplitter * m_imageSourceSplitter;
+    QSplitter * m_openglViewsSplitter;
 
     const QRect DEFAULT_MAIN_WINDOW_GEOMETRY = QRect(QPoint(100,100),QPoint(999,666));
 };

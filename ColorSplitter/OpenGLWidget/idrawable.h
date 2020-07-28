@@ -5,6 +5,7 @@
 #include <QMatrix4x4>
 #include <QOpenGLShaderProgram>
 #include <QOpenGLFunctions>
+#include <memory>
 
 namespace SHADER_VARIABLES {
     const QString ATR_COORD_2D          = "pos2d";
@@ -22,6 +23,8 @@ namespace SHADER_VARIABLES {
 struct DrawParameters
 {
     QMatrix4x4 pvm;
+    QMatrix4x4 projectionViewMatrix;
+    QVector3D lightDirection;
 };
 
 /******************************************************************************
@@ -35,7 +38,7 @@ public:
     virtual ~IDrawable() {}
 
     virtual void draw(QOpenGLFunctions * oglFunctions, const DrawParameters & drawParams) = 0;
-    virtual void initialize() = 0;
+    virtual void setShader(std::shared_ptr<QOpenGLShaderProgram> shader) = 0;
 };
 
 #endif // IDRAWABLE_H
