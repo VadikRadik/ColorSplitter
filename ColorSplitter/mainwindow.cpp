@@ -67,7 +67,6 @@ QWidget *MainWindow::createCentralWidget()
 
     m_openglViewsSplitter->setStretchFactor(0,5);
     m_openglViewsSplitter->setStretchFactor(1,1);
-    //m_openglViewsSplitter->setGeometry(0,0,100,100);
 
     m_imageSourceSplitter->addWidget(m_imageSourceView);
     m_imageSourceSplitter->addWidget(m_openglViewsSplitter);

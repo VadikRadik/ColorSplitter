@@ -19,7 +19,7 @@ ImageView::ImageView()
 ******************************************************************************/
 QWidget *ImageView::createWidget() const
 {
-    return m_imegeWidget;//new OpenGLWidget(m_scene.lock());
+    return m_imegeWidget;
 }
 
 

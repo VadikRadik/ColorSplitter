@@ -21,6 +21,15 @@ Mesh::Mesh(std::shared_ptr<QOpenGLShaderProgram> shader, GLenum drawMode)
     bindShaderAttributes();
 }
 
+Mesh::~Mesh()
+{
+    m_buffer.destroy();
+}
+
+
+/******************************************************************************
+*   Отрисовка меша
+******************************************************************************/
 void Mesh::draw(QOpenGLFunctions *oglFunctions, const DrawParameters &drawParams)
 {
     if ( !m_shaderProgram->bind() || !m_buffer.isCreated() ) {
@@ -50,6 +59,10 @@ void Mesh::draw(QOpenGLFunctions *oglFunctions, const DrawParameters &drawParams
     m_shaderProgram->release();
 }
 
+
+/******************************************************************************
+*   Замена шейдера
+******************************************************************************/
 void Mesh::setShader(std::shared_ptr<QOpenGLShaderProgram> shader)
 {
     m_shaderProgram = shader;
@@ -57,22 +70,38 @@ void Mesh::setShader(std::shared_ptr<QOpenGLShaderProgram> shader)
     bindShaderAttributes();
 }
 
+
+/******************************************************************************
+*   Перемещение координат вершин в меш
+*   Запоминание количества вершин
+******************************************************************************/
 void Mesh::setVertices(std::vector<GLfloat> &vertices)
 {
     m_vertices = std::move(vertices);
     m_bufferSize = m_vertices.size() / VERTEX_DIMENSIONS;
 }
 
+
+/******************************************************************************
+*   Перемещение координат нормалей в меш
+******************************************************************************/
 void Mesh::setNormals(std::vector<GLfloat> &normals)
 {
     m_normals = std::move(normals);
 }
 
+/******************************************************************************
+*   Перемещение компонент цветов в меш
+******************************************************************************/
 void Mesh::setColors(std::vector<GLfloat> &colors)
 {
     m_colors = std::move(colors);
 }
 
+
+/******************************************************************************
+*   Создание буфера для меша
+******************************************************************************/
 void Mesh::createBuffer()
 {
     m_buffer.create();
@@ -102,6 +131,10 @@ void Mesh::createBuffer()
     m_colors.shrink_to_fit();
 }
 
+
+/******************************************************************************
+*   Привязка атрибутов шейдера
+******************************************************************************/
 void Mesh::bindShaderAttributes()
 {
     m_uniformLightDir = m_shaderProgram->uniformLocation( SHADER_VARIABLES::UF_LIGHT_DIRECTION );

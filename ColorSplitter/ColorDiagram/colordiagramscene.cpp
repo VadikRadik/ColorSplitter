@@ -5,14 +5,20 @@
 
 #include <QTime>
 
+/******************************************************************************
+*   Конструктор сцены цветовой диаграммы
+******************************************************************************/
 ColorDiagramScene::ColorDiagramScene(ICamera * camera)
     : AbstractScene(camera)
-    , m_colorScalePattern(std::make_shared<ScalePartPattern>())
     , m_directLightedMeshShader(nullptr)
+    , m_colorScalePattern(std::make_shared<ScalePartPattern>())
 {
 
 }
 
+/******************************************************************************
+*   Создание цветовой диаграммы
+******************************************************************************/
 void ColorDiagramScene::createColorScale()
 {
     std::shared_ptr<Mesh> colorScale = std::make_shared<Mesh>(m_directLightedMeshShader, GL_QUADS);
@@ -53,7 +59,7 @@ void ColorDiagramScene::createTestMesh()
 
     std::shared_ptr<Mesh> meshBatch = std::make_shared<Mesh>(m_directLightedMeshShader, GL_QUADS);
     int i = 0;
-    for (int j = 0; j < 1550000; ++j) {
+    for (int j = 0; j < 25500; ++j) {
 
         QMatrix4x4 model;
         model.rotate(j,UP);
@@ -62,7 +68,7 @@ void ColorDiagramScene::createTestMesh()
         QColor clrHsv;
         clrHsv.setHsv(j % 255,255,255);
 
-        bool builderFilled = meshBuilder->addMeshByPattern(model,clrHsv);
+        bool builderFilled = meshBuilder->addMeshByPattern(model,clrHsv) || j == 25500-1;
         if (builderFilled) {
 
             meshBatch->setVertices(meshBuilder->resultVertices());
@@ -85,6 +91,10 @@ void ColorDiagramScene::createTestMesh()
     addObject(diagramMesh);
 }
 
+
+/******************************************************************************
+*   Создание первичных объектов сцены
+******************************************************************************/
 void ColorDiagramScene::initialize()
 {
     addObject(std::make_shared<Background>(SCENE_BACKGROUND_COLOR));

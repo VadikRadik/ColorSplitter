@@ -25,41 +25,41 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    imagesourcesview.cpp \
+    ImageSources/imagesourcesview.cpp \
     OpenGLWidget/openglwidget.cpp \
     DrawableObjects/rasterimage.cpp \
     OpenGLWidget/ortho2dcamera.cpp \
-    imageview.cpp \
+    Image/imageview.cpp \
     OpenGLWidget/centred3deulercamera.cpp \
-    colordiagramview.cpp \
+    ColorDiagram/colordiagramview.cpp \
     DrawableObjects/mesh.cpp \
     OpenGLWidget/abstractscene.cpp \
-    colordiagramscene.cpp \
-    imagescene.cpp \
+    ColorDiagram/colordiagramscene.cpp \
+    Image/imagescene.cpp \
     DrawableObjects/background.cpp \
-    meshbuilder.cpp \
-    imeshpattern.cpp \
+    ColorDiagram/meshbuilder.cpp \
+    ColorDiagram/imeshpattern.cpp \
     DrawableObjects/meshpack.cpp
 
 HEADERS  += mainwindow.h \
     icolorsplitterview.h \
-    imagesourcesview.h \
+    ImageSources/imagesourcesview.h \
     uistrings.h \
     OpenGLWidget/openglwidget.h \
     OpenGLWidget/idrawable.h \
     DrawableObjects/rasterimage.h \
     OpenGLWidget/icamera.h \
     OpenGLWidget/ortho2dcamera.h \
-    imageview.h \
+    Image/imageview.h \
     OpenGLWidget/centred3deulercamera.h \
-    colordiagramview.h \
+    ColorDiagram/colordiagramview.h \
     DrawableObjects/mesh.h \
     OpenGLWidget/abstractscene.h \
-    colordiagramscene.h \
-    imagescene.h \
+    ColorDiagram/colordiagramscene.h \
+    Image/imagescene.h \
     DrawableObjects/background.h \
-    meshbuilder.h \
-    imeshpattern.h \
+    ColorDiagram/meshbuilder.h \
+    ColorDiagram/imeshpattern.h \
     DrawableObjects/meshpack.h
 
 RESOURCES += \

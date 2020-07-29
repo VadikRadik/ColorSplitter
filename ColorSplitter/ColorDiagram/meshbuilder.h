@@ -27,8 +27,8 @@ private:
     std::vector<GLfloat> m_resultNormals;
     std::vector<GLfloat> m_resultColors;
 
-    int m_batchFloatsSize;
-    int m_patternFloatsCount;
+    unsigned int m_batchFloatsSize;
+    unsigned int m_patternFloatsCount;
 };
 
 #endif // MESHBUILDER_H

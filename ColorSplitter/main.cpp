@@ -5,9 +5,9 @@
 #include <QApplication>
 #include <QImage>
 
-#include "imagesourcesview.h"
-#include "imageview.h"
-#include "colordiagramview.h"
+#include "ImageSources/imagesourcesview.h"
+#include "Image/imageview.h"
+#include "ColorDiagram/colordiagramview.h"
 #include "OpenGLWidget/openglwidget.h"
 #include "DrawableObjects/rasterimage.h"
 
@@ -30,6 +30,5 @@ int main(int argc, char *argv[])
     w.setWidgets();
     w.showMaximized();
 
-    colorDiagram->update(nullptr); // colorDiagram->initialize();
     return a.exec();
 }

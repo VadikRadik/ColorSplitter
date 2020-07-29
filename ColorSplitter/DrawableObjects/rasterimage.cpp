@@ -16,13 +16,13 @@ RasterImage::RasterImage(const QImage &image, std::shared_ptr<QOpenGLShaderProgr
     , m_texture(nullptr)
 {
     m_vertices <<   0.0f                    << 0.0f
-               <<   (float)image.width()    << 0.0f
+               <<   0.0f                    << (float)image.height()
                <<   (float)image.width()    << (float)image.height()
-               <<   0.0f                    << (float)image.height();
+               <<   (float)image.width()    << 0.0f;
     m_textureCoords <<  0.0f << 0.0f
-                    <<  1.0f << 0.0f
+                    <<  0.0f << 1.0f
                     <<  1.0f << 1.0f
-                    <<  0.0f << 1.0f;
+                    <<  1.0f << 0.0f;
 
     setShader(shader);
 }
