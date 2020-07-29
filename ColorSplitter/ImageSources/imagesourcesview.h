@@ -8,6 +8,7 @@
 #include <QHBoxLayout>
 
 #include "icolorsplitterview.h"
+#include "imagesourceslistmodel.h"
 
 /******************************************************************************
 *
@@ -26,16 +27,18 @@ public:
     ImageSourcesView& operator=(ImageSourcesView&&)      = delete;
 
     virtual QWidget *createWidget() const override;
-    virtual void update(SplitterViewModel * model) override;
+    virtual void update(const ColorSplitterModel * model, EModelUpdates stateChange) override;
 
 private:
     QHBoxLayout * createControls() const;
+    void createLogic(QWidget * widget) const;
 
 private:
     QPushButton * m_loadImagesButton;
     QRadioButton * m_showPath;
     QRadioButton * m_showName;
     QListView * m_imageSourcesView;
+    ImageSourcesListModel * m_listModel;
 };
 
 #endif // IMAGESOURCESVIEW_H

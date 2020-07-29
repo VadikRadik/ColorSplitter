@@ -1,0 +1,11 @@
+#ifndef EMODELUPDATES_H
+#define EMODELUPDATES_H
+
+enum EModelUpdates
+{
+    IMAGE_CHANGED,
+    CUT_FRAME_CHANGED,
+    IMAGE_DECOMPOSED
+};
+
+#endif // EMODELUPDATES_H

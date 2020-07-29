@@ -26,7 +26,7 @@ QWidget *ImageView::createWidget() const
 /******************************************************************************
 *   Обновление представления по событию изменения модели
 ******************************************************************************/
-void ImageView::update(SplitterViewModel *model)
+void ImageView::update(const ColorSplitterModel *model, EModelUpdates stateChange)
 {
 
 }

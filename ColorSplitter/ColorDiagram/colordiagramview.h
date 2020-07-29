@@ -15,7 +15,7 @@ public:
     ColorDiagramView();
 
     virtual QWidget *createWidget() const override;
-    virtual void update(SplitterViewModel * model) override;
+    virtual void update(const ColorSplitterModel * model, EModelUpdates stateChange) override;
 
 private:
     QVBoxLayout *createControls() const;

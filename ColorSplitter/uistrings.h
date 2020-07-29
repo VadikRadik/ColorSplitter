@@ -17,6 +17,7 @@ namespace UI_STRINGS {
     const QString CUBE_SHAPE = "Куб";
     const QString ICOSAHEDRON_SHAPE = "Икосаэдр";
     const QString LIGHT_SWITCH = "Свет";
+    const QString OPEN_FILES = "Открыть изображения";
 }
 
 #endif // UISTRINGS_H

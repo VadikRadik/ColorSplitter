@@ -1,6 +1,7 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QGroupBox>
+#include <QFileDialog>
 
 #include "imagesourcesview.h"
 #include "uistrings.h"
@@ -14,8 +15,10 @@ ImageSourcesView::ImageSourcesView() // туду модель для листв�
     , m_showPath(new QRadioButton(UI_STRINGS::SHOW_IMAGE_PATH))
     , m_showName(new QRadioButton(UI_STRINGS::SHOW_FILE_NAME))
     , m_imageSourcesView(new QListView())
+    , m_listModel(new ImageSourcesListModel())
 {
     m_showPath->setChecked(true);
+    m_imageSourcesView->setModel(m_listModel);
 }
 
 
@@ -33,6 +36,8 @@ QWidget * ImageSourcesView::createWidget() const
 
     widget->setLayout(mainLayout);
 
+    createLogic(widget);
+
     return widget;
 }
 
@@ -40,7 +45,7 @@ QWidget * ImageSourcesView::createWidget() const
 /******************************************************************************
 *   Обновление представления по событию изменения модели
 ******************************************************************************/
-void ImageSourcesView::update(SplitterViewModel *model)
+void ImageSourcesView::update(const ColorSplitterModel *model, EModelUpdates stateChange)
 {
 
 }
@@ -64,4 +69,21 @@ QHBoxLayout *ImageSourcesView::createControls() const
     viewControlsLayout->addWidget(showListWaysBox);
 
     return viewControlsLayout;
+}
+
+void ImageSourcesView::createLogic(QWidget *widget) const
+{
+    widget->connect(m_loadImagesButton,&QPushButton::clicked,[=](){
+        QStringList list = QFileDialog::getOpenFileNames(widget, UI_STRINGS::OPEN_FILES, "", "*.png *.bmp *.jpeg *.jpg");
+        if (!list.isEmpty()){
+            m_listModel->addImages(list);
+        }
+    });
+
+    widget->connect(m_showPath,&QRadioButton::pressed,[=](){
+        m_listModel->setDisplayRegime(EDisplayRegime::FULL_PATH);
+    });
+    widget->connect(m_showName,&QRadioButton::pressed,[=](){
+        m_listModel->setDisplayRegime(EDisplayRegime::FILE_NAME);
+    });
 }

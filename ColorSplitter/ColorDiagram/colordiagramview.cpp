@@ -44,7 +44,7 @@ QWidget *ColorDiagramView::createWidget() const
 /******************************************************************************
 *   Обновление представления по событию изменения модели
 ******************************************************************************/
-void ColorDiagramView::update(SplitterViewModel *model)
+void ColorDiagramView::update(const ColorSplitterModel *model, EModelUpdates stateChange)
 {
 
 }

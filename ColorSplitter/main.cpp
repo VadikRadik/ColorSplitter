@@ -10,6 +10,7 @@
 #include "ColorDiagram/colordiagramview.h"
 #include "OpenGLWidget/openglwidget.h"
 #include "DrawableObjects/rasterimage.h"
+#include "colorsplittermodel.h"
 
 int main(int argc, char *argv[])
 {
@@ -22,6 +23,10 @@ int main(int argc, char *argv[])
     std::shared_ptr<IColorSplitterView> imageSourcesView = std::make_shared<ImageSourcesView>();
     std::shared_ptr<IColorSplitterView> imageView = std::make_shared<ImageView>();
     std::shared_ptr<IColorSplitterView> colorDiagram = std::make_shared<ColorDiagramView>();
+
+    ColorSplitterModel model;
+    model.subscribeView(imageView);
+    model.subscribeView(colorDiagram);
 
     MainWindow w;
     w.setImageSourcesView(imageSourcesView->createWidget());
