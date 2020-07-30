@@ -34,7 +34,10 @@ QVariant ImageSourcesListModel::data(const QModelIndex &index, int nRole) const
     if (!index.isValid())
         return QVariant();
 
-    if (index.row() < 0 || index.row() >= m_files.size() || nRole != Qt::DisplayRole)
+    if (nRole == Qt::UserRole)
+        return m_files.at(index.row()).filePath();
+
+    if (nRole != Qt::DisplayRole)
         return QVariant();
 
     return m_displayRegime == EDisplayRegime::FULL_PATH ? m_files.at(index.row()).filePath() : m_files.at(index.row()).fileName();

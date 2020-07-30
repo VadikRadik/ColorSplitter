@@ -6,16 +6,16 @@
 #include "imagesourcesview.h"
 #include "uistrings.h"
 
-
 /******************************************************************************
 *   Конструктор
 ******************************************************************************/
-ImageSourcesView::ImageSourcesView() // туду модель для листвью в параметры
+ImageSourcesView::ImageSourcesView(std::shared_ptr<ImageSourcesController> controller) // туду модель для листвью в параметры
     : m_loadImagesButton(new QPushButton(UI_STRINGS::LOAD_IMAGES_BUTTON_CAPTION))
     , m_showPath(new QRadioButton(UI_STRINGS::SHOW_IMAGE_PATH))
     , m_showName(new QRadioButton(UI_STRINGS::SHOW_FILE_NAME))
     , m_imageSourcesView(new QListView())
     , m_listModel(new ImageSourcesListModel())
+    , m_controller(controller)
 {
     m_showPath->setChecked(true);
     m_imageSourcesView->setModel(m_listModel);
@@ -85,5 +85,9 @@ void ImageSourcesView::createLogic(QWidget *widget) const
     });
     widget->connect(m_showName,&QRadioButton::pressed,[=](){
         m_listModel->setDisplayRegime(EDisplayRegime::FILE_NAME);
+    });
+
+    widget->connect(m_imageSourcesView->selectionModel(),&QItemSelectionModel::currentChanged,[=](QModelIndex index, QModelIndex previousIndex) {
+        m_controller->setImage(m_listModel->data(index,Qt::UserRole).toString());
     });
 }

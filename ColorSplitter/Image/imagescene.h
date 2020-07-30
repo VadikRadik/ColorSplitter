@@ -10,10 +10,11 @@ public:
 
     virtual void initialize() override;
 
-    void setImage(const QImage & image);
+    void changeImage(const QImage & image);
 
 private:
     std::shared_ptr<QOpenGLShaderProgram> m_rasterImageShader;
+    std::weak_ptr<IDrawable> m_image;
 };
 
 #endif // IMAGESCENE_H

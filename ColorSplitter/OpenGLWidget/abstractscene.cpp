@@ -63,8 +63,6 @@ void AbstractScene::addObject(std::shared_ptr<IDrawable> obj)
     makeCurrentContext();
 
     m_sceneObjects.push_back(obj);
-
-    //m_openGLContext->doneCurrent();
 }
 
 
@@ -85,8 +83,6 @@ void AbstractScene::removeObject(std::shared_ptr<IDrawable> obj)
     makeCurrentContext();
 
     m_sceneObjects.remove(obj);
-
-    m_openGLContext->doneCurrent();
 }
 
 

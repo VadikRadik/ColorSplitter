@@ -9,6 +9,7 @@
 
 #include "icolorsplitterview.h"
 #include "imagesourceslistmodel.h"
+#include "imagesourcescontroller.h"
 
 /******************************************************************************
 *
@@ -18,7 +19,7 @@
 class ImageSourcesView : public IColorSplitterView
 {
 public:
-    ImageSourcesView();
+    ImageSourcesView(std::shared_ptr<ImageSourcesController> controller);
 
     ImageSourcesView(const ImageSourcesView&)            = delete;
     ImageSourcesView(ImageSourcesView&&)                 = delete;
@@ -39,6 +40,7 @@ private:
     QRadioButton * m_showName;
     QListView * m_imageSourcesView;
     ImageSourcesListModel * m_listModel;
+    std::shared_ptr<ImageSourcesController> m_controller;
 };
 
 #endif // IMAGESOURCESVIEW_H

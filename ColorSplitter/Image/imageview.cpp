@@ -1,5 +1,6 @@
 #include "imageview.h"
 #include "OpenGLWidget/ortho2dcamera.h"
+#include "colorsplittermodel.h"
 
 /******************************************************************************
 *   Конструктор
@@ -28,5 +29,12 @@ QWidget *ImageView::createWidget() const
 ******************************************************************************/
 void ImageView::update(const ColorSplitterModel *model, EModelUpdates stateChange)
 {
-
+    switch (stateChange) {
+    case EModelUpdates::IMAGE_CHANGED:
+        m_scene.lock()->changeImage(model->image());
+        m_imegeWidget->update();
+        break;
+    default:
+        break;
+    }
 }

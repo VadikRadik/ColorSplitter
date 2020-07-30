@@ -11,6 +11,7 @@
 #include "OpenGLWidget/openglwidget.h"
 #include "DrawableObjects/rasterimage.h"
 #include "colorsplittermodel.h"
+#include "ImageSources/imagesourcescontroller.h"
 
 int main(int argc, char *argv[])
 {
@@ -20,11 +21,15 @@ int main(int argc, char *argv[])
     format.setSamples(4);
     QSurfaceFormat::setDefaultFormat(format);
 
-    std::shared_ptr<IColorSplitterView> imageSourcesView = std::make_shared<ImageSourcesView>();
+    ColorSplitterModel model;
+
+    std::shared_ptr<ImageSourcesController> imageSourcesController = std::make_shared<ImageSourcesController>(model);
+
+    std::shared_ptr<IColorSplitterView> imageSourcesView = std::make_shared<ImageSourcesView>(imageSourcesController);
     std::shared_ptr<IColorSplitterView> imageView = std::make_shared<ImageView>();
     std::shared_ptr<IColorSplitterView> colorDiagram = std::make_shared<ColorDiagramView>();
 
-    ColorSplitterModel model;
+    model.subscribeView(imageSourcesView);
     model.subscribeView(imageView);
     model.subscribeView(colorDiagram);
 

@@ -11,11 +11,16 @@ ImageScene::ImageScene(ICamera * camera)
 void ImageScene::initialize()
 {
     m_rasterImageShader = createShader(":/shaders/rasterImage.vsh",":/shaders/rasterImage.fsh",QString());
-    setImage(QImage("f:/tempos/снимок001.png"));
 }
 
-void ImageScene::setImage(const QImage &image)
+void ImageScene::changeImage(const QImage &image)
 {
     makeCurrentContext();
-    addObject(std::make_shared<RasterImage>(image,m_rasterImageShader));
+
+    if (!m_image.expired())
+        removeObject(m_image.lock());
+
+    std::shared_ptr<IDrawable> newImage = std::make_shared<RasterImage>(image,m_rasterImageShader);
+    m_image = newImage;
+    addObject(newImage);
 }
