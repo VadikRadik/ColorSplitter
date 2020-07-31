@@ -42,7 +42,9 @@ SOURCES += main.cpp\
     DrawableObjects/meshpack.cpp \
     colorsplittermodel.cpp \
     ImageSources/imagesourceslistmodel.cpp \
-    ImageSources/imagesourcescontroller.cpp
+    ImageSources/imagesourcescontroller.cpp \
+    ColorDiagram/colordiagramcontroller.cpp \
+    ColorDiagram/meshpackbuilder.cpp
 
 HEADERS  += mainwindow.h \
     icolorsplitterview.h \
@@ -67,7 +69,9 @@ HEADERS  += mainwindow.h \
     colorsplittermodel.h \
     emodelupdates.h \
     ImageSources/imagesourceslistmodel.h \
-    ImageSources/imagesourcescontroller.h
+    ImageSources/imagesourcescontroller.h \
+    ColorDiagram/colordiagramcontroller.h \
+    ColorDiagram/meshpackbuilder.h
 
 RESOURCES += \
     DrawableObjects/shaders.qrc

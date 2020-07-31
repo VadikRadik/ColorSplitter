@@ -47,7 +47,7 @@ void ColorSplitterModel::setCutFrame(const QMargins &margins)
 /******************************************************************************
 *   Геттер результирующего разбиения
 ******************************************************************************/
-std::unordered_map<QRgb, int> ColorSplitterModel::decomposedColors() const
+const std::unordered_map<QRgb, int> &ColorSplitterModel::decomposedColors() const
 {
     return m_decomposedColors;
 }

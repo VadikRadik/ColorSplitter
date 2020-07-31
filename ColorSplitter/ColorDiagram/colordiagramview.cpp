@@ -8,17 +8,19 @@
 /******************************************************************************
 *   Конструктор
 ******************************************************************************/
-ColorDiagramView::ColorDiagramView()
+ColorDiagramView::ColorDiagramView(std::shared_ptr<ColorDiagramController> controller)
     : m_diagramWidget(nullptr)
     , m_lightSwitch(new QCheckBox(UI_STRINGS::LIGHT_SWITCH))
     , m_cubeShape(new QRadioButton(UI_STRINGS::CUBE_SHAPE))
     , m_icosahedronShape(new QRadioButton(UI_STRINGS::ICOSAHEDRON_SHAPE))
+    , m_controller(controller)
 {
     m_cubeShape->setChecked(true);
     m_lightSwitch->setChecked(true);
     std::shared_ptr<ColorDiagramScene> scene = std::make_shared<ColorDiagramScene>(new Centred3DEulerCamera());
 
     m_diagramWidget = new OpenGLWidget(scene);
+    m_controller->bindScene(scene);
     m_scene = scene;
 }
 
@@ -46,7 +48,14 @@ QWidget *ColorDiagramView::createWidget() const
 ******************************************************************************/
 void ColorDiagramView::update(const ColorSplitterModel *model, EModelUpdates stateChange)
 {
-
+    switch (stateChange) {
+    case EModelUpdates::IMAGE_DECOMPOSED:
+        m_controller->fillDiagram();
+        m_diagramWidget->update();
+        break;
+    default:
+        break;
+    }
 }
 
 

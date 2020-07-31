@@ -2,8 +2,10 @@
 #include "DrawableObjects/background.h"
 #include "DrawableObjects/rasterimage.h"
 #include "meshbuilder.h"
+#include "meshpackbuilder.h"
 
 #include <QTime>
+#include <QtMath>
 
 /******************************************************************************
 *   Конструктор сцены цветовой диаграммы
@@ -12,6 +14,7 @@ ColorDiagramScene::ColorDiagramScene(ICamera * camera)
     : AbstractScene(camera)
     , m_directLightedMeshShader(nullptr)
     , m_colorScalePattern(std::make_shared<ScalePartPattern>())
+    , m_cubePattern(std::make_shared<CubePattern>())
 {
 
 }
@@ -103,4 +106,37 @@ void ColorDiagramScene::initialize()
 
     createColorScale();
     createTestMesh();
+}
+
+void ColorDiagramScene::refillDiagram(const std::unordered_map<QRgb, int> &colors)
+{
+    makeCurrentContext();
+
+    if (!m_diagramMesh.expired())
+        removeObject(m_diagramMesh.lock());
+
+    MeshPackBuilder diagramBuilder(m_cubePattern,m_directLightedMeshShader,GL_QUADS,colors.size());
+
+    for (auto it = colors.cbegin(); it != colors.cend(); ++it) {
+        QColor clrHsv = QColor(it->first).toHsv();
+
+        //QRgb rgb = it.key();
+
+        QMatrix4x4 model;
+        model.rotate(clrHsv.hsvHue(),UP);
+        model.translate(clrHsv.saturationF(),clrHsv.valueF(),0.0f);
+        model.scale(qPow(it->second,0.27) * 0.007f);
+
+        //QVector<GLfloat> color;
+        //color << qRed(rgb)/255.0f << qGreen(rgb)/255.0f << qBlue(rgb)/255.0f;
+
+        diagramBuilder.addPattern(model,clrHsv);
+    }
+
+    GLenum errorCode = m_openGLContext->functions()->glGetError();
+    if (errorCode != 0)
+        qWarning() << "OpenGL error code:" << errorCode;
+
+    m_diagramMesh = diagramBuilder.result();
+    addObject(m_diagramMesh.lock());
 }

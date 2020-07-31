@@ -17,17 +17,15 @@ public:
     ColorSplitterModel();
 
     const QImage & image() const;
-    void resetImage(const QString & imagePath);//const QImage &image);
+    void resetImage(const QString & imagePath);
     void setCutFrame(const QMargins & margins);
-
-    std::unordered_map<QRgb, int> decomposedColors() const;
-    void decompose();
-
+    const std::unordered_map<QRgb, int> & decomposedColors() const;
     QMargins cutFrame() const; // для проверки на нулл в апдейте вьюхи имаджа
 
     void subscribeView(std::shared_ptr<IColorSplitterView> view);
 
 private:
+    void decompose();
     void notify(EModelUpdates stateChanged) const;
     QMargins imageMargins() const;
 
