@@ -162,3 +162,8 @@ void AbstractScene::keyReleaseEvent(QKeyEvent *event)
 {
     m_camera->keyReleaseEvent(event);
 }
+
+void AbstractScene::mouseReleaseEvent(QMouseEvent *event)
+{
+    m_camera->mouseReleaseEvent(event);
+}

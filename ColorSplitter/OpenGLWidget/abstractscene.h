@@ -29,11 +29,12 @@ public:
 
     void flushObjects();
 
-    void wheelEvent     (QWheelEvent *event);
-    void mouseMoveEvent (QMouseEvent *event);
-    void mousePressEvent(QMouseEvent *event);
-    void keyPressEvent  (QKeyEvent *event);
-    void keyReleaseEvent(QKeyEvent *event);
+    void wheelEvent         (QWheelEvent *event);
+    void mouseMoveEvent     (QMouseEvent *event);
+    void mousePressEvent    (QMouseEvent *event);
+    void keyPressEvent      (QKeyEvent *event);
+    void keyReleaseEvent    (QKeyEvent *event);
+    void mouseReleaseEvent  (QMouseEvent *event);
 
     virtual void initialize() = 0;
 
@@ -45,10 +46,9 @@ protected:
 
 protected:
     QOpenGLContext * m_openGLContext;
-
-private:
     std::unique_ptr<ICamera> m_camera;
 
+private:
     QSurface * m_cotextSurface;
     std::list<std::shared_ptr<IDrawable>> m_sceneObjects;
 };

@@ -18,20 +18,20 @@ public:
 
     const QImage & image() const;
     void resetImage(const QString & imagePath);
-    void setCutFrame(const QMargins & margins);
+    void setCutFrame(const QRect & frameRect);
     const std::unordered_map<QRgb, int> & decomposedColors() const;
-    QMargins cutFrame() const; // для проверки на нулл в апдейте вьюхи имаджа
+    QRect cutFrame() const; // для проверки на нулл в апдейте вьюхи имаджа
 
     void subscribeView(std::shared_ptr<IColorSplitterView> view);
 
 private:
     void decompose();
     void notify(EModelUpdates stateChanged) const;
-    QMargins imageMargins() const;
+    QRect imageRect() const;
 
 private:
     QImage m_image;
-    QMargins m_cutFrame;
+    QRect m_cutFrame;
     std::unordered_map<QRgb,int> m_decomposedColors;
     std::list<std::shared_ptr<IColorSplitterView>> m_views;
 };

@@ -16,7 +16,7 @@ MeshPackBuilder::MeshPackBuilder(std::shared_ptr<IMeshPattern> pattern,
 
 }
 
-void MeshPackBuilder::addPattern(const QMatrix4x4 &modelMatrix, const QColor &color)
+void MeshPackBuilder::addPattern(const QMatrix4x4 &modelMatrix, QRgb color)
 {
     bool builderFilled = m_meshBuilder->addMeshByPattern(modelMatrix,color) || m_currentPatternIndex == m_lastPattern;
     if (builderFilled)

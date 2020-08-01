@@ -12,12 +12,14 @@ public:
     virtual QMatrix4x4 projectionMatrix()         const override;
     virtual QMatrix4x4 viewMatrix()               const override;
     virtual QVector3D viewDirection()             const override;
+    virtual QVector3D projectPoint(QPoint point)  const override;
 
-    virtual void wheelEvent     (QWheelEvent *event)    override;
-    virtual void mouseMoveEvent (QMouseEvent *event)    override;
-    virtual void mousePressEvent(QMouseEvent *event)    override;
-    virtual void keyPressEvent  (QKeyEvent *event)      override;
-    virtual void keyReleaseEvent(QKeyEvent *event)      override;
+    virtual void wheelEvent         (QWheelEvent *event)    override;
+    virtual void mouseMoveEvent     (QMouseEvent *event)    override;
+    virtual void mousePressEvent    (QMouseEvent *event)    override;
+    virtual void mouseReleaseEvent  (QMouseEvent *event)    override;
+    virtual void keyPressEvent      (QKeyEvent *event)      override;
+    virtual void keyReleaseEvent    (QKeyEvent *event)      override;
 
 private:
     void calcEyePosition();

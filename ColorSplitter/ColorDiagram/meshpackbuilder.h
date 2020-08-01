@@ -10,7 +10,7 @@ class MeshPackBuilder
 public:
     MeshPackBuilder(std::shared_ptr<IMeshPattern> pattern, std::shared_ptr<QOpenGLShaderProgram> shader, GLenum drawMode, int patternsCount, int batchSize = 50000);
 
-    void addPattern(const QMatrix4x4 & modelMatrix, const QColor & color);
+    void addPattern(const QMatrix4x4 & modelMatrix, QRgb color);
 
     std::shared_ptr<MeshPack> result() const;
 

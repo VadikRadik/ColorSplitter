@@ -61,9 +61,11 @@ MeshBuilder::MeshBuilder(std::shared_ptr<IMeshPattern> pattern, int builderSize)
 *   Добавление к мешу паттерна в определённое место и с определёнными цветами
 *   Возвращает состояние заполненности до конца
 ******************************************************************************/
-bool MeshBuilder::addMeshByPattern(const QMatrix4x4 &modelMatrix, const QColor &color)
+bool MeshBuilder::addMeshByPattern(const QMatrix4x4 &modelMatrix, QRgb color)
 {
-    QColor clrRgb = color.toRgb();
+    float red = qRed(color)/255.0f;
+    float green = qGreen(color)/255.0f;
+    float blue = qBlue(color)/255.0f;
 
     for (unsigned int i = 0; i < m_patternVertices.size(); i += 3) {
         QVector3D newMeshVertex = modelMatrix.map(QVector3D(m_patternVertices.at(i),m_patternVertices.at(i+1),m_patternVertices.at(i+2)));
@@ -77,9 +79,9 @@ bool MeshBuilder::addMeshByPattern(const QMatrix4x4 &modelMatrix, const QColor &
         m_resultNormals.push_back(newMeshNormal.y());
         m_resultNormals.push_back(newMeshNormal.z());
 
-        m_resultColors.push_back(clrRgb.redF());
-        m_resultColors.push_back(clrRgb.greenF());
-        m_resultColors.push_back(clrRgb.blueF());
+        m_resultColors.push_back(red);
+        m_resultColors.push_back(green);
+        m_resultColors.push_back(blue);
     }
 
     return m_resultVertices.size() + m_patternFloatsCount > m_batchFloatsSize;

@@ -5,6 +5,7 @@
 #include <memory>
 
 #include <QOpenGLFunctions>
+#include <QColor>
 
 #include "imeshpattern.h"
 
@@ -13,7 +14,7 @@ class MeshBuilder
 public:
     MeshBuilder(std::shared_ptr<IMeshPattern> pattern, int builderSize);
 
-    bool addMeshByPattern(const QMatrix4x4 & modelMatrix, const QColor & color);
+    bool addMeshByPattern(const QMatrix4x4 & modelMatrix, QRgb color);
 
     std::vector<GLfloat> & resultVertices();
     std::vector<GLfloat> & resultNormals();

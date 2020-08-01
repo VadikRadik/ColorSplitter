@@ -44,7 +44,9 @@ SOURCES += main.cpp\
     ImageSources/imagesourceslistmodel.cpp \
     ImageSources/imagesourcescontroller.cpp \
     ColorDiagram/colordiagramcontroller.cpp \
-    ColorDiagram/meshpackbuilder.cpp
+    ColorDiagram/meshpackbuilder.cpp \
+    DrawableObjects/lineframe.cpp \
+    Image/imagecontroller.cpp
 
 HEADERS  += mainwindow.h \
     icolorsplitterview.h \
@@ -71,7 +73,10 @@ HEADERS  += mainwindow.h \
     ImageSources/imagesourceslistmodel.h \
     ImageSources/imagesourcescontroller.h \
     ColorDiagram/colordiagramcontroller.h \
-    ColorDiagram/meshpackbuilder.h
+    ColorDiagram/meshpackbuilder.h \
+    DrawableObjects/lineframe.h \
+    OpenGLWidget/iwidgetimputhandler.h \
+    Image/imagecontroller.h
 
 RESOURCES += \
     DrawableObjects/shaders.qrc

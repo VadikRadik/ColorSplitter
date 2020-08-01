@@ -5,6 +5,7 @@
 #include<QOpenGLFunctions>
 
 #include "abstractscene.h"
+#include "iwidgetimputhandler.h"
 
 /******************************************************************************
 *
@@ -14,21 +15,23 @@
 class OpenGLWidget : public QOpenGLWidget, protected QOpenGLFunctions
 {
 public:
-    OpenGLWidget(std::shared_ptr<AbstractScene> scene, QWidget *parent = 0);
+    OpenGLWidget(std::shared_ptr<AbstractScene> scene, std::shared_ptr<IWidgetImputHandler> controller = nullptr, QWidget *parent = 0);
     ~OpenGLWidget();
 
 protected:
-    void initializeGL   ()                      override;
-    void paintGL        ()                      override;
-    void resizeGL       (int width, int height) override;
-    void wheelEvent     (QWheelEvent *event)    override;
-    void mouseMoveEvent (QMouseEvent *event)    override;
-    void mousePressEvent(QMouseEvent *event)    override;
-    void keyPressEvent  (QKeyEvent *event)      override;
-    void keyReleaseEvent(QKeyEvent *event)      override;
+    virtual void initializeGL       ()                      override;
+    virtual void paintGL            ()                      override;
+    virtual void resizeGL           (int width, int height) override;
+    virtual void wheelEvent         (QWheelEvent *event)    override;
+    virtual void mouseMoveEvent     (QMouseEvent *event)    override;
+    virtual void mousePressEvent    (QMouseEvent *event)    override;
+    virtual void mouseReleaseEvent  (QMouseEvent *event)    override;
+    virtual void keyPressEvent      (QKeyEvent *event)      override;
+    virtual void keyReleaseEvent    (QKeyEvent *event)      override;
 
 private:
     std::shared_ptr<AbstractScene> m_scene;
+    std::shared_ptr<IWidgetImputHandler> m_controller;
 };
 
 #endif // OPENGLWIDGET_H

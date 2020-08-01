@@ -4,5 +4,7 @@
         <file>rasterImage.vsh</file>
         <file>direct_ligted_mesh.fsh</file>
         <file>direct_ligted_mesh.vsh</file>
+        <file>line.fsh</file>
+        <file>line.vsh</file>
     </qresource>
 </RCC>

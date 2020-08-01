@@ -13,6 +13,7 @@
 #include "colorsplittermodel.h"
 #include "ImageSources/imagesourcescontroller.h"
 #include "ColorDiagram/colordiagramcontroller.h"
+#include "Image/imagecontroller.h"
 
 int main(int argc, char *argv[])
 {
@@ -26,9 +27,10 @@ int main(int argc, char *argv[])
 
     std::shared_ptr<ImageSourcesController> imageSourcesController = std::make_shared<ImageSourcesController>(model);
     std::shared_ptr<ColorDiagramController> colorDiagramController = std::make_shared<ColorDiagramController>(model);
+    std::shared_ptr<ImageController> imageController = std::make_shared<ImageController>(model);
 
     std::shared_ptr<IColorSplitterView> imageSourcesView = std::make_shared<ImageSourcesView>(imageSourcesController);
-    std::shared_ptr<IColorSplitterView> imageView = std::make_shared<ImageView>();
+    std::shared_ptr<IColorSplitterView> imageView = std::make_shared<ImageView>(imageController);
     std::shared_ptr<IColorSplitterView> colorDiagram = std::make_shared<ColorDiagramView>(colorDiagramController);
 
     model.subscribeView(imageSourcesView);

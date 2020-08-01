@@ -4,6 +4,7 @@
 #include "icolorsplitterview.h"
 #include "OpenGLWidget/openglwidget.h"
 #include "imagescene.h"
+#include "imagecontroller.h"
 
 /******************************************************************************
 *
@@ -13,7 +14,7 @@
 class ImageView : public IColorSplitterView
 {
 public:
-    ImageView();
+    ImageView(std::shared_ptr<ImageController> controller);
 
     ImageView(const ImageView&)            = delete;
     ImageView(ImageView&&)                 = delete;

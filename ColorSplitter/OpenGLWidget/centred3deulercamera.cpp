@@ -59,6 +59,11 @@ QVector3D Centred3DEulerCamera::viewDirection() const
     return m_eye.normalized();
 }
 
+QVector3D Centred3DEulerCamera::projectPoint(QPoint point) const
+{
+    return QVector3D();// todo
+}
+
 
 /******************************************************************************
 *   Изменение угла обзора
@@ -101,6 +106,11 @@ void Centred3DEulerCamera::mouseMoveEvent(QMouseEvent *event)
 void Centred3DEulerCamera::mousePressEvent(QMouseEvent *event)
 {
     m_lastMousePos = event->pos();
+}
+
+void Centred3DEulerCamera::mouseReleaseEvent(QMouseEvent *event)
+{
+
 }
 
 void Centred3DEulerCamera::keyPressEvent(QKeyEvent *event)

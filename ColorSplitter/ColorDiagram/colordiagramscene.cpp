@@ -37,7 +37,7 @@ void ColorDiagramScene::createColorScale()
         QColor clrHsv;
         clrHsv.setHsv(i,255,255);
 
-        meshBuilder.addMeshByPattern(model,clrHsv);
+        meshBuilder.addMeshByPattern(model,clrHsv.rgb());
     }
 
     m_scale.lock()->setVertices(meshBuilder.resultVertices());
@@ -71,7 +71,7 @@ void ColorDiagramScene::createTestMesh()
         QColor clrHsv;
         clrHsv.setHsv(j % 255,255,255);
 
-        bool builderFilled = meshBuilder->addMeshByPattern(model,clrHsv) || j == 25500-1;
+        bool builderFilled = meshBuilder->addMeshByPattern(model,clrHsv.rgb()) || j == 25500-1;
         if (builderFilled) {
 
             meshBatch->setVertices(meshBuilder->resultVertices());
@@ -120,17 +120,12 @@ void ColorDiagramScene::refillDiagram(const std::unordered_map<QRgb, int> &color
     for (auto it = colors.cbegin(); it != colors.cend(); ++it) {
         QColor clrHsv = QColor(it->first).toHsv();
 
-        //QRgb rgb = it.key();
-
         QMatrix4x4 model;
         model.rotate(clrHsv.hsvHue(),UP);
         model.translate(clrHsv.saturationF(),clrHsv.valueF(),0.0f);
         model.scale(qPow(it->second,0.27) * 0.007f);
 
-        //QVector<GLfloat> color;
-        //color << qRed(rgb)/255.0f << qGreen(rgb)/255.0f << qBlue(rgb)/255.0f;
-
-        diagramBuilder.addPattern(model,clrHsv);
+        diagramBuilder.addPattern(model,it->first);
     }
 
     GLenum errorCode = m_openGLContext->functions()->glGetError();

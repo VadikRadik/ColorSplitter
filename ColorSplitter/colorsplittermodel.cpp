@@ -27,16 +27,16 @@ void ColorSplitterModel::resetImage(const QString & imagePath)
     m_image = QImage(imagePath);
     notify(EModelUpdates::IMAGE_CHANGED);
 
-    setCutFrame(QMargins());
+    setCutFrame(QRect());
 }
 
 
 /******************************************************************************
 *   Установка рассматриваемой области изображения
 ******************************************************************************/
-void ColorSplitterModel::setCutFrame(const QMargins &margins)
+void ColorSplitterModel::setCutFrame(const QRect &frameRect)
 {
-    m_cutFrame = margins;
+    m_cutFrame = frameRect;
     notify(EModelUpdates::CUT_FRAME_CHANGED);
 
     decompose();
@@ -59,7 +59,7 @@ const std::unordered_map<QRgb, int> &ColorSplitterModel::decomposedColors() cons
 void ColorSplitterModel::decompose()
 {
     m_decomposedColors.clear();
-    QMargins frame = imageMargins();
+    QRect frame = imageRect();
 
     for (int y = frame.top(); y < frame.bottom(); ++y){
         QRgb* line = reinterpret_cast<QRgb*>(m_image.scanLine(y)) + frame.left();
@@ -77,7 +77,7 @@ void ColorSplitterModel::decompose()
 /******************************************************************************
 *   Геттер рассматриваемой области
 ******************************************************************************/
-QMargins ColorSplitterModel::cutFrame() const
+QRect ColorSplitterModel::cutFrame() const
 {
     return m_cutFrame;
 }
@@ -105,21 +105,15 @@ void ColorSplitterModel::notify(EModelUpdates stateChanged) const
 /******************************************************************************
 *   Границы изображения с учётом границ рассматриваемой области
 ******************************************************************************/
-QMargins ColorSplitterModel::imageMargins() const
+QRect ColorSplitterModel::imageRect() const
 {
-    QMargins result;
+    QRect result;
+
     if (m_cutFrame.isNull())
-    {
-        result = QMargins(0,0,m_image.width(),m_image.height());
-    }
+        result = QRect(QPoint(0,0),QPoint(m_image.width(),m_image.height()));
     else
-    {
-        int left = std::max(0,m_cutFrame.left());
-        int right = std::min(m_image.width(),m_cutFrame.right());
-        int top = std::max(0,m_cutFrame.top());
-        int bottom = std::min(m_image.height(),m_cutFrame.bottom());
-        result = QMargins(left,top,right,bottom);
-    }
+        result = m_cutFrame.intersected(m_image.rect());
+
     return result;
 }
 
