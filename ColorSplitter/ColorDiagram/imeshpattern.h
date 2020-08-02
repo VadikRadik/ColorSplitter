@@ -23,6 +23,16 @@ protected:
     std::vector<GLfloat> m_normals;
 };
 
+class CubePattern : public IMeshPattern
+{
+public:
+    CubePattern();
+private:
+    const int VERTICES_COORDINATES_COUNT = 72;
+    const float HALF_RIB = 0.5f;
+    const int VERTICES_PER_FACE = 4;
+};
+
 class ScalePartPattern : public IMeshPattern
 {
 public:
@@ -33,16 +43,6 @@ private:
     const float OUTER_R = 1.2f;
     const float SEMIHEIGHT = 0.025f;
     const QVector3D UP = QVector3D(0.0f,1.0f,0.0);
-};
-
-class CubePattern : public IMeshPattern
-{
-public:
-    CubePattern();
-private:
-    const int VERTICES_COORDINATES_COUNT = 72;
-    const float HALF_RIB = 0.5f;
-    const int VERTICES_PER_FACE = 4;
 };
 
 #endif // IMESHPATTERN_H

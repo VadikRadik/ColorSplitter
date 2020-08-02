@@ -84,6 +84,10 @@ void LineFrame::setShader(std::shared_ptr<QOpenGLShaderProgram> shader)
     bindShaderAttributes();
 }
 
+
+/******************************************************************************
+*   Перезапись координат нижней правой точки рамки
+******************************************************************************/
 void LineFrame::expandFrame(QPointF position)
 {
     m_buffer.bind();
@@ -105,9 +109,6 @@ void LineFrame::expandFrame(QPointF position)
 
     m_buffer.release();
 }
-
-
-
 
 
 /******************************************************************************
@@ -132,6 +133,10 @@ void LineFrame::createBuffer()
     m_buffer.release();
 }
 
+
+/******************************************************************************
+*   Вычисление координат внутренних прямоугольников рамки
+******************************************************************************/
 void LineFrame::calcInnerLoops()
 {
     int startIndex = RECT_VERTICES_COUNT * VERTEX_DIMENSIONS;

@@ -4,6 +4,60 @@
 #include <QMatrix4x4>
 
 /******************************************************************************
+*   Паттерн меша для цветовой диаграммы
+******************************************************************************/
+CubePattern::CubePattern()
+{
+    QVector<QVector3D> normals = {
+        QVector3D { 0.0f, 1.0f, 0.0f}, // NORMAL_UP
+        QVector3D { 0.0f,-1.0f, 0.0f}, // NORMAL_DOWN
+        QVector3D {-1.0f, 0.0f, 0.0f}, // NORMAL_LEFT
+        QVector3D { 1.0f, 0.0f, 0.0f}, // NORMAL_RIGHT
+        QVector3D { 0.0f, 0.0f, 1.0f}, // NORMAL_FRONT
+        QVector3D { 0.0f, 0.0f,-1.0f}  // NORMAL_BACK
+    };
+
+    m_vertices.reserve(VERTICES_COORDINATES_COUNT);
+    m_normals.reserve(VERTICES_COORDINATES_COUNT);
+
+    QVector<QVector3D> baseVertices = {
+        QVector3D {-HALF_RIB,-HALF_RIB, HALF_RIB},
+        QVector3D {-HALF_RIB, HALF_RIB, HALF_RIB},
+        QVector3D { HALF_RIB, HALF_RIB, HALF_RIB},
+        QVector3D { HALF_RIB,-HALF_RIB, HALF_RIB},
+        QVector3D { HALF_RIB,-HALF_RIB,-HALF_RIB},
+        QVector3D { HALF_RIB, HALF_RIB,-HALF_RIB},
+        QVector3D {-HALF_RIB, HALF_RIB,-HALF_RIB},
+        QVector3D {-HALF_RIB,-HALF_RIB,-HALF_RIB}
+    };
+
+    QVector<QVector<int>> faceIndices = {
+        QVector<int> { 2, 5, 6, 1 }, // top
+        QVector<int> { 7, 4, 3, 0 }, // bottom
+        QVector<int> { 1, 6, 7, 0 }, // left
+        QVector<int> { 4, 5, 2, 3 }, // right
+        QVector<int> { 3, 2, 1, 0 }, // front
+        QVector<int> { 7, 6, 5, 4 }  // back
+    };
+
+    for(auto & face : faceIndices) {
+        for (int i = 0; i < VERTICES_PER_FACE; ++i) {
+            m_vertices.push_back(baseVertices[face[i]].x());
+            m_vertices.push_back(baseVertices[face[i]].y());
+            m_vertices.push_back(baseVertices[face[i]].z());
+        }
+    }
+
+    for(auto & normal : normals) {
+        for (int i = 0; i < VERTICES_PER_FACE; ++i) {
+            m_normals.push_back(normal.x());
+            m_normals.push_back(normal.y());
+            m_normals.push_back(normal.z());
+        }
+    }
+}
+
+/******************************************************************************
 *   Паттерн меша для шкалы цветовой диаграммы
 ******************************************************************************/
 ScalePartPattern::ScalePartPattern()
@@ -75,57 +129,3 @@ ScalePartPattern::ScalePartPattern()
     };
 }
 
-
-/******************************************************************************
-*   Паттерн меша для цветовой диаграммы
-******************************************************************************/
-CubePattern::CubePattern()
-{
-    QVector<QVector3D> normals = {
-        QVector3D { 0.0f, 1.0f, 0.0f}, // NORMAL_UP
-        QVector3D { 0.0f,-1.0f, 0.0f}, // NORMAL_DOWN
-        QVector3D {-1.0f, 0.0f, 0.0f}, // NORMAL_LEFT
-        QVector3D { 1.0f, 0.0f, 0.0f}, // NORMAL_RIGHT
-        QVector3D { 0.0f, 0.0f, 1.0f}, // NORMAL_FRONT
-        QVector3D { 0.0f, 0.0f,-1.0f}  // NORMAL_BACK
-    };
-
-    m_vertices.reserve(VERTICES_COORDINATES_COUNT);
-    m_normals.reserve(VERTICES_COORDINATES_COUNT);
-
-    QVector<QVector3D> baseVertices = {
-        QVector3D {-HALF_RIB,-HALF_RIB, HALF_RIB},
-        QVector3D {-HALF_RIB, HALF_RIB, HALF_RIB},
-        QVector3D { HALF_RIB, HALF_RIB, HALF_RIB},
-        QVector3D { HALF_RIB,-HALF_RIB, HALF_RIB},
-        QVector3D { HALF_RIB,-HALF_RIB,-HALF_RIB},
-        QVector3D { HALF_RIB, HALF_RIB,-HALF_RIB},
-        QVector3D {-HALF_RIB, HALF_RIB,-HALF_RIB},
-        QVector3D {-HALF_RIB,-HALF_RIB,-HALF_RIB}
-    };
-
-    QVector<QVector<int>> faceIndices = {
-        QVector<int> { 2, 5, 6, 1 }, // top
-        QVector<int> { 7, 4, 3, 0 }, // bottom
-        QVector<int> { 1, 6, 7, 0 }, // left
-        QVector<int> { 4, 5, 2, 3 }, // right
-        QVector<int> { 3, 2, 1, 0 }, // front
-        QVector<int> { 7, 6, 5, 4 }  // back
-    };
-
-    for(auto & face : faceIndices) {
-        for (int i = 0; i < VERTICES_PER_FACE; ++i) {
-            m_vertices.push_back(baseVertices[face[i]].x());
-            m_vertices.push_back(baseVertices[face[i]].y());
-            m_vertices.push_back(baseVertices[face[i]].z());
-        }
-    }
-
-    for(auto & normal : normals) {
-        for (int i = 0; i < VERTICES_PER_FACE; ++i) {
-            m_normals.push_back(normal.x());
-            m_normals.push_back(normal.y());
-            m_normals.push_back(normal.z());
-        }
-    }
-}

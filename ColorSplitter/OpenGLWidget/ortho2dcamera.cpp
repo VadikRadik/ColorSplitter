@@ -37,6 +37,10 @@ QVector3D Ortho2DCamera::viewDirection() const
     return VIEW_DIRECTION;
 }
 
+
+/******************************************************************************
+*   Перевести координаты виджета в координаты видимого пространства камеры
+******************************************************************************/
 QVector3D Ortho2DCamera::projectPoint(QPoint point) const
 {
     return QVector3D(m_viewportTransformMatrix.map(point));

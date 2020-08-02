@@ -16,6 +16,10 @@ MeshPackBuilder::MeshPackBuilder(std::shared_ptr<IMeshPattern> pattern,
 
 }
 
+
+/******************************************************************************
+*   Добавить часть геометрии к результирующему мешу
+******************************************************************************/
 void MeshPackBuilder::addPattern(const QMatrix4x4 &modelMatrix, QRgb color)
 {
     bool builderFilled = m_meshBuilder->addMeshByPattern(modelMatrix,color) || m_currentPatternIndex == m_lastPattern;
@@ -25,11 +29,19 @@ void MeshPackBuilder::addPattern(const QMatrix4x4 &modelMatrix, QRgb color)
     m_currentPatternIndex++;
 }
 
+
+/******************************************************************************
+*   Геттер результата
+******************************************************************************/
 std::shared_ptr<MeshPack> MeshPackBuilder::result() const
 {
     return m_result;
 }
 
+
+/******************************************************************************
+*   Добавить готовый меш к результату
+******************************************************************************/
 void MeshPackBuilder::addNewMeshBatch()
 {
     m_batchMesh->setVertices(m_meshBuilder->resultVertices());
@@ -43,6 +55,10 @@ void MeshPackBuilder::addNewMeshBatch()
     startNewBatch();
 }
 
+
+/******************************************************************************
+*   Начать новую часть меша
+******************************************************************************/
 void MeshPackBuilder::startNewBatch()
 {
     m_batchMesh = std::make_shared<Mesh>(m_shader, m_drawMode);

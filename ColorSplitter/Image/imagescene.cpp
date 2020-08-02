@@ -11,12 +11,20 @@ ImageScene::ImageScene(ICamera * camera)
 
 }
 
+
+/******************************************************************************
+*   Инициализация шейдеров
+******************************************************************************/
 void ImageScene::initialize()
 {
     m_rasterImageShader = createShader(":/shaders/rasterImage.vsh",":/shaders/rasterImage.fsh",QString());
     m_lineFrameShader = createShader(":/shaders/line.vsh",":/shaders/line.fsh",QString());
 }
 
+
+/******************************************************************************
+*   Замена изображения
+******************************************************************************/
 void ImageScene::changeImage(const QImage &image)
 {
     makeCurrentContext();
@@ -29,6 +37,10 @@ void ImageScene::changeImage(const QImage &image)
     addObject(newImage);
 }
 
+
+/******************************************************************************
+*   Расширение выделительной рамки
+******************************************************************************/
 void ImageScene::expandFrame(QPoint position)
 {
     if (!m_frame.expired()) {
@@ -40,6 +52,10 @@ void ImageScene::expandFrame(QPoint position)
     }
 }
 
+
+/******************************************************************************
+*   Создание выделительной рамки
+******************************************************************************/
 void ImageScene::createFrame(QPoint position)
 {
     removeFrame();
@@ -55,6 +71,10 @@ void ImageScene::createFrame(QPoint position)
     m_bottomRightFrame = m_topLeftFrame;
 }
 
+
+/******************************************************************************
+*   Удаление выделительной рамки
+******************************************************************************/
 void ImageScene::removeFrame()
 {
     makeCurrentContext();
@@ -66,6 +86,10 @@ void ImageScene::removeFrame()
     m_bottomRightFrame = QPoint();
 }
 
+
+/******************************************************************************
+*   Размеры рамки в координатах простаранства изображения
+******************************************************************************/
 QRect ImageScene::getFrameRect() const
 {
     std::pair<int,int> xMinMax = std::minmax(m_topLeftFrame.x(),m_bottomRightFrame.x());
