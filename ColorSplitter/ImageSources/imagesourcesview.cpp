@@ -9,7 +9,7 @@
 /******************************************************************************
 *   Конструктор
 ******************************************************************************/
-ImageSourcesView::ImageSourcesView(std::shared_ptr<ImageSourcesController> controller) // туду модель для листвью в параметры
+ImageSourcesView::ImageSourcesView(std::shared_ptr<ImageSourcesController> controller)
     : m_loadImagesButton(new QPushButton(UI_STRINGS::LOAD_IMAGES_BUTTON_CAPTION))
     , m_showPath(new QRadioButton(UI_STRINGS::SHOW_IMAGE_PATH))
     , m_showName(new QRadioButton(UI_STRINGS::SHOW_FILE_NAME))
@@ -71,6 +71,10 @@ QHBoxLayout *ImageSourcesView::createControls() const
     return viewControlsLayout;
 }
 
+
+/******************************************************************************
+*   Обработчики контролов
+******************************************************************************/
 void ImageSourcesView::createLogic(QWidget *widget) const
 {
     widget->connect(m_loadImagesButton,&QPushButton::clicked,[=](){

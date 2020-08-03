@@ -57,6 +57,51 @@ CubePattern::CubePattern()
     }
 }
 
+TetrahedronPattern::TetrahedronPattern()
+{
+    m_vertices.reserve(VERTICES_COORDINATES_COUNT);
+    m_normals.reserve(VERTICES_COORDINATES_COUNT);
+
+    QVector3D upPoint = QVector3D ( 0.0f, SPHERE_R, 0.0f);
+
+    QMatrix4x4 baseLevelTransform;
+    baseLevelTransform.rotate(-30,QVector3D(0.0f,0.0f,1.0f));
+    QVector3D basePoint1 = baseLevelTransform.map(QVector3D(SPHERE_R, 0.0f, 0.0f));
+
+    QMatrix4x4 baseShapeTransform;
+    baseShapeTransform.rotate(120, UP);
+    QVector3D basePoint2 = baseShapeTransform.map(basePoint1);
+    QVector3D basePoint3 = baseShapeTransform.map(basePoint2);
+
+    QVector<QVector3D> baseVertices = { upPoint, basePoint1, basePoint2, basePoint3 };
+
+    QVector<QVector<int>> faceIndices = {
+        QVector<int> { 0, 1, 2 },
+        QVector<int> { 0, 2, 3 },
+        QVector<int> { 0, 3, 1 },
+        QVector<int> { 3, 2, 1 }, // bottom
+    };
+
+    for(auto & face : faceIndices) {
+        for (int i = 0; i < VERTICES_PER_FACE; ++i) {
+            m_vertices.push_back(baseVertices[face[i]].x());
+            m_vertices.push_back(baseVertices[face[i]].y());
+            m_vertices.push_back(baseVertices[face[i]].z());
+        }
+    }
+
+    for(auto & face : faceIndices) {
+        QVector3D a = baseVertices[face[0]] - baseVertices[face[1]];
+        QVector3D b = baseVertices[face[0]] - baseVertices[face[2]];
+        QVector3D normal = QVector3D::crossProduct(a,b);
+        for (int i = 0; i < VERTICES_PER_FACE; ++i) {
+            m_normals.push_back(normal.x());
+            m_normals.push_back(normal.y());
+            m_normals.push_back(normal.z());
+        }
+    }
+}
+
 /******************************************************************************
 *   Паттерн меша для шкалы цветовой диаграммы
 ******************************************************************************/
@@ -128,4 +173,3 @@ ScalePartPattern::ScalePartPattern()
                     NORMAL_RIGHT.x(), NORMAL_RIGHT.y(), NORMAL_RIGHT.z()
     };
 }
-

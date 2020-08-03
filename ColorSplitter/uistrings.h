@@ -16,6 +16,8 @@ namespace UI_STRINGS {
     const QString DIAGRAM_POINTS_SHAPE = "Форма точек";
     const QString CUBE_SHAPE = "Куб";
     const QString ICOSAHEDRON_SHAPE = "Икосаэдр";
+    const QString OCTAHEDRON_SHAPE = "Октаэдр";
+    const QString TETRAHEDRON_SHAPE = "Тетраэдр";
     const QString LIGHT_SWITCH = "Свет";
     const QString OPEN_FILES = "Открыть изображения";
 }

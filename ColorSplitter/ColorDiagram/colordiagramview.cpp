@@ -11,7 +11,9 @@
 ColorDiagramView::ColorDiagramView(std::shared_ptr<ColorDiagramController> controller)
     : m_diagramWidget(nullptr)
     , m_lightSwitch(new QCheckBox(UI_STRINGS::LIGHT_SWITCH))
+    , m_tetrahedronShape(new QRadioButton(UI_STRINGS::TETRAHEDRON_SHAPE))
     , m_cubeShape(new QRadioButton(UI_STRINGS::CUBE_SHAPE))
+    , m_octahedronShape(new QRadioButton(UI_STRINGS::OCTAHEDRON_SHAPE))
     , m_icosahedronShape(new QRadioButton(UI_STRINGS::ICOSAHEDRON_SHAPE))
     , m_controller(controller)
 {
@@ -22,6 +24,35 @@ ColorDiagramView::ColorDiagramView(std::shared_ptr<ColorDiagramController> contr
     m_diagramWidget = new OpenGLWidget(scene);
     m_controller->bindScene(scene);
     m_scene = scene;
+}
+
+
+/******************************************************************************
+*   Обработчики контролов
+******************************************************************************/
+void ColorDiagramView::createLogic(QWidget* widget) const
+{
+    widget->connect(m_lightSwitch,&QCheckBox::toggled,[=](bool checked) {
+        m_controller->switchLight(checked);
+        m_diagramWidget->update();
+    });
+
+    widget->connect(m_tetrahedronShape,&QRadioButton::pressed,[=](){
+        m_controller->setShape(EDiagramDotShape::TETRAHEDRON);
+        m_diagramWidget->update();
+    });
+    widget->connect(m_cubeShape,&QRadioButton::pressed,[=](){
+        m_controller->setShape(EDiagramDotShape::CUBE);
+        m_diagramWidget->update();
+    });
+    widget->connect(m_octahedronShape,&QRadioButton::pressed,[=](){
+        m_controller->setShape(EDiagramDotShape::OCTAHEDRON);
+        m_diagramWidget->update();
+    });
+    widget->connect(m_icosahedronShape,&QRadioButton::pressed,[=](){
+        m_controller->setShape(EDiagramDotShape::ICOSAHEDRON);
+        m_diagramWidget->update();
+    });
 }
 
 
@@ -39,10 +70,7 @@ QWidget *ColorDiagramView::createWidget() const
 
     widget->setLayout(mainLayout);
 
-    widget->connect(m_lightSwitch,&QCheckBox::toggled,[=](bool checked) {
-        m_controller->switchLight(checked);
-        m_diagramWidget->update();
-    });
+    createLogic(widget);
 
     return widget;
 }
@@ -74,7 +102,9 @@ QVBoxLayout *ColorDiagramView::createControls() const
     QGroupBox * shapeWaysWaysBox = new QGroupBox(UI_STRINGS::DIAGRAM_POINTS_SHAPE);
     QVBoxLayout * shapeWaysLayout = new QVBoxLayout();
 
+    shapeWaysLayout->addWidget(m_tetrahedronShape);
     shapeWaysLayout->addWidget(m_cubeShape);
+    shapeWaysLayout->addWidget(m_octahedronShape);
     shapeWaysLayout->addWidget(m_icosahedronShape);
     shapeWaysWaysBox->setLayout(shapeWaysLayout);
 

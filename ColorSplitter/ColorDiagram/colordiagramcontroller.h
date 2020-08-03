@@ -13,6 +13,7 @@ public:
 
     void fillDiagram();
     void switchLight(bool light);
+    void setShape(EDiagramDotShape shape);
 
     void bindScene(std::shared_ptr<ColorDiagramScene> scene);
 

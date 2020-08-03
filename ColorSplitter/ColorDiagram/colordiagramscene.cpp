@@ -16,7 +16,12 @@ ColorDiagramScene::ColorDiagramScene(ICamera * camera)
     , m_noLightedMeshShader(nullptr)
     , m_currentMeshShader(nullptr)
     , m_colorScalePattern(std::make_shared<ScalePartPattern>())
+    , m_tetrahedronPattern(std::make_shared<TetrahedronPattern>())
     , m_cubePattern(std::make_shared<CubePattern>())
+    , m_octahedronPattern(std::make_shared<TetrahedronPattern>())
+    , m_icosahedronPattern(std::make_shared<TetrahedronPattern>())
+    , m_currentPattern(m_cubePattern)
+
     , m_isLight(true)
 {
 
@@ -65,6 +70,26 @@ void ColorDiagramScene::setLight(bool light)
         m_diagramMesh.lock()->setShader(m_currentMeshShader);
 }
 
+void ColorDiagramScene::setShape(EDiagramDotShape shape)
+{
+    switch (shape) {
+    case EDiagramDotShape::TETRAHEDRON:
+        m_currentPattern = m_tetrahedronPattern;
+        break;
+    case EDiagramDotShape::CUBE:
+        m_currentPattern = m_cubePattern;
+        break;
+    case EDiagramDotShape::OCTAHEDRON:
+        m_currentPattern = m_octahedronPattern;
+        break;
+    case EDiagramDotShape::ICOSAHEDRON:
+        m_currentPattern = m_icosahedronPattern;
+        break;
+    default:
+        break;
+    }
+}
+
 
 /******************************************************************************
 *   Создание первичных объектов сцены
@@ -88,7 +113,7 @@ void ColorDiagramScene::refillDiagram(const std::unordered_map<QRgb, int> &color
     if (!m_diagramMesh.expired())
         removeObject(m_diagramMesh.lock());
 
-    MeshPackBuilder diagramBuilder(m_cubePattern,m_currentMeshShader,GL_QUADS,colors.size());
+    MeshPackBuilder diagramBuilder(m_currentPattern,m_currentMeshShader,m_currentPattern->drawMode(),colors.size());
 
     for (auto it = colors.cbegin(); it != colors.cend(); ++it) {
         QColor clrHsv = QColor(it->first).toHsv();
