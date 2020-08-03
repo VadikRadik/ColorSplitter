@@ -13,8 +13,11 @@
 ColorDiagramScene::ColorDiagramScene(ICamera * camera)
     : AbstractScene(camera)
     , m_directLightedMeshShader(nullptr)
+    , m_noLightedMeshShader(nullptr)
+    , m_currentMeshShader(nullptr)
     , m_colorScalePattern(std::make_shared<ScalePartPattern>())
     , m_cubePattern(std::make_shared<CubePattern>())
+    , m_isLight(true)
 {
 
 }
@@ -52,46 +55,14 @@ void ColorDiagramScene::createColorScale()
     addObject(colorScale);
 }
 
-void ColorDiagramScene::createTestMesh()
+
+
+void ColorDiagramScene::setLight(bool light)
 {
-    std::shared_ptr<MeshPack> diagramMesh = std::make_shared<MeshPack>();
-    m_diagramMesh = diagramMesh;
-
-    int patternsCount = 50000;//27.4 Mb
-    std::unique_ptr<MeshBuilder> meshBuilder(new MeshBuilder(m_colorScalePattern,m_colorScalePattern->patternDataSize()*patternsCount));
-
-    std::shared_ptr<Mesh> meshBatch = std::make_shared<Mesh>(m_directLightedMeshShader, GL_QUADS);
-    int i = 0;
-    for (int j = 0; j < 25500; ++j) {
-
-        QMatrix4x4 model;
-        model.rotate(j,UP);
-        model.translate(0.0f,0.05f*i+1.1f,0.000005f*j);
-
-        QColor clrHsv;
-        clrHsv.setHsv(j % 255,255,255);
-
-        bool builderFilled = meshBuilder->addMeshByPattern(model,clrHsv.rgb()) || j == 25500-1;
-        if (builderFilled) {
-
-            meshBatch->setVertices(meshBuilder->resultVertices());
-            meshBatch->setNormals(meshBuilder->resultNormals());
-            meshBatch->setColors(meshBuilder->resultColors());
-
-            meshBatch->createBuffer();
-            GLenum errorCode = m_openGLContext->functions()->glGetError();
-            if (errorCode != 0)
-                qWarning() << "OpenGL error code:" << errorCode;
-
-            m_diagramMesh.lock()->addMesh(meshBatch);
-
-            meshBatch = std::make_shared<Mesh>(m_directLightedMeshShader, GL_QUADS);
-            meshBuilder.reset(new MeshBuilder(m_colorScalePattern,m_colorScalePattern->patternDataSize()*patternsCount));
-            ++i;
-        }
-
-    }
-    addObject(diagramMesh);
+    m_isLight = light;
+    m_currentMeshShader = m_isLight ? m_directLightedMeshShader : m_noLightedMeshShader;
+    if (!m_diagramMesh.expired())
+        m_diagramMesh.lock()->setShader(m_currentMeshShader);
 }
 
 
@@ -102,11 +73,13 @@ void ColorDiagramScene::initialize()
 {
     addObject(std::make_shared<Background>(SCENE_BACKGROUND_COLOR));
 
-    m_directLightedMeshShader = createShader(":/shaders/direct_ligted_mesh.vsh",":/shaders/direct_ligted_mesh.fsh", QString());
+    m_directLightedMeshShader = createShader(":/shaders/direct_lighted_mesh.vsh",":/shaders/direct_lighted_mesh.fsh", QString());
+    m_noLightedMeshShader = createShader(":/shaders/no_lighted_mesh.vsh",":/shaders/no_lighted_mesh.fsh", QString());
+    setLight(m_isLight);
 
     createColorScale();
-    createTestMesh();
 }
+
 
 void ColorDiagramScene::refillDiagram(const std::unordered_map<QRgb, int> &colors)
 {
@@ -115,7 +88,7 @@ void ColorDiagramScene::refillDiagram(const std::unordered_map<QRgb, int> &color
     if (!m_diagramMesh.expired())
         removeObject(m_diagramMesh.lock());
 
-    MeshPackBuilder diagramBuilder(m_cubePattern,m_directLightedMeshShader,GL_QUADS,colors.size());
+    MeshPackBuilder diagramBuilder(m_cubePattern,m_currentMeshShader,GL_QUADS,colors.size());
 
     for (auto it = colors.cbegin(); it != colors.cend(); ++it) {
         QColor clrHsv = QColor(it->first).toHsv();

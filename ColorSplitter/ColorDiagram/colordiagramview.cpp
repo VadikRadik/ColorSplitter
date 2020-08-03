@@ -39,6 +39,11 @@ QWidget *ColorDiagramView::createWidget() const
 
     widget->setLayout(mainLayout);
 
+    widget->connect(m_lightSwitch,&QCheckBox::toggled,[=](bool checked) {
+        m_controller->switchLight(checked);
+        m_diagramWidget->update();
+    });
+
     return widget;
 }
 

@@ -11,6 +11,11 @@ void ColorDiagramController::fillDiagram()
     m_scene.lock()->refillDiagram(m_model.decomposedColors());
 }
 
+void ColorDiagramController::switchLight(bool light)
+{
+    m_scene.lock()->setLight(light);
+}
+
 void ColorDiagramController::bindScene(std::shared_ptr<ColorDiagramScene> scene)
 {
     m_scene = scene;

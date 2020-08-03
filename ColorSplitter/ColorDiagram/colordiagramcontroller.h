@@ -12,6 +12,8 @@ public:
     ColorDiagramController(ColorSplitterModel &model);
 
     void fillDiagram();
+    void switchLight(bool light);
+
     void bindScene(std::shared_ptr<ColorDiagramScene> scene);
 
 private:
