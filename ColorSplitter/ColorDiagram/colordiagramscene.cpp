@@ -18,8 +18,8 @@ ColorDiagramScene::ColorDiagramScene(ICamera * camera)
     , m_colorScalePattern(std::make_shared<ScalePartPattern>())
     , m_tetrahedronPattern(std::make_shared<TetrahedronPattern>())
     , m_cubePattern(std::make_shared<CubePattern>())
-    , m_octahedronPattern(std::make_shared<TetrahedronPattern>())
-    , m_icosahedronPattern(std::make_shared<TetrahedronPattern>())
+    , m_octahedronPattern(std::make_shared<OctahedronPattern>())
+    , m_icosahedronPattern(std::make_shared<Icosahedron>())
     , m_currentPattern(m_cubePattern)
 
     , m_isLight(true)
@@ -32,7 +32,7 @@ ColorDiagramScene::ColorDiagramScene(ICamera * camera)
 ******************************************************************************/
 void ColorDiagramScene::createColorScale()
 {
-    std::shared_ptr<Mesh> colorScale = std::make_shared<Mesh>(m_directLightedMeshShader, GL_QUADS);
+    std::shared_ptr<Mesh> colorScale = std::make_shared<Mesh>(m_directLightedMeshShader, m_colorScalePattern->drawMode());
     m_scale = colorScale;
 
     MeshBuilder meshBuilder(m_colorScalePattern,m_colorScalePattern->patternDataSize()*COLOR_SCALE_PARTS_COUNT);

@@ -16,9 +16,6 @@ public:
     virtual int patternDataSize() const {return m_vertices.size();}
     virtual GLenum drawMode() = 0;
 
-//protected:
-//    IMeshPattern() = default;
-
 protected:
     std::vector<GLfloat> m_vertices;
     std::vector<GLfloat> m_normals;
@@ -49,6 +46,33 @@ private:
     const float SPHERE_R = 0.5f;
     const int VERTICES_PER_FACE = 3;
     const QVector3D UP = QVector3D(0.0f,1.0f,0.0);
+};
+
+class OctahedronPattern : public IMeshPattern
+{
+public:
+    OctahedronPattern();
+
+    virtual GLenum drawMode() override {return GL_TRIANGLES; }
+
+private:
+    const int VERTICES_COORDINATES_COUNT = 72;
+    const float SPHERE_R = 0.5f;
+    const int VERTICES_PER_FACE = 3;
+    const QVector3D UP = QVector3D(0.0f,1.0f,0.0);
+};
+
+class Icosahedron : public IMeshPattern
+{
+public:
+    Icosahedron();
+
+    virtual GLenum drawMode() override {return GL_TRIANGLES; }
+
+private:
+    const int VERTICES_COORDINATES_COUNT = 180;
+    const float HALF_RIB = 0.2f;
+    const int VERTICES_PER_FACE = 3;
 };
 
 class ScalePartPattern : public IMeshPattern

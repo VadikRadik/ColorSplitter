@@ -7,6 +7,7 @@
 *   Паттерн меша для цветовой диаграммы
 ******************************************************************************/
 CubePattern::CubePattern()
+    : IMeshPattern()
 {
     QVector<QVector3D> normals = {
         QVector3D { 0.0f, 1.0f, 0.0f}, // NORMAL_UP
@@ -58,6 +59,7 @@ CubePattern::CubePattern()
 }
 
 TetrahedronPattern::TetrahedronPattern()
+    : IMeshPattern()
 {
     m_vertices.reserve(VERTICES_COORDINATES_COUNT);
     m_normals.reserve(VERTICES_COORDINATES_COUNT);
@@ -80,6 +82,131 @@ TetrahedronPattern::TetrahedronPattern()
         QVector<int> { 0, 2, 3 },
         QVector<int> { 0, 3, 1 },
         QVector<int> { 3, 2, 1 }, // bottom
+    };
+
+    for(auto & face : faceIndices) {
+        for (int i = 0; i < VERTICES_PER_FACE; ++i) {
+            m_vertices.push_back(baseVertices[face[i]].x());
+            m_vertices.push_back(baseVertices[face[i]].y());
+            m_vertices.push_back(baseVertices[face[i]].z());
+        }
+    }
+
+    for(auto & face : faceIndices) {
+        QVector3D a = baseVertices[face[0]] - baseVertices[face[1]];
+        QVector3D b = baseVertices[face[0]] - baseVertices[face[2]];
+        QVector3D normal = QVector3D::crossProduct(a,b);
+        for (int i = 0; i < VERTICES_PER_FACE; ++i) {
+            m_normals.push_back(normal.x());
+            m_normals.push_back(normal.y());
+            m_normals.push_back(normal.z());
+        }
+    }
+}
+
+OctahedronPattern::OctahedronPattern()
+    : IMeshPattern()
+{
+    m_vertices.reserve(VERTICES_COORDINATES_COUNT);
+    m_normals.reserve(VERTICES_COORDINATES_COUNT);
+
+    QVector3D upPoint = QVector3D ( 0.0f, SPHERE_R, 0.0f);
+    QVector3D downPoint = QVector3D ( 0.0f,-SPHERE_R, 0.0f);
+
+    QVector3D basePoint1 = QVector3D ( SPHERE_R, 0.0f, 0.0f);
+
+    QMatrix4x4 baseShapeTransform;
+    baseShapeTransform.rotate(90, UP);
+    QVector3D basePoint2 = baseShapeTransform.map(basePoint1);
+    QVector3D basePoint3 = baseShapeTransform.map(basePoint2);
+    QVector3D basePoint4 = baseShapeTransform.map(basePoint3);
+
+    QVector<QVector3D> baseVertices = { upPoint, basePoint1, basePoint2, basePoint3, basePoint4, downPoint };
+
+    QVector<QVector<int>> faceIndices = {
+        QVector<int> { 0, 1, 2 },
+        QVector<int> { 0, 2, 3 },
+        QVector<int> { 0, 3, 4 },
+        QVector<int> { 0, 4, 1 },
+        QVector<int> { 5, 2, 1 },
+        QVector<int> { 5, 3, 2 },
+        QVector<int> { 5, 4, 3 },
+        QVector<int> { 5, 1, 4 }
+    };
+
+    for(auto & face : faceIndices) {
+        for (int i = 0; i < VERTICES_PER_FACE; ++i) {
+            m_vertices.push_back(baseVertices[face[i]].x());
+            m_vertices.push_back(baseVertices[face[i]].y());
+            m_vertices.push_back(baseVertices[face[i]].z());
+        }
+    }
+
+    for(auto & face : faceIndices) {
+        QVector3D a = baseVertices[face[0]] - baseVertices[face[1]];
+        QVector3D b = baseVertices[face[0]] - baseVertices[face[2]];
+        QVector3D normal = QVector3D::crossProduct(a,b);
+        for (int i = 0; i < VERTICES_PER_FACE; ++i) {
+            m_normals.push_back(normal.x());
+            m_normals.push_back(normal.y());
+            m_normals.push_back(normal.z());
+        }
+    }
+}
+
+Icosahedron::Icosahedron()
+    : IMeshPattern()
+{
+    m_vertices.reserve(VERTICES_COORDINATES_COUNT);
+    m_normals.reserve(VERTICES_COORDINATES_COUNT);
+
+    const double PHI = (sqrt(5.0) + 1.0) / 2.0;
+    const float BASE = HALF_RIB * PHI;
+
+    m_vertices.reserve(VERTICES_COORDINATES_COUNT);
+    m_normals.reserve(VERTICES_COORDINATES_COUNT);
+
+    QVector<QVector3D> baseVertices = {
+        QVector3D { BASE, 0.0f,-HALF_RIB},
+        QVector3D { BASE, 0.0f, HALF_RIB},
+        QVector3D {-BASE, 0.0f, HALF_RIB},
+        QVector3D {-BASE, 0.0f,-HALF_RIB},
+
+        QVector3D { 0.0f,-HALF_RIB, BASE},
+        QVector3D { 0.0f, HALF_RIB, BASE},
+        QVector3D { 0.0f, HALF_RIB,-BASE},
+        QVector3D { 0.0f,-HALF_RIB,-BASE},
+
+        QVector3D {-HALF_RIB, BASE, 0.0f},
+        QVector3D { HALF_RIB, BASE, 0.0f},
+        QVector3D { HALF_RIB,-BASE, 0.0f},
+        QVector3D {-HALF_RIB,-BASE, 0.0f}
+    };
+
+    QVector<QVector<int>> faceIndices = {
+        QVector<int> { 5, 2, 4 },
+        QVector<int> { 5, 8, 2 },
+        QVector<int> { 5, 9, 8 },
+        QVector<int> { 5, 1, 9 },
+        QVector<int> { 5, 4, 1 },
+
+        QVector<int> { 7, 6, 0 },
+        QVector<int> { 7, 3, 6 },
+        QVector<int> { 7,11, 3 },
+        QVector<int> { 7,10,11 },
+        QVector<int> { 7, 0,10 },
+
+        QVector<int> { 6, 8, 9 },
+        QVector<int> { 3, 2, 8 },
+        QVector<int> {11, 4, 2 },
+        QVector<int> {10, 1, 4 },
+        QVector<int> { 0, 9, 1 },
+
+        QVector<int> { 6, 9, 0 },
+        QVector<int> { 0, 1,10 },
+        QVector<int> {10, 4,11 },
+        QVector<int> {11, 2, 3 },
+        QVector<int> { 3, 8, 6 }
     };
 
     for(auto & face : faceIndices) {
