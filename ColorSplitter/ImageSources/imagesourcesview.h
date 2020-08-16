@@ -13,19 +13,13 @@
 
 /******************************************************************************
 *
-*   Представление списка изображений
+*   View of images list. Creates the images list widget
 *
 ******************************************************************************/
 class ImageSourcesView : public IColorSplitterView
 {
 public:
     ImageSourcesView(std::shared_ptr<ImageSourcesController> controller);
-
-    ImageSourcesView(const ImageSourcesView&)            = delete;
-    ImageSourcesView(ImageSourcesView&&)                 = delete;
-
-    ImageSourcesView& operator=(const ImageSourcesView&) = delete;
-    ImageSourcesView& operator=(ImageSourcesView&&)      = delete;
 
     virtual QWidget *createWidget() const override;
     virtual void update(const ColorSplitterModel * model, EModelUpdates stateChange) override;
@@ -35,12 +29,12 @@ private:
     void createLogic(QWidget * widget) const;
 
 private:
+    std::shared_ptr<ImageSourcesController> m_controller;
     QPushButton * m_loadImagesButton;
     QRadioButton * m_showPath;
     QRadioButton * m_showName;
     QListView * m_imageSourcesView;
     ImageSourcesListModel * m_listModel;
-    std::shared_ptr<ImageSourcesController> m_controller;
 };
 
 #endif // IMAGESOURCESVIEW_H

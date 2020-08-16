@@ -2,7 +2,6 @@
 #define IMAGESOURCESLISTMODEL_H
 
 #include <QAbstractListModel>
-#include <QFileInfo>
 #include <QFileInfoList>
 
 enum EDisplayRegime
@@ -11,6 +10,11 @@ enum EDisplayRegime
     FILE_NAME
 };
 
+/******************************************************************************
+*
+*   Images list model.
+*
+******************************************************************************/
 class ImageSourcesListModel : public QAbstractListModel
 {
 public:

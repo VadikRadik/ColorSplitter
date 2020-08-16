@@ -1,4 +1,3 @@
-#include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QGroupBox>
 #include <QFileDialog>
@@ -7,15 +6,15 @@
 #include "uistrings.h"
 
 /******************************************************************************
-*   Конструктор
+*   Constructor
 ******************************************************************************/
 ImageSourcesView::ImageSourcesView(std::shared_ptr<ImageSourcesController> controller)
-    : m_loadImagesButton(new QPushButton(UI_STRINGS::LOAD_IMAGES_BUTTON_CAPTION))
+    : m_controller(controller)
+    , m_loadImagesButton(new QPushButton(UI_STRINGS::LOAD_IMAGES_BUTTON_CAPTION))
     , m_showPath(new QRadioButton(UI_STRINGS::SHOW_IMAGE_PATH))
     , m_showName(new QRadioButton(UI_STRINGS::SHOW_FILE_NAME))
     , m_imageSourcesView(new QListView())
     , m_listModel(new ImageSourcesListModel())
-    , m_controller(controller)
 {
     m_showPath->setChecked(true);
     m_imageSourcesView->setModel(m_listModel);
@@ -23,7 +22,7 @@ ImageSourcesView::ImageSourcesView(std::shared_ptr<ImageSourcesController> contr
 
 
 /******************************************************************************
-*   Создание и передача виджета представления
+*   Creates the widget of the images list
 ******************************************************************************/
 QWidget * ImageSourcesView::createWidget() const
 {
@@ -43,7 +42,7 @@ QWidget * ImageSourcesView::createWidget() const
 
 
 /******************************************************************************
-*   Обновление представления по событию изменения модели
+*   Updates the view by changing of a model state
 ******************************************************************************/
 void ImageSourcesView::update(const ColorSplitterModel *model, EModelUpdates stateChange)
 {
@@ -52,7 +51,7 @@ void ImageSourcesView::update(const ColorSplitterModel *model, EModelUpdates sta
 
 
 /******************************************************************************
-*   Создание элементов управления виджета представления
+*   Creates controls
 ******************************************************************************/
 QHBoxLayout *ImageSourcesView::createControls() const
 {
@@ -73,7 +72,7 @@ QHBoxLayout *ImageSourcesView::createControls() const
 
 
 /******************************************************************************
-*   Обработчики контролов
+*   Creates controls event handlers
 ******************************************************************************/
 void ImageSourcesView::createLogic(QWidget *widget) const
 {

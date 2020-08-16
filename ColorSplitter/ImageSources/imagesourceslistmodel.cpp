@@ -9,7 +9,7 @@ ImageSourcesListModel::ImageSourcesListModel()
 
 
 /******************************************************************************
-*   Добавление списка файлов в модель
+*   Adds images to the model
 ******************************************************************************/
 void ImageSourcesListModel::addImages(const QStringList &images)
 {
@@ -27,7 +27,7 @@ void ImageSourcesListModel::addImages(const QStringList &images)
 
 
 /******************************************************************************
-*   Возврат данных модели
+*   Returns model data
 ******************************************************************************/
 QVariant ImageSourcesListModel::data(const QModelIndex &index, int nRole) const
 {
@@ -45,7 +45,7 @@ QVariant ImageSourcesListModel::data(const QModelIndex &index, int nRole) const
 
 
 /******************************************************************************
-*   Возврат количества записей в модели
+*   Returns images count
 ******************************************************************************/
 int ImageSourcesListModel::rowCount(const QModelIndex &parent) const
 {
@@ -57,7 +57,7 @@ int ImageSourcesListModel::rowCount(const QModelIndex &parent) const
 
 
 /******************************************************************************
-*   Смена режима отображения
+*   Changes display regimes
 ******************************************************************************/
 void ImageSourcesListModel::setDisplayRegime(const EDisplayRegime &displayRegime)
 {

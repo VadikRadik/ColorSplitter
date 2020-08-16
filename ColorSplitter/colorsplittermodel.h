@@ -20,7 +20,7 @@ public:
     void resetImage(const QString & imagePath);
     void setCutFrame(const QRect & frameRect);
     const std::unordered_map<QRgb, int> & decomposedColors() const;
-    QRect cutFrame() const; // для проверки на нулл в апдейте вьюхи имаджа
+    const QRect &cutFrame() const;
 
     void subscribeView(std::shared_ptr<IColorSplitterView> view);
 
@@ -33,7 +33,9 @@ private:
     QImage m_image;
     QRect m_cutFrame;
     std::unordered_map<QRgb,int> m_decomposedColors;
-    std::list<std::shared_ptr<IColorSplitterView>> m_views;
+    std::list<std::weak_ptr<IColorSplitterView>> m_views;
+
+    static constexpr int BUCKETS_COUNT = 2000000;
 };
 
 #endif // COLORSPLITTERMODEL_H

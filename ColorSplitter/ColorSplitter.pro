@@ -76,7 +76,9 @@ HEADERS  += mainwindow.h \
     ColorDiagram/meshpackbuilder.h \
     DrawableObjects/lineframe.h \
     OpenGLWidget/iwidgetimputhandler.h \
-    Image/imagecontroller.h
+    Image/imagecontroller.h \
+    uistrings/uistringsru.h \
+    uistrings/uistringseng.h
 
 RESOURCES += \
     DrawableObjects/shaders.qrc

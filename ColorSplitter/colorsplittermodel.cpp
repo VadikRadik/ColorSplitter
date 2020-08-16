@@ -6,7 +6,7 @@ ColorSplitterModel::ColorSplitterModel()
     , m_decomposedColors()
     , m_views()
 {
-    m_decomposedColors.reserve(std::numeric_limits<unsigned int>::max()/64);
+    m_decomposedColors.reserve(BUCKETS_COUNT);
 }
 
 
@@ -77,7 +77,7 @@ void ColorSplitterModel::decompose()
 /******************************************************************************
 *   Геттер рассматриваемой области
 ******************************************************************************/
-QRect ColorSplitterModel::cutFrame() const
+const QRect &ColorSplitterModel::cutFrame() const
 {
     return m_cutFrame;
 }
@@ -97,8 +97,10 @@ void ColorSplitterModel::subscribeView(std::shared_ptr<IColorSplitterView> view)
 ******************************************************************************/
 void ColorSplitterModel::notify(EModelUpdates stateChanged) const
 {
-    for (auto it = m_views.cbegin(); it != m_views.cend(); ++it)
-        (*it)->update(this, stateChanged);
+    for (auto it = m_views.cbegin(); it != m_views.cend(); ++it) {
+        if (!it->expired())
+            it->lock()->update(this, stateChanged);
+    }
 }
 
 
