@@ -75,10 +75,10 @@ HEADERS  += mainwindow.h \
     ColorDiagram/colordiagramcontroller.h \
     ColorDiagram/meshpackbuilder.h \
     DrawableObjects/lineframe.h \
-    OpenGLWidget/iwidgetimputhandler.h \
     Image/imagecontroller.h \
     uistrings/uistringsru.h \
-    uistrings/uistringseng.h
+    uistrings/uistringseng.h \
+    OpenGLWidget/iwidgetinputhandler.h
 
 RESOURCES += \
     DrawableObjects/shaders.qrc

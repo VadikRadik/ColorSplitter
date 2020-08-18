@@ -14,14 +14,9 @@ Centred3DEulerCamera::Centred3DEulerCamera()
     calcEyePosition();
 }
 
-void Centred3DEulerCamera::calcEyePosition()
-{
-    m_eye = QVector3D(EYE_R*qSin(m_phi)*qSin(m_theta), EYE_R*qCos(m_theta), EYE_R*qCos(m_phi)*qSin(m_theta));
-    m_eye += m_center;
-}
 
 /******************************************************************************
-*   Обработка изменения вьюпорта
+*   Handles changes of viewport's size
 ******************************************************************************/
 void Centred3DEulerCamera::resizeView(int width, int height)
 {
@@ -30,7 +25,7 @@ void Centred3DEulerCamera::resizeView(int width, int height)
 
 
 /******************************************************************************
-*   Возврат матрицы проекции
+*   Returns the projection matrix
 ******************************************************************************/
 QMatrix4x4 Centred3DEulerCamera::projectionMatrix() const
 {
@@ -41,7 +36,7 @@ QMatrix4x4 Centred3DEulerCamera::projectionMatrix() const
 
 
 /******************************************************************************
-*   Возврат матрицы вью
+*   Returns the view matrix
 ******************************************************************************/
 QMatrix4x4 Centred3DEulerCamera::viewMatrix() const
 {
@@ -52,13 +47,17 @@ QMatrix4x4 Centred3DEulerCamera::viewMatrix() const
 
 
 /******************************************************************************
-*   Вектор направления камеры
+*   Returns the view direction
 ******************************************************************************/
 QVector3D Centred3DEulerCamera::viewDirection() const
 {
     return m_eye.normalized();
 }
 
+
+/******************************************************************************
+*   Returns the world coordinates
+******************************************************************************/
 QVector3D Centred3DEulerCamera::projectPoint(QPoint point) const
 {
     return QVector3D();// todo
@@ -66,7 +65,7 @@ QVector3D Centred3DEulerCamera::projectPoint(QPoint point) const
 
 
 /******************************************************************************
-*   Изменение угла обзора
+*   Changes the field of view
 ******************************************************************************/
 void Centred3DEulerCamera::wheelEvent(QWheelEvent *event)
 {
@@ -80,7 +79,7 @@ void Centred3DEulerCamera::wheelEvent(QWheelEvent *event)
 
 
 /******************************************************************************
-*   Вращение камеры
+*   Rotates the camera
 ******************************************************************************/
 void Centred3DEulerCamera::mouseMoveEvent(QMouseEvent *event)
 {
@@ -101,7 +100,7 @@ void Centred3DEulerCamera::mouseMoveEvent(QMouseEvent *event)
 
 
 /******************************************************************************
-*   Начало вращения камеры
+*   Begining of rotation. Memorizes the start mouse position
 ******************************************************************************/
 void Centred3DEulerCamera::mousePressEvent(QMouseEvent *event)
 {
@@ -110,15 +109,24 @@ void Centred3DEulerCamera::mousePressEvent(QMouseEvent *event)
 
 void Centred3DEulerCamera::mouseReleaseEvent(QMouseEvent *event)
 {
-
+    // do nothing
 }
 
 void Centred3DEulerCamera::keyPressEvent(QKeyEvent *event)
 {
-
+    // do nothing
 }
 
 void Centred3DEulerCamera::keyReleaseEvent(QKeyEvent *event)
 {
+    // do nothing
+}
 
+/******************************************************************************
+*   Calculating of the eye position
+******************************************************************************/
+void Centred3DEulerCamera::calcEyePosition()
+{
+    m_eye = QVector3D(EYE_R*qSin(m_phi)*qSin(m_theta), EYE_R*qCos(m_theta), EYE_R*qCos(m_phi)*qSin(m_theta));
+    m_eye += m_center;
 }

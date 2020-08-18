@@ -1,23 +1,21 @@
 #include "abstractscene.h"
-
 #include "ortho2dcamera.h"
 
-
 /******************************************************************************
-*   Конструктор
+*   Constructor
 ******************************************************************************/
 AbstractScene::AbstractScene(ICamera * camera)
     : m_camera(camera)
     , m_openGLContext(nullptr)
-    , m_cotextSurface(nullptr)
     , m_sceneObjects()
+    , m_cotextSurface(nullptr)
 {
 
 }
 
 
 /******************************************************************************
-*   Запоминание контекста рисования
+*   Memorizes a draw context
 ******************************************************************************/
 void AbstractScene::bindDrawContext(QOpenGLContext *context)
 {
@@ -25,14 +23,9 @@ void AbstractScene::bindDrawContext(QOpenGLContext *context)
     m_cotextSurface = context->surface();
 }
 
-//void AbstractScene::setCamera(ICamera *camera)
-//{
-//    m_camera.reset(camera);
-//}
-
 
 /******************************************************************************
-*   Рисование объектов сцены
+*   Draws scene objects
 ******************************************************************************/
 void AbstractScene::draw()
 {
@@ -47,7 +40,7 @@ void AbstractScene::draw()
 
 
 /******************************************************************************
-*   Обработка изменение размеров окна
+*   Handles resizing of the vieport
 ******************************************************************************/
 void AbstractScene::resizeView(int width, int height)
 {
@@ -56,7 +49,7 @@ void AbstractScene::resizeView(int width, int height)
 
 
 /******************************************************************************
-*   Добавление объекта в сцену
+*   Adds an object to the scene
 ******************************************************************************/
 void AbstractScene::addObject(std::shared_ptr<IDrawable> obj)
 {
@@ -67,7 +60,7 @@ void AbstractScene::addObject(std::shared_ptr<IDrawable> obj)
 
 
 /******************************************************************************
-*   Включение контекста
+*   Turn on the draw context
 ******************************************************************************/
 void AbstractScene::makeCurrentContext()
 {
@@ -76,7 +69,7 @@ void AbstractScene::makeCurrentContext()
 
 
 /******************************************************************************
-*   Удаление объекта из сцены
+*   Removes an object from the scene
 ******************************************************************************/
 void AbstractScene::removeObject(std::shared_ptr<IDrawable> obj)
 {
@@ -87,7 +80,7 @@ void AbstractScene::removeObject(std::shared_ptr<IDrawable> obj)
 
 
 /******************************************************************************
-*   Очистка сцены от объектов
+*   Removes all objects from the scene
 ******************************************************************************/
 void AbstractScene::flushObjects()
 {
@@ -100,7 +93,7 @@ void AbstractScene::flushObjects()
 
 
 /******************************************************************************
-*   Создание шейдера в контексте
+*   Creates a shader in the scene context
 ******************************************************************************/
 std::shared_ptr<QOpenGLShaderProgram> AbstractScene::createShader(const QString &vertexShaderPath,
                                                             const QString &fragmentShaderPath,
@@ -135,7 +128,7 @@ std::shared_ptr<QOpenGLShaderProgram> AbstractScene::createShader(const QString 
 
 
 /******************************************************************************
-*   Обработка событий ввода
+*   Input handlers
 ******************************************************************************/
 
 void AbstractScene::wheelEvent(QWheelEvent *event)

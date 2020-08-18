@@ -2,10 +2,8 @@
 
 #include <QVBoxLayout>
 
-
 /******************************************************************************
-*   Конструктор
-*   Инициализация размеров окна по умолчанию
+*   Main window constructor
 ******************************************************************************/
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -23,7 +21,7 @@ MainWindow::~MainWindow()
 
 
 /******************************************************************************
-*   Добавление представления списка изображений
+*   Adds the images list widget to the main window
 ******************************************************************************/
 void MainWindow::setImageSourcesView(QWidget *view)
 {
@@ -32,7 +30,7 @@ void MainWindow::setImageSourcesView(QWidget *view)
 
 
 /******************************************************************************
-*   Добавление представления изображеня
+*   Adds the image widget to the main window
 ******************************************************************************/
 void MainWindow::setImageView(QWidget *view)
 {
@@ -41,7 +39,7 @@ void MainWindow::setImageView(QWidget *view)
 
 
 /******************************************************************************
-*   Добавление представления цветовой диаграммы
+*   Adds the color diagram widget to the main window
 ******************************************************************************/
 void MainWindow::setColorDiagramView(QWidget *view)
 {
@@ -50,7 +48,7 @@ void MainWindow::setColorDiagramView(QWidget *view)
 
 
 /******************************************************************************
-*   Добавление представлений в окно
+*   Adds all widgets to the main window
 ******************************************************************************/
 void MainWindow::setWidgets()
 {
@@ -59,7 +57,7 @@ void MainWindow::setWidgets()
 
 
 /******************************************************************************
-*   Создание окна
+*   Sets widget's geometry
 ******************************************************************************/
 QWidget *MainWindow::createCentralWidget()
 {

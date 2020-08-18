@@ -5,7 +5,7 @@
 
 /******************************************************************************
 *
-*   Камера для 2D сцены
+*   The camera for 2D scene
 *
 ******************************************************************************/
 class Ortho2DCamera : public ICamera
@@ -29,7 +29,6 @@ public:
 private:
     QMatrix4x4 m_viewportTransformMatrix;
     QRectF m_viewRect;
-
     QPointF m_lastMousePos;
 
     const float ZOOM_STEP = 0.77f;

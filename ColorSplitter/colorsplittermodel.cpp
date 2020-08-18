@@ -11,7 +11,7 @@ ColorSplitterModel::ColorSplitterModel()
 
 
 /******************************************************************************
-*   Геттер изображения
+*   Image getter
 ******************************************************************************/
 const QImage &ColorSplitterModel::image() const
 {
@@ -20,7 +20,7 @@ const QImage &ColorSplitterModel::image() const
 
 
 /******************************************************************************
-*   Переключение изображения
+*   Changes an image
 ******************************************************************************/
 void ColorSplitterModel::resetImage(const QString & imagePath)
 {
@@ -32,7 +32,7 @@ void ColorSplitterModel::resetImage(const QString & imagePath)
 
 
 /******************************************************************************
-*   Установка рассматриваемой области изображения
+*   Sets the exploring frame
 ******************************************************************************/
 void ColorSplitterModel::setCutFrame(const QRect &frameRect)
 {
@@ -45,7 +45,7 @@ void ColorSplitterModel::setCutFrame(const QRect &frameRect)
 
 
 /******************************************************************************
-*   Геттер результирующего разбиения
+*   Gets the color splitting result
 ******************************************************************************/
 const std::unordered_map<QRgb, int> &ColorSplitterModel::decomposedColors() const
 {
@@ -54,7 +54,7 @@ const std::unordered_map<QRgb, int> &ColorSplitterModel::decomposedColors() cons
 
 
 /******************************************************************************
-*   Попиксельное разбиение изображения на составляющие цвета
+*   Counts all colors of the image
 ******************************************************************************/
 void ColorSplitterModel::decompose()
 {
@@ -75,7 +75,7 @@ void ColorSplitterModel::decompose()
 
 
 /******************************************************************************
-*   Геттер рассматриваемой области
+*   Gets the exploring frame
 ******************************************************************************/
 const QRect &ColorSplitterModel::cutFrame() const
 {
@@ -84,7 +84,7 @@ const QRect &ColorSplitterModel::cutFrame() const
 
 
 /******************************************************************************
-*   Подписка представлений на изменения модели
+*   Subscribes views for model's state changes
 ******************************************************************************/
 void ColorSplitterModel::subscribeView(std::shared_ptr<IColorSplitterView> view)
 {
@@ -93,7 +93,7 @@ void ColorSplitterModel::subscribeView(std::shared_ptr<IColorSplitterView> view)
 
 
 /******************************************************************************
-*   Уведомление моделей об изменениях состояния моделей
+*   Notifies views for model's state changes
 ******************************************************************************/
 void ColorSplitterModel::notify(EModelUpdates stateChanged) const
 {
@@ -105,7 +105,7 @@ void ColorSplitterModel::notify(EModelUpdates stateChanged) const
 
 
 /******************************************************************************
-*   Границы изображения с учётом границ рассматриваемой области
+*   Bounds of the image rectangle with the exploring frame's bounds
 ******************************************************************************/
 QRect ColorSplitterModel::imageRect() const
 {

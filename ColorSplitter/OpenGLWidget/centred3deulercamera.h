@@ -3,6 +3,11 @@
 
 #include "icamera.h"
 
+/******************************************************************************
+*
+*   A camera for rotating an object in 3D
+*
+******************************************************************************/
 class Centred3DEulerCamera : public ICamera
 {
 public:
@@ -25,13 +30,13 @@ private:
     void calcEyePosition();
 
 private:
-    float m_phi;
-    float m_theta;
-    float m_fov;
     QVector3D m_eye;
     QVector3D m_center;
     QRectF m_viewRect;
     QPointF m_lastMousePos;
+    float m_phi;
+    float m_theta;
+    float m_fov;
 
     const float FOV_STEP = 3.0f;
     const float FOV_MAX = 120.0f;

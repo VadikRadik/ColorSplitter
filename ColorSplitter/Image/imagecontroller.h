@@ -1,11 +1,11 @@
 #ifndef IMAGECONTROLLER_H
 #define IMAGECONTROLLER_H
 
-#include "OpenGLWidget/iwidgetimputhandler.h"
+#include "OpenGLWidget/iwidgetinputhandler.h"
 #include "imagescene.h"
 #include "colorsplittermodel.h"
 
-class ImageController : public IWidgetImputHandler
+class ImageController : public IWidgetInputHandler
 {
 public:
     ImageController(ColorSplitterModel &model);

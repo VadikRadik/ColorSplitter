@@ -1,11 +1,16 @@
-#ifndef IWIDGETIMPUTHANDLER_H
-#define IWIDGETIMPUTHANDLER_H
+#ifndef IWIDGETINPUTHANDLER_H
+#define IWIDGETINPUTHANDLER_H
 
 #include <QMouseEvent>
 #include <QWheelEvent>
 #include <QKeyEvent>
 
-class IWidgetImputHandler
+/******************************************************************************
+*
+*   User's input handler interface
+*
+******************************************************************************/
+class IWidgetInputHandler
 {
 public:
     virtual void wheelEvent         (QWheelEvent *event) = 0;
@@ -16,4 +21,4 @@ public:
     virtual void keyReleaseEvent    (QKeyEvent *event)   = 0;
 };
 
-#endif // IWIDGETIMPUTHANDLER_H
+#endif // IWIDGETINPUTHANDLER_H

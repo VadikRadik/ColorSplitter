@@ -1,23 +1,19 @@
 #include "openglwidget.h"
 
-#include <QDebug>
-#include <QTime>
-
 /******************************************************************************
-*   Конструктор виджета
-*   setFocusPolicy нужен для корректной работы keyPressEvent
+*   Constructor
 ******************************************************************************/
-OpenGLWidget::OpenGLWidget(std::shared_ptr<AbstractScene> scene, std::shared_ptr<IWidgetImputHandler> controller, QWidget *parent)
+OpenGLWidget::OpenGLWidget(std::shared_ptr<AbstractScene> scene, std::shared_ptr<IWidgetInputHandler> controller, QWidget *parent)
     : QOpenGLWidget(parent)
     , m_scene(scene)
     , m_controller(controller)
 {
-    setFocusPolicy(Qt::StrongFocus);
+    setFocusPolicy(Qt::StrongFocus); // for keyPressEvent
 }
 
 
 /******************************************************************************
-*   Объектам сцены с текстурами необходимо удаляться в этом деструкторе
+*   The scene's drawable objects must be removed in correct context
 ******************************************************************************/
 OpenGLWidget::~OpenGLWidget()
 {
@@ -26,7 +22,7 @@ OpenGLWidget::~OpenGLWidget()
 
 
 /******************************************************************************
-*   Инициализация контекста рисования
+*   The draw context initialization
 ******************************************************************************/
 void OpenGLWidget::initializeGL()
 {
@@ -45,7 +41,7 @@ void OpenGLWidget::initializeGL()
 
 
 /******************************************************************************
-*   Обработка события рисования виджета
+*   The paint event handler
 ******************************************************************************/
 void OpenGLWidget::paintGL()
 {
@@ -56,7 +52,7 @@ void OpenGLWidget::paintGL()
 
 
 /******************************************************************************
-*   Обработка события изменения размера виджета
+*   The resize event handler
 ******************************************************************************/
 void OpenGLWidget::resizeGL(int width, int height)
 {
@@ -65,7 +61,7 @@ void OpenGLWidget::resizeGL(int width, int height)
 
 
 /******************************************************************************
-*   Обработки событий ввода
+*   The input handlers
 ******************************************************************************/
 
 void OpenGLWidget::wheelEvent(QWheelEvent *event)

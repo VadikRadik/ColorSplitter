@@ -9,7 +9,7 @@
 
 /******************************************************************************
 *
-*   Сцена с рисуемыми объектами
+*   Scene with drawable objects
 *
 ******************************************************************************/
 class AbstractScene
@@ -19,7 +19,6 @@ public:
     virtual~AbstractScene() {}
 
     void bindDrawContext(QOpenGLContext *context);
-    //void setCamera(ICamera * camera);
 
     void draw();
     void resizeView(int width, int height);
@@ -49,8 +48,8 @@ protected:
     std::unique_ptr<ICamera> m_camera;
 
 private:
-    QSurface * m_cotextSurface;
     std::list<std::shared_ptr<IDrawable>> m_sceneObjects;
+    QSurface * m_cotextSurface;
 };
 
 #endif // ABSTRACTSCENE_H

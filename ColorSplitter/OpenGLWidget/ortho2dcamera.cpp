@@ -1,7 +1,7 @@
 #include "ortho2dcamera.h"
 
 /******************************************************************************
-*   Обработка изменения вьюпорта
+*   The resize event handler
 ******************************************************************************/
 void Ortho2DCamera::resizeView(int width, int height)
 {
@@ -10,7 +10,7 @@ void Ortho2DCamera::resizeView(int width, int height)
 
 
 /******************************************************************************
-*   Возврат матрицы проекции
+*   Returns the projection matrix
 ******************************************************************************/
 QMatrix4x4 Ortho2DCamera::projectionMatrix() const
 {
@@ -21,7 +21,7 @@ QMatrix4x4 Ortho2DCamera::projectionMatrix() const
 
 
 /******************************************************************************
-*   Возврат матрицы вью
+*   Returns the view matrix
 ******************************************************************************/
 QMatrix4x4 Ortho2DCamera::viewMatrix() const
 {
@@ -30,7 +30,7 @@ QMatrix4x4 Ortho2DCamera::viewMatrix() const
 
 
 /******************************************************************************
-*   Вектор направления камеры
+*   Returns the view direction
 ******************************************************************************/
 QVector3D Ortho2DCamera::viewDirection() const
 {
@@ -39,7 +39,7 @@ QVector3D Ortho2DCamera::viewDirection() const
 
 
 /******************************************************************************
-*   Перевести координаты виджета в координаты видимого пространства камеры
+*   Translates widget coordinates to camera space coordinates
 ******************************************************************************/
 QVector3D Ortho2DCamera::projectPoint(QPoint point) const
 {
@@ -48,7 +48,7 @@ QVector3D Ortho2DCamera::projectPoint(QPoint point) const
 
 
 /******************************************************************************
-*   Приближение/удаление камеры
+*   Zoom in / zoom out
 ******************************************************************************/
 void Ortho2DCamera::wheelEvent(QWheelEvent *event)
 {
@@ -65,7 +65,7 @@ void Ortho2DCamera::wheelEvent(QWheelEvent *event)
 
 
 /******************************************************************************
-*   Перемещение камеры в стороны
+*   Moves the camera
 ******************************************************************************/
 void Ortho2DCamera::mouseMoveEvent(QMouseEvent *event)
 {
@@ -79,7 +79,7 @@ void Ortho2DCamera::mouseMoveEvent(QMouseEvent *event)
 
 
 /******************************************************************************
-*   Начало перемещения камеры в стороны
+*   Begining of camera moving. Memorizes the start mouse position
 ******************************************************************************/
 void Ortho2DCamera::mousePressEvent(QMouseEvent *event)
 {
@@ -88,15 +88,15 @@ void Ortho2DCamera::mousePressEvent(QMouseEvent *event)
 
 void Ortho2DCamera::mouseReleaseEvent(QMouseEvent *event)
 {
-
+    // do nothing
 }
 
 void Ortho2DCamera::keyPressEvent(QKeyEvent *event)
 {
-
+    // do nothing
 }
 
 void Ortho2DCamera::keyReleaseEvent(QKeyEvent *event)
 {
-
+    // do nothing
 }

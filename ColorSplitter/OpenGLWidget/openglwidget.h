@@ -5,17 +5,17 @@
 #include<QOpenGLFunctions>
 
 #include "abstractscene.h"
-#include "iwidgetimputhandler.h"
+#include "iwidgetinputhandler.h"
 
 /******************************************************************************
 *
-*   Реализация QOpenGLWidget
+*   The QOpenGLWidget realization
 *
 ******************************************************************************/
 class OpenGLWidget : public QOpenGLWidget, protected QOpenGLFunctions
 {
 public:
-    OpenGLWidget(std::shared_ptr<AbstractScene> scene, std::shared_ptr<IWidgetImputHandler> controller = nullptr, QWidget *parent = 0);
+    OpenGLWidget(std::shared_ptr<AbstractScene> scene, std::shared_ptr<IWidgetInputHandler> controller = nullptr, QWidget *parent = 0);
     ~OpenGLWidget();
 
 protected:
@@ -31,7 +31,7 @@ protected:
 
 private:
     std::shared_ptr<AbstractScene> m_scene;
-    std::shared_ptr<IWidgetImputHandler> m_controller;
+    std::shared_ptr<IWidgetInputHandler> m_controller;
 };
 
 #endif // OPENGLWIDGET_H

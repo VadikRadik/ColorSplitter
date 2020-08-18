@@ -1,10 +1,9 @@
-#include "mainwindow.h"
-
 #include <memory>
 
 #include <QApplication>
 #include <QImage>
 
+#include "mainwindow.h"
 #include "ImageSources/imagesourcesview.h"
 #include "Image/imageview.h"
 #include "ColorDiagram/colordiagramview.h"
