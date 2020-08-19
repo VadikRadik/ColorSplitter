@@ -8,7 +8,7 @@ ImageController::ImageController(ColorSplitterModel &model)
 
 
 /******************************************************************************
-*   Привязка сцены к контроллеру
+*   Binds the scene to the controller
 ******************************************************************************/
 void ImageController::bindScene(std::shared_ptr<ImageScene> scene)
 {
@@ -17,24 +17,28 @@ void ImageController::bindScene(std::shared_ptr<ImageScene> scene)
 
 
 /******************************************************************************
-*   Обработчики ввода
+*   The user's input handlers
 ******************************************************************************/
 
 void ImageController::wheelEvent(QWheelEvent *event)
 {
-
+    // do nothing
 }
 
 void ImageController::mouseMoveEvent(QMouseEvent *event)
 {
-    if (event->buttons() == Qt::RightButton)
-        m_scene.lock()->expandFrame(event->pos());
+    if (event->buttons() == Qt::RightButton) {
+        if (!m_scene.expired())
+            m_scene.lock()->expandFrame(event->pos());
+    }
 }
 
 void ImageController::mousePressEvent(QMouseEvent *event)
 {
-    if (event->buttons() == Qt::RightButton)
-        m_scene.lock()->createFrame(event->pos());
+    if (event->buttons() == Qt::RightButton) {
+        if (!m_scene.expired())
+            m_scene.lock()->createFrame(event->pos());
+    }
 }
 
 void ImageController::mouseReleaseEvent(QMouseEvent *event)
@@ -51,5 +55,5 @@ void ImageController::keyPressEvent(QKeyEvent *event)
 
 void ImageController::keyReleaseEvent(QKeyEvent *event)
 {
-
+    // do nothing
 }

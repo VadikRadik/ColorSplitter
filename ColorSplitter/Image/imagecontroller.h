@@ -5,6 +5,12 @@
 #include "imagescene.h"
 #include "colorsplittermodel.h"
 
+
+/******************************************************************************
+*
+*   Controller for image module
+*
+******************************************************************************/
 class ImageController : public IWidgetInputHandler
 {
 public:

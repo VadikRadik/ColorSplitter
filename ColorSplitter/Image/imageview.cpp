@@ -3,7 +3,7 @@
 #include "colorsplittermodel.h"
 
 /******************************************************************************
-*   Конструктор
+*   Constructor
 ******************************************************************************/
 ImageView::ImageView(std::shared_ptr<ImageController> controller)
     : m_imegeWidget(nullptr)
@@ -17,7 +17,7 @@ ImageView::ImageView(std::shared_ptr<ImageController> controller)
 
 
 /******************************************************************************
-*   Создание и/или передача виджета представления
+*   Returns the view widget
 ******************************************************************************/
 QWidget *ImageView::createWidget() const
 {
@@ -26,7 +26,7 @@ QWidget *ImageView::createWidget() const
 
 
 /******************************************************************************
-*   Обновление представления по событию изменения модели
+*   Updates the view by changing of a model state
 ******************************************************************************/
 void ImageView::update(const ColorSplitterModel *model, EModelUpdates stateChange)
 {

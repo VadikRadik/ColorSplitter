@@ -8,19 +8,13 @@
 
 /******************************************************************************
 *
-*   Представление изображения
+*   The image views
 *
 ******************************************************************************/
 class ImageView : public IColorSplitterView
 {
 public:
     ImageView(std::shared_ptr<ImageController> controller);
-
-    ImageView(const ImageView&)            = delete;
-    ImageView(ImageView&&)                 = delete;
-
-    ImageView& operator=(const ImageView&) = delete;
-    ImageView& operator=(ImageView&&)      = delete;
 
     virtual QWidget *createWidget() const override;
     virtual void update(const ColorSplitterModel * model, EModelUpdates stateChange) override;

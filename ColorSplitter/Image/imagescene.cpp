@@ -13,7 +13,7 @@ ImageScene::ImageScene(ICamera * camera)
 
 
 /******************************************************************************
-*   Инициализация шейдеров
+*   Creates shaders
 ******************************************************************************/
 void ImageScene::initialize()
 {
@@ -23,7 +23,7 @@ void ImageScene::initialize()
 
 
 /******************************************************************************
-*   Замена изображения
+*   Changes images
 ******************************************************************************/
 void ImageScene::changeImage(const QImage &image)
 {
@@ -39,7 +39,7 @@ void ImageScene::changeImage(const QImage &image)
 
 
 /******************************************************************************
-*   Расширение выделительной рамки
+*   Changes the exploring frame geometry
 ******************************************************************************/
 void ImageScene::expandFrame(QPoint position)
 {
@@ -54,7 +54,7 @@ void ImageScene::expandFrame(QPoint position)
 
 
 /******************************************************************************
-*   Создание выделительной рамки
+*   Creates an exploring frame
 ******************************************************************************/
 void ImageScene::createFrame(QPoint position)
 {
@@ -73,7 +73,7 @@ void ImageScene::createFrame(QPoint position)
 
 
 /******************************************************************************
-*   Удаление выделительной рамки
+*   Removes the exploring frame
 ******************************************************************************/
 void ImageScene::removeFrame()
 {
@@ -88,7 +88,7 @@ void ImageScene::removeFrame()
 
 
 /******************************************************************************
-*   Размеры рамки в координатах простаранства изображения
+*   Returns exploring frame's coordinates in the world space
 ******************************************************************************/
 QRect ImageScene::getFrameRect() const
 {

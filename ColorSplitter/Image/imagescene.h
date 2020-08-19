@@ -4,6 +4,12 @@
 #include "OpenGLWidget/abstractscene.h"
 #include "DrawableObjects/lineframe.h"
 
+
+/******************************************************************************
+*
+*   The scene for image display
+*
+******************************************************************************/
 class ImageScene : public AbstractScene
 {
 public:
