@@ -5,6 +5,12 @@
 #include "DrawableObjects/meshpack.h"
 #include "DrawableObjects/mesh.h"
 
+
+/******************************************************************************
+*
+*   Creates wrappers for several meshes
+*
+******************************************************************************/
 class MeshPackBuilder
 {
 public:

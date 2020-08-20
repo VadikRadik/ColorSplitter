@@ -4,11 +4,10 @@
 #include "meshbuilder.h"
 #include "meshpackbuilder.h"
 
-#include <QTime>
 #include <QtMath>
 
 /******************************************************************************
-*   Конструктор сцены цветовой диаграммы
+*   Constructor
 ******************************************************************************/
 ColorDiagramScene::ColorDiagramScene(ICamera * camera)
     : AbstractScene(camera)
@@ -21,14 +20,13 @@ ColorDiagramScene::ColorDiagramScene(ICamera * camera)
     , m_octahedronPattern(std::make_shared<OctahedronPattern>())
     , m_icosahedronPattern(std::make_shared<Icosahedron>())
     , m_currentPattern(m_cubePattern)
-
     , m_isLight(true)
 {
 
 }
 
 /******************************************************************************
-*   Создание цветовой диаграммы
+*   Creates the color scale
 ******************************************************************************/
 void ColorDiagramScene::createColorScale()
 {
@@ -61,7 +59,9 @@ void ColorDiagramScene::createColorScale()
 }
 
 
-
+/******************************************************************************
+*   Switches the light source for the diagram scene
+******************************************************************************/
 void ColorDiagramScene::setLight(bool light)
 {
     m_isLight = light;
@@ -70,6 +70,10 @@ void ColorDiagramScene::setLight(bool light)
         m_diagramMesh.lock()->setShader(m_currentMeshShader);
 }
 
+
+/******************************************************************************
+*   Switches shape for the diagram points
+******************************************************************************/
 void ColorDiagramScene::setShape(EDiagramDotShape shape)
 {
     switch (shape) {
@@ -92,7 +96,7 @@ void ColorDiagramScene::setShape(EDiagramDotShape shape)
 
 
 /******************************************************************************
-*   Создание шейдеров и первичных объектов сцены
+*   Creates shaders and diagram objects
 ******************************************************************************/
 void ColorDiagramScene::initialize()
 {
@@ -107,7 +111,7 @@ void ColorDiagramScene::initialize()
 
 
 /******************************************************************************
-*   Заполнение диаграммы цветовыми точками
+*   Creates the diagram mesh
 ******************************************************************************/
 void ColorDiagramScene::refillDiagram(const std::unordered_map<QRgb, int> &colors)
 {
@@ -124,7 +128,7 @@ void ColorDiagramScene::refillDiagram(const std::unordered_map<QRgb, int> &color
         QMatrix4x4 model;
         model.rotate(clrHsv.hsvHue(),UP);
         model.translate(clrHsv.saturationF(),clrHsv.valueF(),0.0f);
-        model.scale(qPow(it->second,0.27) * 0.007f);
+        model.scale(qPow(it->second,VOLUME_POWER) * DIAGRAM_POINT_SCALE_FACTOR);
 
         diagramBuilder.addPattern(model,it->first);
     }

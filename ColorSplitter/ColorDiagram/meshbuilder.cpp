@@ -14,39 +14,6 @@ MeshBuilder::MeshBuilder(std::shared_ptr<IMeshPattern> pattern, int builderSize)
     , m_batchFloatsSize(builderSize)
     , m_patternFloatsCount(0)
 {
-    /*QVector<GLfloat> vertices;
-    vertices
-    <<-0.5f<<-0.5f<<-0.5f<< 0.5f<<-0.5f<<-0.5f<< 0.5f<< 0.5f<<-0.5f<< 0.5f<< 0.5f<<-0.5f<<-0.5f<< 0.5f<<-0.5f<<-0.5f<<-0.5f<<-0.5f
-    <<-0.5f<<-0.5f<< 0.5f<< 0.5f<<-0.5f<< 0.5f<< 0.5f<< 0.5f<< 0.5f<< 0.5f<< 0.5f<< 0.5f<<-0.5f<< 0.5f<< 0.5f<<-0.5f<<-0.5f<< 0.5f
-    <<-0.5f<< 0.5f<< 0.5f<<-0.5f<< 0.5f<<-0.5f<<-0.5f<<-0.5f<<-0.5f<<-0.5f<<-0.5f<<-0.5f<<-0.5f<<-0.5f<< 0.5f<<-0.5f<< 0.5f<< 0.5f
-    << 0.5f<< 0.5f<< 0.5f<< 0.5f<< 0.5f<<-0.5f<< 0.5f<<-0.5f<<-0.5f<< 0.5f<<-0.5f<<-0.5f<< 0.5f<<-0.5f<< 0.5f<< 0.5f<< 0.5f<< 0.5f
-    <<-0.5f<<-0.5f<<-0.5f<< 0.5f<<-0.5f<<-0.5f<< 0.5f<<-0.5f<< 0.5f<< 0.5f<<-0.5f<< 0.5f<<-0.5f<<-0.5f<< 0.5f<<-0.5f<<-0.5f<<-0.5f
-    <<-0.5f<< 0.5f<<-0.5f<< 0.5f<< 0.5f<<-0.5f<< 0.5f<< 0.5f<< 0.5f<< 0.5f<< 0.5f<< 0.5f<<-0.5f<< 0.5f<< 0.5f<<-0.5f<< 0.5f<<-0.5f;
-    m_patternVertices = vertices.toStdVector();
-
-    QVector<GLfloat> normals;
-    normals
-    << 0.0f<< 0.0f<<-1.0f<< 0.0f<< 0.0f<<-1.0f<< 0.0f<< 0.0f<<-1.0f<< 0.0f<< 0.0f<<-1.0f<< 0.0f<< 0.0f<<-1.0f<< 0.0f<< 0.0f<<-1.0f
-    << 0.0f<< 0.0f<< 1.0f<< 0.0f<< 0.0f<< 1.0f<< 0.0f<< 0.0f<< 1.0f<< 0.0f<< 0.0f<< 1.0f<< 0.0f<< 0.0f<< 1.0f<< 0.0f<< 0.0f<< 1.0f
-    <<-1.0f<< 0.0f<< 0.0f<<-1.0f<< 0.0f<< 0.0f<<-1.0f<< 0.0f<< 0.0f<<-1.0f<< 0.0f<< 0.0f<<-1.0f<< 0.0f<< 0.0f<<-1.0f<< 0.0f<< 0.0f
-    << 1.0f<< 0.0f<< 0.0f<< 1.0f<< 0.0f<< 0.0f<< 1.0f<< 0.0f<< 0.0f<< 1.0f<< 0.0f<< 0.0f<< 1.0f<< 0.0f<< 0.0f<< 1.0f<< 0.0f<< 0.0f
-    << 0.0f<<-1.0f<< 0.0f<< 0.0f<<-1.0f<< 0.0f<< 0.0f<<-1.0f<< 0.0f<< 0.0f<<-1.0f<< 0.0f<< 0.0f<<-1.0f<< 0.0f<< 0.0f<<-1.0f<< 0.0f
-    << 0.0f<< 1.0f<< 0.0f<< 0.0f<< 1.0f<< 0.0f<< 0.0f<< 1.0f<< 0.0f<< 0.0f<< 1.0f<< 0.0f<< 0.0f<< 1.0f<< 0.0f<< 0.0f<< 1.0f<< 0.0f;
-    m_patternNormals = normals.toStdVector();
-
-    QVector<GLfloat> colors;
-    colors
-    << 0.0f<< 0.0f<< 1.0f<< 0.0f<< 0.0f<< 1.0f<< 0.0f<< 0.0f<< 1.0f<< 0.0f<< 0.0f<< 1.0f<< 0.0f<< 0.0f<< 1.0f<< 0.0f<< 0.0f<< 1.0f
-    << 0.0f<< 0.0f<< 1.0f<< 0.0f<< 0.0f<< 1.0f<< 0.0f<< 0.0f<< 1.0f<< 0.0f<< 0.0f<< 1.0f<< 0.0f<< 0.0f<< 1.0f<< 0.0f<< 0.0f<< 1.0f
-    << 1.0f<< 0.0f<< 0.0f<< 1.0f<< 0.0f<< 0.0f<< 1.0f<< 0.0f<< 0.0f<< 1.0f<< 0.0f<< 0.0f<< 1.0f<< 0.0f<< 0.0f<< 1.0f<< 0.0f<< 0.0f
-    << 1.0f<< 0.0f<< 0.0f<< 1.0f<< 0.0f<< 0.0f<< 1.0f<< 0.0f<< 0.0f<< 1.0f<< 0.0f<< 0.0f<< 1.0f<< 0.0f<< 0.0f<< 1.0f<< 0.0f<< 0.0f
-    << 0.0f<< 1.0f<< 0.0f<< 0.0f<< 1.0f<< 0.0f<< 0.0f<< 1.0f<< 0.0f<< 0.0f<< 1.0f<< 0.0f<< 0.0f<< 1.0f<< 0.0f<< 0.0f<< 1.0f<< 0.0f
-    << 0.0f<< 1.0f<< 0.0f<< 0.0f<< 1.0f<< 0.0f<< 0.0f<< 1.0f<< 0.0f<< 0.0f<< 1.0f<< 0.0f<< 0.0f<< 1.0f<< 0.0f<< 0.0f<< 1.0f<< 0.0f;
-    m_patternColors = colors.toStdVector();
-
-    m_resultVertices = m_patternVertices;
-    m_resultNormals = m_patternNormals;
-    m_resultColors = m_patternColors;*/
     m_patternVertices = pattern->vertices();
     m_patternNormals = pattern->normals();
     m_patternFloatsCount = m_patternVertices.size();
@@ -58,8 +25,7 @@ MeshBuilder::MeshBuilder(std::shared_ptr<IMeshPattern> pattern, int builderSize)
 
 
 /******************************************************************************
-*   Добавление к мешу паттерна в определённое место и с определёнными цветами
-*   Возвращает состояние заполненности до конца
+*   Adds mesh patrts by pattern and returns filled state
 ******************************************************************************/
 bool MeshBuilder::addMeshByPattern(const QMatrix4x4 &modelMatrix, QRgb color)
 {
@@ -89,7 +55,7 @@ bool MeshBuilder::addMeshByPattern(const QMatrix4x4 &modelMatrix, QRgb color)
 
 
 /******************************************************************************
-*   Координаты вершин для перемещения в буфер меша
+*   Vertex coordinates for moving to the mesh
 ******************************************************************************/
 std::vector<GLfloat> &MeshBuilder::resultVertices()
 {
@@ -98,7 +64,7 @@ std::vector<GLfloat> &MeshBuilder::resultVertices()
 
 
 /******************************************************************************
-*   Координаты нормалей для перемещения в буфер меша
+*   Vertex normals coordinates for moving to the mesh
 ******************************************************************************/
 std::vector<GLfloat> &MeshBuilder::resultNormals()
 {
@@ -107,7 +73,7 @@ std::vector<GLfloat> &MeshBuilder::resultNormals()
 
 
 /******************************************************************************
-*   Компоненты цветов для перемещения в буфер меша
+*   Vertex color components for moving to the mesh
 ******************************************************************************/
 std::vector<GLfloat> &MeshBuilder::resultColors()
 {

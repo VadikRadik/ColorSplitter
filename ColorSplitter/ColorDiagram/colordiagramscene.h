@@ -18,6 +18,12 @@ enum EDiagramDotShape
     ICOSAHEDRON
 };
 
+
+/******************************************************************************
+*
+*   Scene for the color diagram
+*
+******************************************************************************/
 class ColorDiagramScene : public AbstractScene
 {
 public:
@@ -53,6 +59,8 @@ private:
     const QColor SCENE_BACKGROUND_COLOR = QColor::fromRgbF(0.5f,0.5f,0.5f);
     const int COLOR_SCALE_PARTS_COUNT = 360;
     const QVector3D UP = QVector3D(0.0f,1.0f,0.0);
+    const float VOLUME_POWER = 0.27f;
+    const float DIAGRAM_POINT_SCALE_FACTOR = 0.007f;
 };
 
 #endif // COLORDIAGRAMSCENE_H

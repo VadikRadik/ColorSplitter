@@ -10,6 +10,12 @@
 #include <QCheckBox>
 #include <QRadioButton>
 
+
+/******************************************************************************
+*
+*   View for the color diagram module
+*
+******************************************************************************/
 class ColorDiagramView : public IColorSplitterView
 {
 public:

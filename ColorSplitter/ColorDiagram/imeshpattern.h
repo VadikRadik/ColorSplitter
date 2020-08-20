@@ -2,9 +2,15 @@
 #define IMESHPATTERN_H
 
 #include <vector>
-#include <QOpenGLFunctions>
 
+#include <QOpenGLFunctions>
 #include <QVector3D>
+
+/******************************************************************************
+*
+*   Patterns for the mesh builder
+*
+******************************************************************************/
 
 class IMeshPattern
 {

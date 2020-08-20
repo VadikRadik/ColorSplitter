@@ -6,6 +6,12 @@
 #include "colorsplittermodel.h"
 #include "colordiagramscene.h"
 
+
+/******************************************************************************
+*
+*   Controller for the color diagram module
+*
+******************************************************************************/
 class ColorDiagramController
 {
 public:

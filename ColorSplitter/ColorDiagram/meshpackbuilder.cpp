@@ -18,7 +18,7 @@ MeshPackBuilder::MeshPackBuilder(std::shared_ptr<IMeshPattern> pattern,
 
 
 /******************************************************************************
-*   Добавить часть геометрии к результирующему мешу
+*   Adds a geometry part to the mesh result
 ******************************************************************************/
 void MeshPackBuilder::addPattern(const QMatrix4x4 &modelMatrix, QRgb color)
 {
@@ -31,7 +31,7 @@ void MeshPackBuilder::addPattern(const QMatrix4x4 &modelMatrix, QRgb color)
 
 
 /******************************************************************************
-*   Геттер результата
+*   Returns result
 ******************************************************************************/
 std::shared_ptr<MeshPack> MeshPackBuilder::result() const
 {
@@ -40,7 +40,7 @@ std::shared_ptr<MeshPack> MeshPackBuilder::result() const
 
 
 /******************************************************************************
-*   Добавить готовый меш к результату
+*   Adds a mesh to the result
 ******************************************************************************/
 void MeshPackBuilder::addNewMeshBatch()
 {
@@ -57,7 +57,7 @@ void MeshPackBuilder::addNewMeshBatch()
 
 
 /******************************************************************************
-*   Начать новую часть меша
+*   Starts new mesh
 ******************************************************************************/
 void MeshPackBuilder::startNewBatch()
 {

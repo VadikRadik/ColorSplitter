@@ -6,7 +6,7 @@
 #include <QGroupBox>
 
 /******************************************************************************
-*   Конструктор
+*   Constructor
 ******************************************************************************/
 ColorDiagramView::ColorDiagramView(std::shared_ptr<ColorDiagramController> controller)
     : m_diagramWidget(nullptr)
@@ -28,7 +28,7 @@ ColorDiagramView::ColorDiagramView(std::shared_ptr<ColorDiagramController> contr
 
 
 /******************************************************************************
-*   Обработчики контролов
+*   Creates user's input handlers
 ******************************************************************************/
 void ColorDiagramView::createLogic(QWidget* widget) const
 {
@@ -57,7 +57,7 @@ void ColorDiagramView::createLogic(QWidget* widget) const
 
 
 /******************************************************************************
-*   Создание и/или передача виджета представления
+*   Returns the view widget
 ******************************************************************************/
 QWidget *ColorDiagramView::createWidget() const
 {
@@ -77,7 +77,7 @@ QWidget *ColorDiagramView::createWidget() const
 
 
 /******************************************************************************
-*   Обновление представления по событию изменения модели
+*   Updates the view by changing of a model state
 ******************************************************************************/
 void ColorDiagramView::update(const ColorSplitterModel *model, EModelUpdates stateChange)
 {
@@ -93,7 +93,7 @@ void ColorDiagramView::update(const ColorSplitterModel *model, EModelUpdates sta
 
 
 /******************************************************************************
-*   Создание элементов управления виджета представления
+*   Creates controls
 ******************************************************************************/
 QVBoxLayout *ColorDiagramView::createControls() const
 {
