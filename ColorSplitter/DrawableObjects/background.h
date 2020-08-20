@@ -4,6 +4,11 @@
 #include "OpenGLWidget/idrawable.h"
 #include <QColor>
 
+/******************************************************************************
+*
+*   The scene's background
+*
+******************************************************************************/
 class Background : public IDrawable
 {
 public:

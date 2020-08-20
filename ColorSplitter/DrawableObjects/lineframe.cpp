@@ -43,7 +43,7 @@ LineFrame::~LineFrame()
 
 
 /******************************************************************************
-*   Отрисовка рамки
+*   Draws the frame
 ******************************************************************************/
 void LineFrame::draw(QOpenGLFunctions *oglFunctions, const DrawParameters &drawParams)
 {
@@ -75,7 +75,7 @@ void LineFrame::draw(QOpenGLFunctions *oglFunctions, const DrawParameters &drawP
 
 
 /******************************************************************************
-*   Замена шейдера
+*   Changes the shader
 ******************************************************************************/
 void LineFrame::setShader(std::shared_ptr<QOpenGLShaderProgram> shader)
 {
@@ -86,7 +86,7 @@ void LineFrame::setShader(std::shared_ptr<QOpenGLShaderProgram> shader)
 
 
 /******************************************************************************
-*   Перезапись координат нижней правой точки рамки
+*   Moves bottom right frame's corner
 ******************************************************************************/
 void LineFrame::expandFrame(QPointF position)
 {
@@ -112,7 +112,7 @@ void LineFrame::expandFrame(QPointF position)
 
 
 /******************************************************************************
-*   Создание буфера для меша
+*   Creates a buffer for vertices data
 ******************************************************************************/
 void LineFrame::createBuffer()
 {
@@ -135,7 +135,7 @@ void LineFrame::createBuffer()
 
 
 /******************************************************************************
-*   Вычисление координат внутренних прямоугольников рамки
+*   Calculates geometry for inner frame's rectangles
 ******************************************************************************/
 void LineFrame::calcInnerLoops()
 {
@@ -157,7 +157,7 @@ void LineFrame::calcInnerLoops()
 
 
 /******************************************************************************
-*   Привязка атрибутов шейдера
+*   Binds shader's attributes
 ******************************************************************************/
 void LineFrame::bindShaderAttributes()
 {

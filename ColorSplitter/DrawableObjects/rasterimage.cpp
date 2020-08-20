@@ -1,8 +1,8 @@
 #include "rasterimage.h"
 
 /******************************************************************************
-*   Конструктор.
-*   Инициализация координат квада под изображение
+*   Constructor.
+*   Initializes quad's coordinates for the image
 ******************************************************************************/
 RasterImage::RasterImage(const QImage &image, std::shared_ptr<QOpenGLShaderProgram> shader)
     : m_shaderProgram(shader)
@@ -40,7 +40,7 @@ RasterImage::~RasterImage()
 
 
 /******************************************************************************
-*   Рисование квада с текстурой
+*   Draws the textured quad
 ******************************************************************************/
 void RasterImage::draw(QOpenGLFunctions * oglFunctions, const DrawParameters &drawParams)
 {
@@ -73,7 +73,7 @@ void RasterImage::draw(QOpenGLFunctions * oglFunctions, const DrawParameters &dr
 
 
 /******************************************************************************
-*   Установка шейдера для квада с текстурой
+*   Changes the shader
 ******************************************************************************/
 void RasterImage::setShader(std::shared_ptr<QOpenGLShaderProgram> shader)
 {
@@ -91,7 +91,7 @@ void RasterImage::setShader(std::shared_ptr<QOpenGLShaderProgram> shader)
 
 
 /******************************************************************************
-*   Создание вертексного буфера
+*   Creates a buffer for the quad
 ******************************************************************************/
 void RasterImage::createBuffer(const QVector<GLfloat> &vertices, const QVector<GLfloat> &textuerCoordinates)
 {

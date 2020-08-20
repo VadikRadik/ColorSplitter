@@ -5,6 +5,12 @@
 
 #include <QOpenGLBuffer>
 
+
+/******************************************************************************
+*
+*   A rectangle frame
+*
+******************************************************************************/
 class LineFrame : public IDrawable
 {
 public:
@@ -39,7 +45,6 @@ private:
 
     GLint m_attributeCoord2d;
     GLint m_attributeColors;
-
     GLint m_uniformPvm;
 
     QOpenGLBuffer m_buffer;
@@ -48,8 +53,6 @@ private:
     int m_colorsOffset;
 
     std::array<GLfloat,4> m_movablePoint;
-
-
 };
 
 #endif // LINEFRAME_H

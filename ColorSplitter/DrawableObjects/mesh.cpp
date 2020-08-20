@@ -28,7 +28,7 @@ Mesh::~Mesh()
 
 
 /******************************************************************************
-*   Отрисовка меша
+*   Draws the mesh
 ******************************************************************************/
 void Mesh::draw(QOpenGLFunctions *oglFunctions, const DrawParameters &drawParams)
 {
@@ -61,7 +61,7 @@ void Mesh::draw(QOpenGLFunctions *oglFunctions, const DrawParameters &drawParams
 
 
 /******************************************************************************
-*   Замена шейдера
+*   Changes the shader
 ******************************************************************************/
 void Mesh::setShader(std::shared_ptr<QOpenGLShaderProgram> shader)
 {
@@ -72,8 +72,8 @@ void Mesh::setShader(std::shared_ptr<QOpenGLShaderProgram> shader)
 
 
 /******************************************************************************
-*   Перемещение координат вершин в меш
-*   Запоминание количества вершин
+*   Moves the vertices coordinates to the mesh
+*   Memorizes vertices count
 ******************************************************************************/
 void Mesh::setVertices(std::vector<GLfloat> &vertices)
 {
@@ -83,7 +83,7 @@ void Mesh::setVertices(std::vector<GLfloat> &vertices)
 
 
 /******************************************************************************
-*   Перемещение координат нормалей в меш
+*   Moves the vertices normals to the mesh
 ******************************************************************************/
 void Mesh::setNormals(std::vector<GLfloat> &normals)
 {
@@ -91,7 +91,7 @@ void Mesh::setNormals(std::vector<GLfloat> &normals)
 }
 
 /******************************************************************************
-*   Перемещение компонент цветов в меш
+*   Moves the vertices colors to the mesh
 ******************************************************************************/
 void Mesh::setColors(std::vector<GLfloat> &colors)
 {
@@ -100,7 +100,7 @@ void Mesh::setColors(std::vector<GLfloat> &colors)
 
 
 /******************************************************************************
-*   Создание буфера для меша
+*   Creates a buffer for the mesh
 ******************************************************************************/
 void Mesh::createBuffer()
 {
@@ -133,7 +133,7 @@ void Mesh::createBuffer()
 
 
 /******************************************************************************
-*   Привязка атрибутов шейдера
+*   Binds shader's attributes
 ******************************************************************************/
 void Mesh::bindShaderAttributes()
 {
