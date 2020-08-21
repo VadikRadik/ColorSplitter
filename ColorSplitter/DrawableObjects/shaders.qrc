@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/shaders">
+        <file>rasterImage.fsh</file>
+        <file>rasterImage.vsh</file>
+        <file>direct_lighted_mesh.fsh</file>
+        <file>direct_lighted_mesh.vsh</file>
+        <file>line.fsh</file>
+        <file>line.vsh</file>
+        <file>no_lighted_mesh.fsh</file>
+        <file>no_lighted_mesh.vsh</file>
+    </qresource>
+</RCC>

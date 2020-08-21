@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui opengl
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -24,6 +24,61 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    ImageSources/imagesourcesview.cpp \
+    OpenGLWidget/openglwidget.cpp \
+    DrawableObjects/rasterimage.cpp \
+    OpenGLWidget/ortho2dcamera.cpp \
+    Image/imageview.cpp \
+    OpenGLWidget/centred3deulercamera.cpp \
+    ColorDiagram/colordiagramview.cpp \
+    DrawableObjects/mesh.cpp \
+    OpenGLWidget/abstractscene.cpp \
+    ColorDiagram/colordiagramscene.cpp \
+    Image/imagescene.cpp \
+    DrawableObjects/background.cpp \
+    ColorDiagram/meshbuilder.cpp \
+    ColorDiagram/imeshpattern.cpp \
+    DrawableObjects/meshpack.cpp \
+    colorsplittermodel.cpp \
+    ImageSources/imagesourceslistmodel.cpp \
+    ImageSources/imagesourcescontroller.cpp \
+    ColorDiagram/colordiagramcontroller.cpp \
+    ColorDiagram/meshpackbuilder.cpp \
+    DrawableObjects/lineframe.cpp \
+    Image/imagecontroller.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    icolorsplitterview.h \
+    ImageSources/imagesourcesview.h \
+    uistrings.h \
+    OpenGLWidget/openglwidget.h \
+    OpenGLWidget/idrawable.h \
+    DrawableObjects/rasterimage.h \
+    OpenGLWidget/icamera.h \
+    OpenGLWidget/ortho2dcamera.h \
+    Image/imageview.h \
+    OpenGLWidget/centred3deulercamera.h \
+    ColorDiagram/colordiagramview.h \
+    DrawableObjects/mesh.h \
+    OpenGLWidget/abstractscene.h \
+    ColorDiagram/colordiagramscene.h \
+    Image/imagescene.h \
+    DrawableObjects/background.h \
+    ColorDiagram/meshbuilder.h \
+    ColorDiagram/imeshpattern.h \
+    DrawableObjects/meshpack.h \
+    colorsplittermodel.h \
+    emodelupdates.h \
+    ImageSources/imagesourceslistmodel.h \
+    ImageSources/imagesourcescontroller.h \
+    ColorDiagram/colordiagramcontroller.h \
+    ColorDiagram/meshpackbuilder.h \
+    DrawableObjects/lineframe.h \
+    Image/imagecontroller.h \
+    uistrings/uistringsru.h \
+    uistrings/uistringseng.h \
+    OpenGLWidget/iwidgetinputhandler.h
+
+RESOURCES += \
+    DrawableObjects/shaders.qrc

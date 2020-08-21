@@ -2,7 +2,13 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QSplitter>
 
+/******************************************************************************
+*
+*   The main window
+*
+******************************************************************************/
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -10,6 +16,22 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = 0);
     ~MainWindow();
+
+    void setImageSourcesView    (QWidget * view);
+    void setImageView           (QWidget * view);
+    void setColorDiagramView    (QWidget * view);
+
+    void setWidgets();
+
+private:
+    QWidget * createCentralWidget();
+
+private:
+    QWidget * m_imageSourceView;
+    QSplitter * m_imageSourceSplitter;
+    QSplitter * m_openglViewsSplitter;
+
+    const QRect DEFAULT_MAIN_WINDOW_GEOMETRY = QRect(QPoint(100,100),QPoint(999,666));
 };
 
 #endif // MAINWINDOW_H
