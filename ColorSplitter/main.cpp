@@ -1,14 +1,11 @@
 #include <memory>
 
 #include <QApplication>
-#include <QImage>
 
 #include "mainwindow.h"
 #include "ImageSources/imagesourcesview.h"
 #include "Image/imageview.h"
 #include "ColorDiagram/colordiagramview.h"
-#include "OpenGLWidget/openglwidget.h"
-#include "DrawableObjects/rasterimage.h"
 #include "colorsplittermodel.h"
 #include "ImageSources/imagesourcescontroller.h"
 #include "ColorDiagram/colordiagramcontroller.h"
@@ -37,10 +34,12 @@ int main(int argc, char *argv[])
     model.subscribeView(colorDiagram);
 
     MainWindow w;
+
     w.setImageSourcesView(imageSourcesView->createWidget());
     w.setColorDiagramView(colorDiagram->createWidget());
     w.setImageView(imageView->createWidget());
     w.setWidgets();
+
     w.showMaximized();
 
     return a.exec();
