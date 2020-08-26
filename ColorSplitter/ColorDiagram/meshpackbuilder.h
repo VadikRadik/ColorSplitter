@@ -5,6 +5,8 @@
 #include "DrawableObjects/meshpack.h"
 #include "DrawableObjects/mesh.h"
 
+#include <stack>
+
 
 /******************************************************************************
 *
@@ -14,11 +16,13 @@
 class MeshPackBuilder
 {
 public:
-    MeshPackBuilder(std::shared_ptr<IMeshPattern> pattern, std::shared_ptr<QOpenGLShaderProgram> shader, GLenum drawMode, int patternsCount, int batchSize = 50000);
+    MeshPackBuilder(std::shared_ptr<IMeshPattern> pattern, std::shared_ptr<QOpenGLShaderProgram> shader, GLenum drawMode, int patternsCount, int batchSize = 2500000);
 
     void addPattern(const QMatrix4x4 & modelMatrix, QRgb color);
 
     std::shared_ptr<MeshPack> result() const;
+
+    void createMeshBuffersIfNeed();
 
 private:
     void addNewMeshBatch();
@@ -34,6 +38,8 @@ private:
     std::unique_ptr<MeshBuilder> m_meshBuilder;
     int m_currentPatternIndex;
     int m_meshBuilderSize;
+
+    std::stack<std::shared_ptr<Mesh>> m_meshesForCreatingBuffer;
 };
 
 #endif // MESHPACKBUILDER_H

@@ -131,6 +131,8 @@ void ColorDiagramScene::refillDiagram(const std::unordered_map<QRgb, int> &color
         model.scale(qPow(it->second,VOLUME_POWER) * DIAGRAM_POINT_SCALE_FACTOR);
 
         diagramBuilder.addPattern(model,it->first);
+
+        diagramBuilder.createMeshBuffersIfNeed();
     }
 
     GLenum errorCode = m_openGLContext->functions()->glGetError();
