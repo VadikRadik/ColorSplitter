@@ -9,6 +9,7 @@
 #include <QVBoxLayout>
 #include <QCheckBox>
 #include <QRadioButton>
+#include <QTimer>
 
 
 /******************************************************************************

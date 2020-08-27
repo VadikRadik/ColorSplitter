@@ -7,6 +7,7 @@
 #include "DrawableObjects/mesh.h"
 #include "DrawableObjects/meshpack.h"
 #include "imeshpattern.h"
+#include "meshpackbuilder.h"
 
 #include <QColor>
 
@@ -35,6 +36,9 @@ public:
 
     void setLight(bool light);
     void setShape(EDiagramDotShape shape);
+    bool isNewDiagramBuilt();
+    void updateDiagram();
+    void showNewDiagram();
 
 private:
     void createColorScale();
@@ -53,6 +57,8 @@ private:
     std::shared_ptr<IMeshPattern> m_octahedronPattern;
     std::shared_ptr<IMeshPattern> m_icosahedronPattern;
     std::shared_ptr<IMeshPattern> m_currentPattern;
+
+    std::unique_ptr<MeshPackBuilder> m_diagramBuilder;
 
     bool m_isLight;
 

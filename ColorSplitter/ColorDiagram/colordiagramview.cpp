@@ -53,6 +53,10 @@ void ColorDiagramView::createLogic(QWidget* widget) const
         m_controller->setShape(EDiagramDotShape::ICOSAHEDRON);
         m_diagramWidget->update();
     });
+
+    widget->connect(m_controller.get(),&ColorDiagramController::diagramChanged,[=](){
+        m_diagramWidget->update();
+    });
 }
 
 

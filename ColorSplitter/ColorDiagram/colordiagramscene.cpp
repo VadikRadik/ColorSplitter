@@ -2,9 +2,11 @@
 #include "DrawableObjects/background.h"
 #include "DrawableObjects/rasterimage.h"
 #include "meshbuilder.h"
-#include "meshpackbuilder.h"
 
 #include <QtMath>
+
+#include <QTime>
+#include <QDebug>
 
 /******************************************************************************
 *   Constructor
@@ -94,6 +96,37 @@ void ColorDiagramScene::setShape(EDiagramDotShape shape)
     }
 }
 
+bool ColorDiagramScene::isNewDiagramBuilt()
+{
+    if (m_diagramBuilder) {
+        return m_diagramBuilder->isGeometryBuilt();
+    }
+    return false;
+}
+
+void ColorDiagramScene::updateDiagram()
+{
+    qDebug() << "update scene called";
+    makeCurrentContext();
+    m_diagramBuilder->createMeshBuffersIfNeed();
+}
+
+void ColorDiagramScene::showNewDiagram()
+{
+    makeCurrentContext();
+
+    if (!m_diagramMesh.expired())
+        removeObject(m_diagramMesh.lock());
+
+    m_diagramMesh = m_diagramBuilder->result();
+    //m_diagramMesh.lock()->setShader(m_currentMeshShader);
+    addObject(m_diagramMesh.lock());
+
+    GLenum errorCode = m_openGLContext->functions()->glGetError();
+    if (errorCode != 0)
+       qWarning() << "OpenGL error code:" << errorCode;
+}
+
 
 /******************************************************************************
 *   Creates shaders and diagram objects
@@ -115,14 +148,17 @@ void ColorDiagramScene::initialize()
 ******************************************************************************/
 void ColorDiagramScene::refillDiagram(const std::unordered_map<QRgb, int> &colors)
 {
-    makeCurrentContext();
+    //QTime timer;
+    //timer.start();
 
-    if (!m_diagramMesh.expired())
-        removeObject(m_diagramMesh.lock());
 
-    MeshPackBuilder diagramBuilder(m_currentPattern,m_currentMeshShader,m_currentPattern->drawMode(),colors.size());
+    m_diagramBuilder.reset();
+    m_diagramBuilder.reset(new MeshPackBuilder(colors,m_currentPattern,m_currentMeshShader,m_currentPattern->drawMode(),colors.size()));
 
-    for (auto it = colors.cbegin(); it != colors.cend(); ++it) {
+    m_diagramBuilder->createMeshGeometry();
+
+
+    /*for (auto it = colors.cbegin(); it != colors.cend(); ++it) {
         QColor clrHsv = QColor(it->first).toHsv();
 
         QMatrix4x4 model;
@@ -130,15 +166,22 @@ void ColorDiagramScene::refillDiagram(const std::unordered_map<QRgb, int> &color
         model.translate(clrHsv.saturationF(),clrHsv.valueF(),0.0f);
         model.scale(qPow(it->second,VOLUME_POWER) * DIAGRAM_POINT_SCALE_FACTOR);
 
-        diagramBuilder.addPattern(model,it->first);
+        m_diagramBuilder->addPattern(model,it->first);
+    }*/
 
-        diagramBuilder.createMeshBuffersIfNeed();
-    }
+//    makeCurrentContext();
+//
+//    if (!m_diagramMesh.expired())
+//        removeObject(m_diagramMesh.lock());
 
-    GLenum errorCode = m_openGLContext->functions()->glGetError();
-    if (errorCode != 0)
-        qWarning() << "OpenGL error code:" << errorCode;
+    //m_diagramBuilder->createMeshBuffersIfNeed();
 
-    m_diagramMesh = diagramBuilder.result();
-    addObject(m_diagramMesh.lock());
+    //GLenum errorCode = m_openGLContext->functions()->glGetError();
+    //if (errorCode != 0)
+     //   qWarning() << "OpenGL error code:" << errorCode;
+
+//    m_diagramMesh = m_diagramBuilder->result();
+//    addObject(m_diagramMesh.lock());
+
+    //qDebug() << timer.elapsed();
 }

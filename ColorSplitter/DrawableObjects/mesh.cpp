@@ -137,6 +137,9 @@ void Mesh::createBuffer()
 ******************************************************************************/
 void Mesh::bindShaderAttributes()
 {
+    if (m_shaderProgram == nullptr)
+        return;
+
     m_uniformLightDir = m_shaderProgram->uniformLocation( SHADER_VARIABLES::UF_LIGHT_DIRECTION );
     m_uniformPvm = m_shaderProgram->uniformLocation( SHADER_VARIABLES::UF_PVM_MATRIX );
 
