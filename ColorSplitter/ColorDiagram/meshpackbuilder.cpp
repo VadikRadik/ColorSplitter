@@ -7,11 +7,11 @@
 MeshPackGeometryCreator::MeshPackGeometryCreator(std::vector<std::pair<QRgb, int> > &colors,
                                                  std::shared_ptr<IMeshPattern> pattern,
                                                  int patternsCount, int batchSize)
-    : m_pattern(std::make_shared<Icosahedron>())//pattern)
+    : m_pattern(pattern)
     , m_meshesForCreatingBuffer()
     , m_resultMeshes()
     , m_meshBuilder(new MeshBuilder(m_pattern,batchSize))
-    , m_lastPatternIndex(patternsCount-1)
+    , m_lastPatternIndex(colors.size()-1)
     , m_currentPatternIndex(0)
     , m_drawMode(pattern->drawMode())
     , m_meshBuilderSize(batchSize)
@@ -37,9 +37,9 @@ void MeshPackGeometryCreator::createMeshBuffersIfNeed()
         m_meshesForCreatingBuffer.pop();
         m_bufferStackMutex.unlock();
 
+        //qDebug() << sizeof(*topMesh);
         topMesh->createBuffer();
-        //m_result->addMesh(topMesh);
-
+        //qDebug() << sizeof(*topMesh);
     }
 }
 
@@ -52,8 +52,8 @@ void MeshPackGeometryCreator::addPattern(const QMatrix4x4 &modelMatrix, QRgb col
     bool builderFilled = m_meshBuilder->addMeshByPattern(modelMatrix,color) || m_currentPatternIndex == m_lastPatternIndex;
     if (builderFilled)
         addNewMeshBatch();
-
-    m_currentPatternIndex++;
+    //qDebug() << m_currentPatternIndex << m_lastPatternIndex;
+    ++m_currentPatternIndex;
 }
 
 /******************************************************************************
@@ -133,7 +133,7 @@ MeshPackBuilder::MeshPackBuilder(const std::unordered_map<QRgb, int> &colors, st
     //, m_meshBuilderSize(batchSize)//pattern->patternDataSize()*batchSize)
    // , m_meshesForCreatingBuffer()
     , m_imageColorsBatches()
-    , m_coresCount(1)//std::thread::hardware_concurrency())
+    , m_coresCount(std::thread::hardware_concurrency())
     , m_threads()
     //, m_mutex()
     //, m_threadsFinished()
@@ -190,8 +190,9 @@ MeshPackBuilder::~MeshPackBuilder()
 /******************************************************************************
 *   Returns result
 ******************************************************************************/
-std::shared_ptr<MeshPack> MeshPackBuilder::result() const
+std::shared_ptr<MeshPack> MeshPackBuilder::packResult()
 {
+    createMeshBuffersIfNeed();
     for (int i = 0; i < m_coresCount; ++i) {
         std::list<std::shared_ptr<Mesh>> result = m_geometryCreators[i]->resultMeshes();
         for (auto & mesh : result) {
@@ -199,7 +200,7 @@ std::shared_ptr<MeshPack> MeshPackBuilder::result() const
         }
     }
     m_result->setShader(m_shader);
-    qDebug() << m_result->meshesCount() << m_timer.elapsed();
+    qDebug() << m_result->meshesCount() << m_timer.elapsed() << "============================================";
     return m_result;
 }
 

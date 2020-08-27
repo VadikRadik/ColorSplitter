@@ -63,13 +63,13 @@ public:
     MeshPackBuilder(const std::unordered_map<QRgb, int> &colors,
                     std::shared_ptr<IMeshPattern> pattern,
                     std::shared_ptr<QOpenGLShaderProgram> shader,
-                    GLenum drawMode, int patternsCount, int batchSize = 500000);
+                    GLenum drawMode, int patternsCount, int batchSize = 2500000);
     ~MeshPackBuilder();
 
 
-    void addPattern(const QMatrix4x4 & modelMatrix, QRgb color);
+    //void addPattern(const QMatrix4x4 & modelMatrix, QRgb color);
 
-    std::shared_ptr<MeshPack> result() const;
+    std::shared_ptr<MeshPack> packResult();
 
     void createMeshGeometry();
     void createMeshBuffersIfNeed();

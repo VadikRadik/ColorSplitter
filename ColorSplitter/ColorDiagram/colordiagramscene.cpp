@@ -106,21 +106,23 @@ bool ColorDiagramScene::isNewDiagramBuilt()
 
 void ColorDiagramScene::updateDiagram()
 {
-    qDebug() << "update scene called";
+    //qDebug() << "update scene called";
     makeCurrentContext();
-    m_diagramBuilder->createMeshBuffersIfNeed();
+    if (m_diagramBuilder) {
+        m_diagramBuilder->createMeshBuffersIfNeed();
+    }
 }
 
 void ColorDiagramScene::showNewDiagram()
 {
     makeCurrentContext();
 
-    if (!m_diagramMesh.expired())
-        removeObject(m_diagramMesh.lock());
+    m_diagramMesh = m_diagramBuilder->packResult();
 
-    m_diagramMesh = m_diagramBuilder->result();
     //m_diagramMesh.lock()->setShader(m_currentMeshShader);
     addObject(m_diagramMesh.lock());
+
+    m_diagramBuilder.reset();
 
     GLenum errorCode = m_openGLContext->functions()->glGetError();
     if (errorCode != 0)
@@ -151,6 +153,10 @@ void ColorDiagramScene::refillDiagram(const std::unordered_map<QRgb, int> &color
     //QTime timer;
     //timer.start();
 
+    makeCurrentContext();
+
+    if (!m_diagramMesh.expired())
+        removeObject(m_diagramMesh.lock());
 
     m_diagramBuilder.reset();
     m_diagramBuilder.reset(new MeshPackBuilder(colors,m_currentPattern,m_currentMeshShader,m_currentPattern->drawMode(),colors.size()));

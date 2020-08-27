@@ -90,6 +90,7 @@ void Mesh::setNormals(std::vector<GLfloat> &normals)
     m_normals = std::move(normals);
 }
 
+
 /******************************************************************************
 *   Moves the vertices colors to the mesh
 ******************************************************************************/
