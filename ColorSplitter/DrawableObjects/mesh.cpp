@@ -21,11 +21,6 @@ Mesh::Mesh(std::shared_ptr<QOpenGLShaderProgram> shader, GLenum drawMode)
     bindShaderAttributes();
 }
 
-Mesh::~Mesh()
-{
-    m_buffer.destroy();
-}
-
 
 /******************************************************************************
 *   Draws the mesh
@@ -107,6 +102,7 @@ void Mesh::createBuffer()
 {
     m_buffer.create();
     m_buffer.bind();
+    m_buffer.setUsagePattern(QOpenGLBuffer::StaticDraw);
 
     int verticesPartSize = m_vertices.size() * sizeof(GLfloat);
     int normalsPartSize = m_normals.size() * sizeof(GLfloat);

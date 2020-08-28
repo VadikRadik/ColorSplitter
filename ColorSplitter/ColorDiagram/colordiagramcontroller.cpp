@@ -18,7 +18,7 @@ ColorDiagramController::ColorDiagramController(ColorSplitterModel &model)
 void ColorDiagramController::fillDiagram()
 {
     m_scene.lock()->refillDiagram(m_model.decomposedColors());
-    m_timer.start(20);
+    m_timer.start(TIMER_PERIOD);
 }
 
 
@@ -39,7 +39,18 @@ void ColorDiagramController::setShape(EDiagramDotShape shape)
     if (!m_scene.expired()) {
         m_scene.lock()->setShape(shape);
         m_scene.lock()->refillDiagram(m_model.decomposedColors());
-        m_timer.start(20);
+        m_timer.start(TIMER_PERIOD);
+    }
+}
+
+
+/******************************************************************************
+*   Removes a diagram from the scene
+******************************************************************************/
+void ColorDiagramController::flushDiagram()
+{
+    if (!m_scene.expired()) {
+        m_scene.lock()->flushDiagram();
     }
 }
 
@@ -52,6 +63,10 @@ void ColorDiagramController::bindScene(std::shared_ptr<ColorDiagramScene> scene)
     m_scene = scene;
 }
 
+
+/******************************************************************************
+*   Checks a diagram creation from the main thread
+******************************************************************************/
 bool ColorDiagramController::checkUpdateDiagram()
 {
     bool needToUpdate = false;

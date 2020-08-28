@@ -33,6 +33,7 @@ public:
     virtual void initialize() override;
 
     void refillDiagram(const std::unordered_map<QRgb, int> & colors);
+    void flushDiagram();
 
     void setLight(bool light);
     void setShape(EDiagramDotShape shape);

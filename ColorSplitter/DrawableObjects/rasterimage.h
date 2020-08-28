@@ -17,7 +17,6 @@ class RasterImage : public IDrawable
 {
 public:
     RasterImage(const QImage &image, std::shared_ptr<QOpenGLShaderProgram> shader);
-    ~RasterImage();
 
     virtual void draw(QOpenGLFunctions * oglFunctions, const DrawParameters & drawParams) override;
     virtual void setShader(std::shared_ptr<QOpenGLShaderProgram> shader) override;

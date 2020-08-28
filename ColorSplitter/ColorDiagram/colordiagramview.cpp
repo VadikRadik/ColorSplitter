@@ -90,6 +90,9 @@ void ColorDiagramView::update(const ColorSplitterModel *model, EModelUpdates sta
         m_controller->fillDiagram();
         m_diagramWidget->update();
         break;
+    case EModelUpdates::IMAGE_CHANGED:
+        m_controller->flushDiagram();
+        break;
     default:
         break;
     }

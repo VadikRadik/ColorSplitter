@@ -36,11 +36,6 @@ LineFrame::LineFrame(std::shared_ptr<QOpenGLShaderProgram> shader, QPointF start
     bindShaderAttributes();
 }
 
-LineFrame::~LineFrame()
-{
-    m_buffer.destroy();
-}
-
 
 /******************************************************************************
 *   Draws the frame

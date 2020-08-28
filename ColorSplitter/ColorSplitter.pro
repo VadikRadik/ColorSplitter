@@ -46,7 +46,8 @@ SOURCES += main.cpp\
     ColorDiagram/colordiagramcontroller.cpp \
     ColorDiagram/meshpackbuilder.cpp \
     DrawableObjects/lineframe.cpp \
-    Image/imagecontroller.cpp
+    Image/imagecontroller.cpp \
+    ColorDiagram/diagramgeometrycreator.cpp
 
 HEADERS  += mainwindow.h \
     icolorsplitterview.h \
@@ -78,7 +79,8 @@ HEADERS  += mainwindow.h \
     Image/imagecontroller.h \
     uistrings/uistringsru.h \
     uistrings/uistringseng.h \
-    OpenGLWidget/iwidgetinputhandler.h
+    OpenGLWidget/iwidgetinputhandler.h \
+    ColorDiagram/diagramgeometrycreator.h
 
 RESOURCES += \
     DrawableObjects/shaders.qrc
