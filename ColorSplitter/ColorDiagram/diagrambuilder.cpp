@@ -1,6 +1,7 @@
-#include "meshpackbuilder.h"
+#include "diagrambuilder.h"
 
-MeshPackBuilder::MeshPackBuilder(const std::unordered_map<QRgb, int> &colors, std::shared_ptr<IMeshPattern> pattern,
+
+DiagramBuilder::DiagramBuilder(const std::unordered_map<QRgb, int> &colors, std::shared_ptr<IMeshPattern> pattern,
                                  std::shared_ptr<QOpenGLShaderProgram> shader,
                                  int batchSize)
     : m_pattern(pattern)
@@ -11,7 +12,16 @@ MeshPackBuilder::MeshPackBuilder(const std::unordered_map<QRgb, int> &colors, st
     , m_threadsCount(std::thread::hardware_concurrency())
     , m_threads()
     , m_geometryCreators()
+    , m_timer()
 {
+    QObject::connect(&m_timer,&QTimer::timeout,[=](){
+        m_creatingSubscriber->update(EColorDiagramState::CREATE_BUFFERS_NEEDED);
+        if (isGeometryBuilt()) {
+            m_timer.stop();
+            m_creatingSubscriber->update(EColorDiagramState::DONE);
+        }
+    });
+
     if (m_threadsCount == 0)
         m_threadsCount++;
 
@@ -32,7 +42,7 @@ MeshPackBuilder::MeshPackBuilder(const std::unordered_map<QRgb, int> &colors, st
     }
 }
 
-MeshPackBuilder::~MeshPackBuilder()
+DiagramBuilder::~DiagramBuilder()
 {
     for (auto & t : m_threads) {
         if(t.joinable())
@@ -44,7 +54,7 @@ MeshPackBuilder::~MeshPackBuilder()
 /******************************************************************************
 *   Returns the result
 ******************************************************************************/
-std::shared_ptr<MeshPack> MeshPackBuilder::packResult()
+std::shared_ptr<MeshPack> DiagramBuilder::packResult()
 {
     createMeshBuffersIfNeed();
     for (int i = 0; i < m_threadsCount; ++i) {
@@ -62,7 +72,7 @@ std::shared_ptr<MeshPack> MeshPackBuilder::packResult()
 /******************************************************************************
 *   Starts a diagram creation with several threads
 ******************************************************************************/
-void MeshPackBuilder::createMeshGeometry()
+void DiagramBuilder::createMeshGeometry()
 {
     for (int i = 0; i < m_threadsCount; ++i) {
         m_geometryCreators[i].reset(new DiagramGeometryCreator(m_imageColorsBatches[i],m_pattern,m_batchSize));
@@ -73,6 +83,7 @@ void MeshPackBuilder::createMeshGeometry()
     }
 
     m_imageColorsBatches.clear();
+    m_timer.start(TIMER_PERIOD);
 }
 
 
@@ -80,7 +91,7 @@ void MeshPackBuilder::createMeshGeometry()
 *   Checks for new meshes for creating vertex buffers.
 *   Must be called from the main thread and with a correct OpenGL context
 ******************************************************************************/
-void MeshPackBuilder::createMeshBuffersIfNeed()
+void DiagramBuilder::createMeshBuffersIfNeed()
 {
     for (int i = 0; i < m_threadsCount; ++i) {
         m_geometryCreators[i]->createMeshBuffersIfNeed();
@@ -92,7 +103,7 @@ void MeshPackBuilder::createMeshBuffersIfNeed()
 *   Checks for finish creating
 *   Must be called from the main thread and with a correct OpenGL context
 ******************************************************************************/
-bool MeshPackBuilder::isGeometryBuilt()
+bool DiagramBuilder::isGeometryBuilt()
 {
     int creatorsFinished = 0;
     for (int i = 0; i < m_threadsCount; ++i) {
@@ -101,4 +112,13 @@ bool MeshPackBuilder::isGeometryBuilt()
     }
 
     return creatorsFinished == m_threadsCount;
+}
+
+
+/******************************************************************************
+*   Subscribes scene for diagram bilding events
+******************************************************************************/
+void DiagramBuilder::subscribe(IObserver *subscriber)
+{
+    m_creatingSubscriber = subscriber;
 }

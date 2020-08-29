@@ -6,17 +6,14 @@
 #include "colorsplittermodel.h"
 #include "colordiagramscene.h"
 
-#include <QTimer>
-
 
 /******************************************************************************
 *
 *   Controller for the color diagram module
 *
 ******************************************************************************/
-class ColorDiagramController : public QObject
+class ColorDiagramController
 {
-    Q_OBJECT
 public:
     ColorDiagramController(ColorSplitterModel &model);
 
@@ -27,18 +24,9 @@ public:
 
     void bindScene(std::shared_ptr<ColorDiagramScene> scene);
 
-signals:
-    void diagramChanged();
-
-private:
-    bool checkUpdateDiagram();
-
 private:
     ColorSplitterModel & m_model;
     std::weak_ptr<ColorDiagramScene> m_scene;
-
-    QTimer m_timer;
-    static const int TIMER_PERIOD = 50;
 };
 
 #endif // COLORDIAGRAMCONTROLLER_H

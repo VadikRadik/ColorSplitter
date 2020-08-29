@@ -24,6 +24,7 @@ ColorDiagramView::ColorDiagramView(std::shared_ptr<ColorDiagramController> contr
     m_diagramWidget = new OpenGLWidget(scene);
     m_controller->bindScene(scene);
     m_scene = scene;
+    m_scene.lock()->subscribeView(this);
 }
 
 
@@ -51,10 +52,6 @@ void ColorDiagramView::createLogic(QWidget* widget) const
     });
     widget->connect(m_icosahedronShape,&QRadioButton::pressed,[=](){
         m_controller->setShape(EDiagramDotShape::ICOSAHEDRON);
-        m_diagramWidget->update();
-    });
-
-    widget->connect(m_controller.get(),&ColorDiagramController::diagramChanged,[=](){
         m_diagramWidget->update();
     });
 }
@@ -92,6 +89,21 @@ void ColorDiagramView::update(const ColorSplitterModel *model, EModelUpdates sta
         break;
     case EModelUpdates::IMAGE_CHANGED:
         m_controller->flushDiagram();
+        break;
+    default:
+        break;
+    }
+}
+
+
+/******************************************************************************
+*   Handles events from its content
+******************************************************************************/
+void ColorDiagramView::updateWidgets(EStateToUpdate state)
+{
+    switch (state) {
+    case EStateToUpdate::DIAGRAM_BUILT:
+        m_diagramWidget->update();
         break;
     default:
         break;

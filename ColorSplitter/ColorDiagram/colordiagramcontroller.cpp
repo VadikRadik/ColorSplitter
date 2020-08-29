@@ -2,14 +2,8 @@
 
 ColorDiagramController::ColorDiagramController(ColorSplitterModel &model)
     : m_model(model)
-    , m_timer()
 {
-    connect(&m_timer,&QTimer::timeout,[=](){
-        if (checkUpdateDiagram()) {
-            m_timer.stop();
-            emit diagramChanged();
-        }
-    });
+
 }
 
 /******************************************************************************
@@ -18,7 +12,6 @@ ColorDiagramController::ColorDiagramController(ColorSplitterModel &model)
 void ColorDiagramController::fillDiagram()
 {
     m_scene.lock()->refillDiagram(m_model.decomposedColors());
-    m_timer.start(TIMER_PERIOD);
 }
 
 
@@ -39,7 +32,6 @@ void ColorDiagramController::setShape(EDiagramDotShape shape)
     if (!m_scene.expired()) {
         m_scene.lock()->setShape(shape);
         m_scene.lock()->refillDiagram(m_model.decomposedColors());
-        m_timer.start(TIMER_PERIOD);
     }
 }
 
@@ -61,21 +53,4 @@ void ColorDiagramController::flushDiagram()
 void ColorDiagramController::bindScene(std::shared_ptr<ColorDiagramScene> scene)
 {
     m_scene = scene;
-}
-
-
-/******************************************************************************
-*   Checks a diagram creation from the main thread
-******************************************************************************/
-bool ColorDiagramController::checkUpdateDiagram()
-{
-    bool needToUpdate = false;
-    if (!m_scene.expired()) {
-        m_scene.lock()->updateDiagram();
-        needToUpdate = m_scene.lock()->isNewDiagramBuilt();
-        if (needToUpdate) {
-            m_scene.lock()->showNewDiagram();
-        }
-    }
-    return needToUpdate;
 }

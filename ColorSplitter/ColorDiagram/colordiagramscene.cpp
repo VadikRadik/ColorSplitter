@@ -96,18 +96,6 @@ void ColorDiagramScene::setShape(EDiagramDotShape shape)
 
 
 /******************************************************************************
-*   Checks the diagram for finish creation
-******************************************************************************/
-bool ColorDiagramScene::isNewDiagramBuilt()
-{
-    if (m_diagramBuilder) {
-        return m_diagramBuilder->isGeometryBuilt();
-    }
-    return false;
-}
-
-
-/******************************************************************************
 *   Updates the diagram from main thread
 ******************************************************************************/
 void ColorDiagramScene::updateDiagram()
@@ -132,7 +120,36 @@ void ColorDiagramScene::showNewDiagram()
 
     GLenum errorCode = m_openGLContext->functions()->glGetError();
     if (errorCode != 0)
-       qWarning() << "OpenGL error code:" << errorCode;
+        qWarning() << "OpenGL error code:" << errorCode;
+}
+
+
+/******************************************************************************
+*   Subscribes the diagram view for diagram events
+******************************************************************************/
+void ColorDiagramScene::subscribeView(IWidgetsUpdatable *view)
+{
+    m_view = view;
+}
+
+
+/******************************************************************************
+*   Handles diagram builder events
+******************************************************************************/
+void ColorDiagramScene::update(EColorDiagramState state)
+{
+    switch (state) {
+    case EColorDiagramState::CREATE_BUFFERS_NEEDED:
+        updateDiagram();
+        break;
+    case EColorDiagramState::DONE:
+        showNewDiagram();
+        if (m_view != nullptr)
+            m_view->updateWidgets(EStateToUpdate::DIAGRAM_BUILT);
+        break;
+    default:
+        break;
+    }
 }
 
 
@@ -158,7 +175,8 @@ void ColorDiagramScene::refillDiagram(const std::unordered_map<QRgb, int> &color
 {
     flushDiagram();
 
-    m_diagramBuilder.reset(new MeshPackBuilder(colors,m_currentPattern,m_currentMeshShader));
+    m_diagramBuilder.reset(new DiagramBuilder(colors,m_currentPattern,m_currentMeshShader));
+    m_diagramBuilder->subscribe(this);
 
     m_diagramBuilder->createMeshGeometry();
 }
