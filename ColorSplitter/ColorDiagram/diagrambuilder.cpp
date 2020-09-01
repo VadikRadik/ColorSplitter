@@ -23,7 +23,9 @@ DiagramBuilder::DiagramBuilder(const std::unordered_map<QRgb, int> &colors, std:
     });
 
     if (m_threadsCount == 0)
-        m_threadsCount++;
+        ++m_threadsCount;
+    else if (m_threadsCount > 2)
+        --m_threadsCount;
 
     int colorsBatchSize = colors.size() / m_threadsCount + 1;
 
