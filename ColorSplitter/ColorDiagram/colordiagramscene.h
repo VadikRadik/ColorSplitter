@@ -7,6 +7,8 @@
 #include "DrawableObjects/mesh.h"
 #include "DrawableObjects/meshpack.h"
 #include "imeshpattern.h"
+#include "diagrambuilder.h"
+#include "iwidgetsupdatable.h"
 
 #include <QColor>
 
@@ -25,6 +27,7 @@ enum EDiagramDotShape
 *
 ******************************************************************************/
 class ColorDiagramScene : public AbstractScene
+                        , public IObserver
 {
 public:
     ColorDiagramScene(ICamera *camera);
@@ -32,12 +35,18 @@ public:
     virtual void initialize() override;
 
     void refillDiagram(const std::unordered_map<QRgb, int> & colors);
+    void flushDiagram();
 
     void setLight(bool light);
     void setShape(EDiagramDotShape shape);
 
+    void subscribeView(IWidgetsUpdatable * view);
+    virtual void update(EColorDiagramState state) override;
+
 private:
     void createColorScale();
+    void updateDiagram();
+    void showNewDiagram();
 
 private:
     std::shared_ptr<QOpenGLShaderProgram> m_directLightedMeshShader;
@@ -53,6 +62,9 @@ private:
     std::shared_ptr<IMeshPattern> m_octahedronPattern;
     std::shared_ptr<IMeshPattern> m_icosahedronPattern;
     std::shared_ptr<IMeshPattern> m_currentPattern;
+
+    std::unique_ptr<DiagramBuilder> m_diagramBuilder;
+    IWidgetsUpdatable * m_view;
 
     bool m_isLight;
 

@@ -5,6 +5,7 @@
 #include "OpenGLWidget/openglwidget.h"
 #include "colordiagramscene.h"
 #include "colordiagramcontroller.h"
+#include "iwidgetsupdatable.h"
 
 #include <QVBoxLayout>
 #include <QCheckBox>
@@ -17,12 +18,14 @@
 *
 ******************************************************************************/
 class ColorDiagramView : public IColorSplitterView
+                       , public IWidgetsUpdatable
 {
 public:
     ColorDiagramView(std::shared_ptr<ColorDiagramController> controller);
 
     virtual QWidget *createWidget() const override;
     virtual void update(const ColorSplitterModel * model, EModelUpdates stateChange) override;
+    virtual void updateWidgets(EStateToUpdate state) override;
 
 private:
     QVBoxLayout *createControls() const;

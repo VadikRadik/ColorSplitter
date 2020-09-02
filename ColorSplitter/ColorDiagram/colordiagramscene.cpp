@@ -2,9 +2,9 @@
 #include "DrawableObjects/background.h"
 #include "DrawableObjects/rasterimage.h"
 #include "meshbuilder.h"
-#include "meshpackbuilder.h"
 
 #include <QtMath>
+
 
 /******************************************************************************
 *   Constructor
@@ -96,6 +96,64 @@ void ColorDiagramScene::setShape(EDiagramDotShape shape)
 
 
 /******************************************************************************
+*   Updates the diagram from main thread
+******************************************************************************/
+void ColorDiagramScene::updateDiagram()
+{
+    makeCurrentContext();
+    if (m_diagramBuilder) {
+        m_diagramBuilder->createMeshBuffersIfNeed();
+    }
+}
+
+
+/******************************************************************************
+*   Finishs a diagram and adds to the scene
+******************************************************************************/
+void ColorDiagramScene::showNewDiagram()
+{
+    makeCurrentContext();
+
+    m_diagramMesh = m_diagramBuilder->packResult();
+    addObject(m_diagramMesh.lock());
+    m_diagramBuilder.reset();
+
+    GLenum errorCode = m_openGLContext->functions()->glGetError();
+    if (errorCode != 0)
+        qWarning() << "OpenGL error code:" << errorCode;
+}
+
+
+/******************************************************************************
+*   Subscribes the diagram view for diagram events
+******************************************************************************/
+void ColorDiagramScene::subscribeView(IWidgetsUpdatable *view)
+{
+    m_view = view;
+}
+
+
+/******************************************************************************
+*   Handles diagram builder events
+******************************************************************************/
+void ColorDiagramScene::update(EColorDiagramState state)
+{
+    switch (state) {
+    case EColorDiagramState::CREATE_BUFFERS_NEEDED:
+        updateDiagram();
+        break;
+    case EColorDiagramState::DONE:
+        showNewDiagram();
+        if (m_view != nullptr)
+            m_view->updateWidgets(EStateToUpdate::DIAGRAM_BUILT);
+        break;
+    default:
+        break;
+    }
+}
+
+
+/******************************************************************************
 *   Creates shaders and diagram objects
 ******************************************************************************/
 void ColorDiagramScene::initialize()
@@ -115,28 +173,24 @@ void ColorDiagramScene::initialize()
 ******************************************************************************/
 void ColorDiagramScene::refillDiagram(const std::unordered_map<QRgb, int> &colors)
 {
+    flushDiagram();
+
+    m_diagramBuilder.reset(new DiagramBuilder(colors,m_currentPattern,m_currentMeshShader));
+    m_diagramBuilder->subscribe(this);
+
+    m_diagramBuilder->createMeshGeometry();
+}
+
+
+/******************************************************************************
+*   Removes a diagram from the scene
+******************************************************************************/
+void ColorDiagramScene::flushDiagram()
+{
     makeCurrentContext();
 
     if (!m_diagramMesh.expired())
         removeObject(m_diagramMesh.lock());
 
-    MeshPackBuilder diagramBuilder(m_currentPattern,m_currentMeshShader,m_currentPattern->drawMode(),colors.size());
-
-    for (auto it = colors.cbegin(); it != colors.cend(); ++it) {
-        QColor clrHsv = QColor(it->first).toHsv();
-
-        QMatrix4x4 model;
-        model.rotate(clrHsv.hsvHue(),UP);
-        model.translate(clrHsv.saturationF(),clrHsv.valueF(),0.0f);
-        model.scale(qPow(it->second,VOLUME_POWER) * DIAGRAM_POINT_SCALE_FACTOR);
-
-        diagramBuilder.addPattern(model,it->first);
-    }
-
-    GLenum errorCode = m_openGLContext->functions()->glGetError();
-    if (errorCode != 0)
-        qWarning() << "OpenGL error code:" << errorCode;
-
-    m_diagramMesh = diagramBuilder.result();
-    addObject(m_diagramMesh.lock());
+    m_diagramBuilder.reset();
 }

@@ -1,5 +1,6 @@
 #include "rasterimage.h"
 
+
 /******************************************************************************
 *   Constructor.
 *   Initializes quad's coordinates for the image
@@ -31,11 +32,6 @@ RasterImage::RasterImage(const QImage &image, std::shared_ptr<QOpenGLShaderProgr
     createBuffer(vertices,textureCoords);
 
     setShader(shader);
-}
-
-RasterImage::~RasterImage()
-{
-    m_buffer.destroy();
 }
 
 

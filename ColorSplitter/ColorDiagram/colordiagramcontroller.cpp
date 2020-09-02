@@ -37,6 +37,17 @@ void ColorDiagramController::setShape(EDiagramDotShape shape)
 
 
 /******************************************************************************
+*   Removes a diagram from the scene
+******************************************************************************/
+void ColorDiagramController::flushDiagram()
+{
+    if (!m_scene.expired()) {
+        m_scene.lock()->flushDiagram();
+    }
+}
+
+
+/******************************************************************************
 *   Binds color diagram scene to the controller
 ******************************************************************************/
 void ColorDiagramController::bindScene(std::shared_ptr<ColorDiagramScene> scene)

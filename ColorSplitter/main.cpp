@@ -4,12 +4,13 @@
 
 #include "mainwindow.h"
 #include "ImageSources/imagesourcesview.h"
-#include "Image/imageview.h"
-#include "ColorDiagram/colordiagramview.h"
-#include "colorsplittermodel.h"
 #include "ImageSources/imagesourcescontroller.h"
-#include "ColorDiagram/colordiagramcontroller.h"
+#include "Image/imageview.h"
 #include "Image/imagecontroller.h"
+#include "ColorDiagram/colordiagramview.h"
+#include "ColorDiagram/colordiagramcontroller.h"
+#include "colorsplittermodel.h"
+
 
 int main(int argc, char *argv[])
 {
@@ -30,8 +31,8 @@ int main(int argc, char *argv[])
     std::shared_ptr<IColorSplitterView> colorDiagram = std::make_shared<ColorDiagramView>(colorDiagramController);
 
     model.subscribeView(imageSourcesView);
-    model.subscribeView(imageView);
     model.subscribeView(colorDiagram);
+    model.subscribeView(imageView);
 
     MainWindow w;
 

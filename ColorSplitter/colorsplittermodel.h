@@ -24,7 +24,7 @@ public:
     const QImage & image() const;
     void resetImage(const QString & imagePath);
     void setCutFrame(const QRect & frameRect);
-    const std::unordered_map<QRgb, int> & decomposedColors() const;
+    const std::unordered_map<QRgb, int> & decomposedColors();
     const QRect &cutFrame() const;
 
     void subscribeView(std::shared_ptr<IColorSplitterView> view);

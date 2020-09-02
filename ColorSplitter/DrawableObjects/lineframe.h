@@ -15,7 +15,6 @@ class LineFrame : public IDrawable
 {
 public:
     LineFrame(std::shared_ptr<QOpenGLShaderProgram> shader, QPointF startPosition);
-    ~LineFrame();
 
     virtual void draw(QOpenGLFunctions * oglFunctions, const DrawParameters & drawParams) override;
     virtual void setShader(std::shared_ptr<QOpenGLShaderProgram> shader) override;

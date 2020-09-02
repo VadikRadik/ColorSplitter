@@ -24,6 +24,7 @@ ColorDiagramView::ColorDiagramView(std::shared_ptr<ColorDiagramController> contr
     m_diagramWidget = new OpenGLWidget(scene);
     m_controller->bindScene(scene);
     m_scene = scene;
+    m_scene.lock()->subscribeView(this);
 }
 
 
@@ -82,8 +83,26 @@ QWidget *ColorDiagramView::createWidget() const
 void ColorDiagramView::update(const ColorSplitterModel *model, EModelUpdates stateChange)
 {
     switch (stateChange) {
-    case EModelUpdates::IMAGE_DECOMPOSED:
+    case EModelUpdates::CUT_FRAME_CHANGED:
         m_controller->fillDiagram();
+        m_diagramWidget->update();
+        break;
+    case EModelUpdates::IMAGE_CHANGED:
+        m_controller->flushDiagram();
+        break;
+    default:
+        break;
+    }
+}
+
+
+/******************************************************************************
+*   Handles events from its content
+******************************************************************************/
+void ColorDiagramView::updateWidgets(EStateToUpdate state)
+{
+    switch (state) {
+    case EStateToUpdate::DIAGRAM_BUILT:
         m_diagramWidget->update();
         break;
     default:

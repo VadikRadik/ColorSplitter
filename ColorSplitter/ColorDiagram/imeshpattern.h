@@ -20,7 +20,7 @@ public:
     virtual std::vector<GLfloat> vertices() const {return m_vertices;}
     virtual std::vector<GLfloat> normals() const {return m_normals;}
     virtual int patternDataSize() const {return m_vertices.size();}
-    virtual GLenum drawMode() = 0;
+    virtual GLenum drawMode() const = 0;
 
 protected:
     std::vector<GLfloat> m_vertices;
@@ -32,7 +32,7 @@ class CubePattern : public IMeshPattern
 public:
     CubePattern();
 
-    virtual GLenum drawMode() override {return GL_QUADS; }
+    virtual GLenum drawMode() const override {return GL_QUADS; }
 
 private:
     const int VERTICES_COORDINATES_COUNT = 72; // 6 faces * 4 vertices * 3 dimensions
@@ -45,7 +45,7 @@ class TetrahedronPattern : public IMeshPattern
 public:
     TetrahedronPattern();
 
-    virtual GLenum drawMode() override {return GL_TRIANGLES; }
+    virtual GLenum drawMode() const override {return GL_TRIANGLES; }
 
 private:
     const int VERTICES_COORDINATES_COUNT = 36; // 4 faces * 3 vertices * 3 dimensions
@@ -59,7 +59,7 @@ class OctahedronPattern : public IMeshPattern
 public:
     OctahedronPattern();
 
-    virtual GLenum drawMode() override {return GL_TRIANGLES; }
+    virtual GLenum drawMode() const override {return GL_TRIANGLES; }
 
 private:
     const int VERTICES_COORDINATES_COUNT = 72; // 8 faces * 3 vertices * 3 dimensions
@@ -73,7 +73,7 @@ class Icosahedron : public IMeshPattern
 public:
     Icosahedron();
 
-    virtual GLenum drawMode() override {return GL_TRIANGLES; }
+    virtual GLenum drawMode() const override {return GL_TRIANGLES; }
 
 private:
     const int VERTICES_COORDINATES_COUNT = 180; // 20 faces * 3 vertices * 3 dimensions
@@ -86,7 +86,7 @@ class ScalePartPattern : public IMeshPattern
 public:
     ScalePartPattern();
 
-    virtual GLenum drawMode() override {return GL_QUADS; }
+    virtual GLenum drawMode() const override {return GL_QUADS; }
 
 private:
     const int VERTICES_COORDINATES_COUNT = 48; // 4 faces * 4 vertices * 3 dimensions

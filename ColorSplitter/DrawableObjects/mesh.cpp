@@ -21,11 +21,6 @@ Mesh::Mesh(std::shared_ptr<QOpenGLShaderProgram> shader, GLenum drawMode)
     bindShaderAttributes();
 }
 
-Mesh::~Mesh()
-{
-    m_buffer.destroy();
-}
-
 
 /******************************************************************************
 *   Draws the mesh
@@ -90,6 +85,7 @@ void Mesh::setNormals(std::vector<GLfloat> &normals)
     m_normals = std::move(normals);
 }
 
+
 /******************************************************************************
 *   Moves the vertices colors to the mesh
 ******************************************************************************/
@@ -106,6 +102,7 @@ void Mesh::createBuffer()
 {
     m_buffer.create();
     m_buffer.bind();
+    m_buffer.setUsagePattern(QOpenGLBuffer::StaticDraw);
 
     int verticesPartSize = m_vertices.size() * sizeof(GLfloat);
     int normalsPartSize = m_normals.size() * sizeof(GLfloat);
@@ -137,6 +134,9 @@ void Mesh::createBuffer()
 ******************************************************************************/
 void Mesh::bindShaderAttributes()
 {
+    if (m_shaderProgram == nullptr)
+        return;
+
     m_uniformLightDir = m_shaderProgram->uniformLocation( SHADER_VARIABLES::UF_LIGHT_DIRECTION );
     m_uniformPvm = m_shaderProgram->uniformLocation( SHADER_VARIABLES::UF_PVM_MATRIX );
 

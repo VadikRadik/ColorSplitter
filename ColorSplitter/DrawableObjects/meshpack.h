@@ -17,6 +17,8 @@ public:
     virtual void draw(QOpenGLFunctions *oglFunctions, const DrawParameters &drawParams) override;
     virtual void setShader(std::shared_ptr<QOpenGLShaderProgram> shader) override;
 
+    int meshesCount() {return m_meshes.size();}
+
 private:
     std::list<std::shared_ptr<IDrawable>> m_meshes;
 };

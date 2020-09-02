@@ -37,18 +37,21 @@ void ColorSplitterModel::resetImage(const QString & imagePath)
 void ColorSplitterModel::setCutFrame(const QRect &frameRect)
 {
     m_cutFrame = frameRect;
-    notify(EModelUpdates::CUT_FRAME_CHANGED);
 
-    decompose();
-    notify(EModelUpdates::IMAGE_DECOMPOSED);
+    m_decomposedColors.clear();
+
+    notify(EModelUpdates::CUT_FRAME_CHANGED);
 }
 
 
 /******************************************************************************
 *   Gets the color splitting result
 ******************************************************************************/
-const std::unordered_map<QRgb, int> &ColorSplitterModel::decomposedColors() const
+const std::unordered_map<QRgb, int> &ColorSplitterModel::decomposedColors()
 {
+    if (m_decomposedColors.empty())
+        decompose();
+
     return m_decomposedColors;
 }
 
@@ -58,7 +61,6 @@ const std::unordered_map<QRgb, int> &ColorSplitterModel::decomposedColors() cons
 ******************************************************************************/
 void ColorSplitterModel::decompose()
 {
-    m_decomposedColors.clear();
     QRect frame = imageRect();
 
     for (int y = frame.top(); y < frame.bottom(); ++y){
