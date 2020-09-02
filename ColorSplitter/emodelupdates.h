@@ -4,8 +4,7 @@
 enum EModelUpdates
 {
     IMAGE_CHANGED,
-    CUT_FRAME_CHANGED,
-    IMAGE_DECOMPOSED
+    CUT_FRAME_CHANGED
 };
 
 #endif // EMODELUPDATES_H

@@ -83,7 +83,7 @@ QWidget *ColorDiagramView::createWidget() const
 void ColorDiagramView::update(const ColorSplitterModel *model, EModelUpdates stateChange)
 {
     switch (stateChange) {
-    case EModelUpdates::IMAGE_DECOMPOSED:
+    case EModelUpdates::CUT_FRAME_CHANGED:
         m_controller->fillDiagram();
         m_diagramWidget->update();
         break;
